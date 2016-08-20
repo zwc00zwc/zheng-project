@@ -2,3 +2,6 @@
 /zheng-web/*.iml
 /zheng-web/target
 /*.iml
+/zheng-core/*.iml
+/zheng-core/target
+/zheng-service/*.iml

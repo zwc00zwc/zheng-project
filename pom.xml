@@ -10,6 +10,9 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>zheng-web</module>
+        <module>zheng-service</module>
+        <module>zheng-core</module>
+        <module>zheng-core</module>
     </modules>
 
     <properties>
@@ -207,6 +210,16 @@
             <version>2.0</version>
         </dependency>
         <!--velocity end-->
+
+        <!--dubbo-->
+        <!-- https://mvnrepository.com/artifact/com.alibaba/dubbo -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>dubbo</artifactId>
+            <version>2.5.3</version>
+        </dependency>
+        <!--dubbo end-->
+
     </dependencies>
 
 </project>

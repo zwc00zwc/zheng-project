@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+	http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd http://www.springframework.org/schema/aop
+	http://www.springframework.org/schema/aop/spring-aop-4.2.xsd">
+
+    <!-- 服务信息 -->
+    <dubbo:application name="demo-provider" owner="programmer" organization="dubbox"/>
+
+    <!-- 注册中心 -->
+    <dubbo:registry address="zookeeper://127.0.0.1:2181"/>
+    <!-- 注册中心 -->
+
+    <!-- 协议 -->
+    <dubbo:protocol name="dubbo" serialization="kryo" port="20884"/>
+
+    <!-- 暴露服务 -->
+    <dubbo:service interface="spi.TestSPI" ref="testSpiService" protocol="dubbo"/>
+
+    <!-- AOP -->
+    <!--<aop:config>-->
+        <!--<aop:pointcut id="service" expression="target(hg.framework.common.base.BaseServiceProviderInterface)-->
+				<!--and args(hg.framework.common.base.BaseSPIRequest,..)"/>-->
+        <!--<aop:aspect id="serviceAspect2" ref="dbCheckerAspect" order="101">-->
+            <!--<aop:before pointcut-ref="service" method="before"/>-->
+        <!--</aop:aspect>-->
+        <!--<aop:aspect id="serviceAspect1" ref="serviceProviderProcessLazyObjectAspect" order="100">-->
+            <!--<aop:around pointcut-ref="service" method="doAround"/>-->
+        <!--</aop:aspect>-->
+    <!--</aop:config>-->
+
+</beans>
