@@ -14,7 +14,8 @@
     <!-- 注册中心 -->
 
     <!-- 协议 -->
-    <dubbo:protocol name="dubbo" serialization="kryo" port="20884"/>
+    <!--<dubbo:protocol name="dubbo" serialization="kryo" port="20884"/>-->
+    <dubbo:protocol name="dubbo" port="20884"/>
 
     <!-- 暴露服务 -->
     <dubbo:service interface="spi.TestSPI" ref="testSpiService" protocol="dubbo"/>

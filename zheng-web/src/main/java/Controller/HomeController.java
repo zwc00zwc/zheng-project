@@ -11,11 +11,11 @@ import javax.annotation.Resource;
  */
 @Controller
 public class HomeController {
-    //@Resource
-    //private TestSPI testSPI;
+    @Resource
+    private TestSPI testSPI;
     @RequestMapping(value = "/")
     public String index(){
-        //testSPI.test();
+        testSPI.test();
         return "index";
     }
 }
