@@ -15,6 +15,7 @@
     <!-- 强制SPRING使用CGLIB动态代理，不使用JDK代理。 -->
     <aop:config proxy-target-class="true"/>
 
+    <import resource="classpath:config/spring-mvc.xml"/>
     <import resource="classpath:config/spring-dubbo-consumer.xml"/>
 
 </beans>

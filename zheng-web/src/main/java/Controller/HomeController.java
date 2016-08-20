@@ -16,6 +16,7 @@ public class HomeController {
     @RequestMapping(value = "/")
     public String index(){
         testSPI.test();
+        System.out.println(testSPI.test2());
         return "index";
     }
 }

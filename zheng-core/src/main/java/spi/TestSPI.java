@@ -7,4 +7,6 @@ import java.io.Serializable;
  */
 public interface TestSPI extends Serializable {
     void test();
+
+    String test2();
 }

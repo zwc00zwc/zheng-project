@@ -11,4 +11,8 @@ public class TestSPIService extends BaseSPIService implements TestSPI {
     public void test() {
         System.out.println("test SPI service");
     }
+
+    public String test2() {
+        return "test2";
+    }
 }
