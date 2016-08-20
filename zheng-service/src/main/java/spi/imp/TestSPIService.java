@@ -1,11 +1,13 @@
 package spi.imp;
 
+import org.springframework.stereotype.Service;
 import spi.TestSPI;
 
 /**
  * Created by Administrator on 2016/8/20.
  */
-public class TestSPIService implements TestSPI {
+@Service("testSpiService")
+public class TestSPIService extends BaseSPIService implements TestSPI {
     public void test() {
         System.out.println("test SPI service");
     }

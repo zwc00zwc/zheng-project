@@ -18,7 +18,6 @@
 
     <!-- 暴露服务 -->
     <dubbo:service interface="spi.TestSPI" ref="testSpiService" protocol="dubbo"/>
-
     <!-- AOP -->
     <!--<aop:config>-->
         <!--<aop:pointcut id="service" expression="target(hg.framework.common.base.BaseServiceProviderInterface)-->
