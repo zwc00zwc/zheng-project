@@ -25,8 +25,20 @@ public class AdminController {
         return "admin/role";
     }
 
+    @RequestMapping(value = "/addrole")
+    public String addrole(){
+        return "admin/addrole";
+    }
+
     @RequestMapping(value = "/perm")
     public String permission(){
         return "/admin/permission";
     }
+
+    @RequestMapping(value = "/addperm")
+    public String addPermission(){
+        return "/admin/addpermission";
+    }
+
+
 }
