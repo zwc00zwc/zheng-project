@@ -2,6 +2,7 @@ package controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import spi.TestSPI;
 
 import javax.annotation.Resource;
@@ -18,5 +19,10 @@ public class HomeController {
         testSPI.test();
         System.out.println(testSPI.test2());
         return "index";
+    }
+
+    @RequestMapping(value = "/welcome",method = {RequestMethod.GET})
+    public String welcome(){
+        return "welcome";
     }
 }
