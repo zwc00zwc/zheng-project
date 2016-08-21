@@ -25,14 +25,14 @@
         <!--</mvc:interceptor>-->
     <!--</mvc:interceptors>-->
 
-    <!--<mvc:resources mapping="/css/**" location="/css/"></mvc:resources>-->
-    <!--<mvc:resources mapping="/js/**" location="/js/"></mvc:resources>-->
-    <!--<mvc:resources mapping="/fonts/**" location="/fonts/" ></mvc:resources>-->
-    <!--<mvc:resources mapping="/img/**" location="/img/" ></mvc:resources>-->
+    <mvc:resources mapping="/css/**" location="/css/"></mvc:resources>
+    <mvc:resources mapping="/js/**" location="/js/"></mvc:resources>
+    <mvc:resources mapping="/fonts/**" location="/fonts/" ></mvc:resources>
+    <mvc:resources mapping="/img/**" location="/img/" ></mvc:resources>
 
     <mvc:annotation-driven></mvc:annotation-driven>
 
-    <context:component-scan base-package="Controller" use-default-filters="false">
+    <context:component-scan base-package="controller" use-default-filters="false">
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"></context:include-filter>
     </context:component-scan>
 
