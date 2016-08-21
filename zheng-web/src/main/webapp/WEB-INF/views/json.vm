@@ -1,0 +1,28 @@
+#set($layout =  "share/layout.vm" )
+<p>
+<h1 class="page-header">用户列表</h1>
+</p>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>编号</th>
+            <th>姓名</th>
+            <th>手机</th>
+            <th>地址</th>
+            <th>权限</th>
+        </tr>
+        </thead>
+        <tbody>
+            #foreach($item in $list)
+            <tr>
+                <td>$item.id</td>
+                <td>$item.userName</td>
+                <td>$item.phone</td>
+                <td>$item.address</td>
+                <td>$item.role</td>
+            </tr>
+            #end
+        </tbody>
+    </table>
+</div>

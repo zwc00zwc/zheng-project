@@ -1,0 +1,34 @@
+#set($layout =  "share/layout.vm" )
+<script type="text/javascript">
+    function sub(){
+        jQuery.ajax({
+            url: '$!{request.getContextPath()}/Role/addoredit',
+            data: jQuery('#form1').serialize(),
+            type: "post",
+            success: function (data) {
+                if (data.code > 0) {
+                    alert("成功！");
+                    location.href="/Role/index";
+                }
+                else {
+                    alert(data.msg);
+                }
+            }
+        });
+    }
+
+    function resub(){
+        location.href="$!{request.getContextPath()}/Role/index";
+    }
+</script>
+<h1 class="page-header">新增用户</h1>
+<form id="form1" action="$!{request.getContextPath()}/Role/addoredit" method="post">
+    <fieldset>
+        <label>权限名</label>
+        <input type="hidden" name="id" value="$!role.id">
+        <input type="text" name="roleName" value="$!role.roleName" placeholder="">
+        <span class="help-block"></span>
+        <button type="button" onclick="resub();" class="btn">取消</button>
+        <button type="button" onclick="sub();" class="btn">提交</button>
+    </fieldset>
+</form>

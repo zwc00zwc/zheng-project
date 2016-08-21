@@ -1,0 +1,57 @@
+#set($layout =  "share/layout.vm" )
+
+<script type="text/javascript">
+    function Delete(id){
+        if(confirm('确定删除此用户吗?')){
+            jQuery.ajax({
+                url: '$!{request.getContextPath()}/Role/delete',
+                data: {rid:id},
+                type: "post",
+                success: function (data) {
+                    if (data.code > 0) {
+                        alert("成功！");
+                        location.href="/Member/index";
+                    }
+                    else {
+                        alert(data.msg);
+                    }
+                }
+            });
+        }else {
+            return
+        }
+    }
+
+    function add(){
+        location.href="$!{request.getContextPath()}/Role/Add";
+    }
+</script>
+<h1 class="page-header">权限列表</h1>
+<p>
+    #if($userInfo.userRoleId==1)
+        <button class="btn btn-large btn-primary" onclick="add();" type="button">新增权限</button>
+    #end
+</p>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>编号</th>
+            <th>权限名</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+            #foreach($item in $role)
+            <tr>
+                <td>$item.id</td>
+                <td>$item.roleName</td>
+                <td>
+                    <a href="/Role/Add?rid=$item.id">修改</a>
+                    <a href="javascript:void();" onclick="Delete($item.id)">删除</a>
+                </td>
+            </tr>
+            #end
+        </tbody>
+    </table>
+</div>

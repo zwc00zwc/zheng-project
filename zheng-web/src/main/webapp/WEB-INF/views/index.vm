@@ -1,1 +1,110 @@
-index
+#set($layout =  "share/layoutindex.vm" )
+<script type="text/javascript">
+    function Delete(id){
+        if(confirm('确定删除此用户吗?')){
+            jQuery.ajax({
+                url: '$!{request.getContextPath()}/Member/delete',
+                data: {mid:id},
+                type: "post",
+                success: function (data) {
+                    if (data.code > 0) {
+                        alert("成功！");
+                        location.href="/Member/index";
+                    }
+                    else {
+                        alert(data.msg);
+                    }
+                }
+            });
+        }else {
+            return
+        }
+    }
+
+    function add(){
+        location.href="$!{request.getContextPath()}/Member/AddOrEdit";
+    }
+
+    function memberSearch(e,formid){
+        var action=jQuery('#'+formid+'').attr('action');
+        var currpage=jQuery('#currpage').val();
+        var keyword=jQuery('#keyword').val();
+        jQuery.ajax({
+            url: action,
+            data: {keyword:keyword,currpage:currpage},
+            type: "post",
+            success: function(data){
+                var html="";
+                if (data.code > 0) {
+                    var listdate=data.data;
+                    jQuery.each(listdate,function(i,val){
+                        jQuery.each(val,function(m,model){
+                            html+="<tr>";
+                            html+="<td>"+model.id+"</td>";
+                            html+="<td>"+model.userName+"</td>";
+                            html+="<td>"+model.phone+"</td>";
+                            html+="<td>"+model.address+"</td>";
+                            if (model.role==1){
+                                html+="<td>管理员";
+                            }else {
+                                html+="<td>普通用户";
+                            }
+                            html+="</td>";
+                            html+="<td>";
+                            html+="<a href=\"/Member/AddOrEdit?mid="+model.id+"\">修改</a>";
+                            html+="<a href=\"javascript:void();\" onclick=\"Delete("+model.id+"\")\">删除</a>";
+                            html+="</td>";
+                            html+="</tr>";
+                        })
+                    })
+                    jQuery.Pagebindmodel('memberlist','subsearch',html,listdate.currpage,listdate.pagecount)
+                }
+                else {
+                    alert('搜索失败');
+                }
+            }
+        })
+    }
+</script>
+<p>
+    <h1 class="page-header">用户列表</h1>
+    #if($userInfo.userRoleId==1)
+        <button class="btn btn-large btn-primary" onclick="add();" type="button">新增用户</button>
+    #end
+</p>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>编号</th>
+            <th>姓名</th>
+            <th>手机</th>
+            <th>地址</th>
+            <th>权限</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody id="memberlist">
+            #foreach($item in $list.model)
+            <tr>
+                <td>$item.id</td>
+                <td>$item.userName</td>
+                <td>$item.phone</td>
+                <td>$item.address</td>
+                <td>#if($item.role==1)
+                    管理员
+                #else
+                    普通用户
+                #end
+                </td>
+                <td>
+                    <a href="/Member/AddOrEdit?mid=$item.id">修改</a>
+                    <a href="javascript:void();" onclick="Delete($item.id)">删除</a>
+                </td>
+            </tr>
+            #end
+        </tbody>
+    </table>
+    <div id="pagination" class="right-container">
+    </div>
+</div>

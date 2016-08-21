@@ -1,0 +1,143 @@
+#set($layout =  "share/layout.vm" )
+<script src="$!{request.getContextPath()}/js/ajaxfileupload.js"></script>
+<script type="text/javascript">
+    function sub(){
+        if (cansub()){
+            jQuery.ajax({
+                url: '$!{request.getContextPath()}/Member/addoredit',
+                data: jQuery('#form1').serialize(),
+                type: "post",
+                success: function (data) {
+                    if (data.code > 0) {
+                        alert("成功！");
+                        location.href="/Member/index";
+                    }
+                    else {
+                        alert(data.msg);
+                    }
+                }
+            });
+        }
+    }
+
+    function cansub(){
+        if (!jQuery('#phone').val()){
+            jQuery('#phone').next().html('请填写手机号');
+            return false;
+        }
+        if (!jQuery('#userName').val()){
+            jQuery('#userName').next().html('请填写用户名');
+            return false;
+        }
+        if (!jQuery('#address').val()){
+            jQuery('#address').next().html('请填写地址');
+            return false;
+        }
+        if (!jQuery('#password').val()){
+            jQuery('#password').next().html('请填写密码');
+            return false;
+        }
+        return true;
+    }
+
+    function resub(){
+        location.href="$!{request.getContextPath()}/Member/index";
+    }
+
+    function ajaxFileUpload() {
+        jQuery.ajaxFileUpload
+        (
+            {
+                url: '$!{request.getContextPath()}/Upload/uploadbysola', //用于文件上传的服务器端请求地址
+                secureuri: false, //是否需要安全协议，一般设置为false
+                fileElementId: 'pic', //文件上传域的ID
+                dataType: 'json', //返回值类型 一般设置为json
+                success: function (data, status)  //服务器成功响应处理函数
+                {
+                    if(data.code>0){
+                        jQuery('#tx').attr('src',data.msg);
+                        jQuery('#imgurl').val(data.msg);
+                    }else{
+                        alert(data.msg);
+                    }
+                },
+                error: function (data, status, e)//服务器响应失败处理函数
+                {
+                    alert(e);
+                }
+            }
+        )
+        return false;
+    }
+</script>
+<style>
+    .file {
+        position: relative;
+        display: inline-block;
+        background: #D0EEFF;
+        border: 1px solid #99D3F5;
+        border-radius: 4px;
+        padding: 4px 12px;
+        overflow: hidden;
+        color: #1E88C7;
+        text-decoration: none;
+        text-indent: 0;
+        line-height: 20px;
+    }
+
+    .file input {
+        position: absolute;
+        font-size: 100px;
+        right: 0;
+        top: 0;
+        opacity: 0;
+    }
+
+    .file:hover {
+        background: #AADFFD;
+        border-color: #78C3F3;
+        color: #004974;
+        text-decoration: none;
+    }
+</style>
+
+
+
+<h1 class="page-header">编辑用户</h1>
+<a href="javascript:;" class="file">
+    选择文件
+    <input type="file" name="pic" onchange="ajaxFileUpload();" id="pic">
+</a>
+<form id="form1" action="$!{request.getContextPath()}/Member/addoredit" method="post">
+    <fieldset>
+        <label>头像</label>
+        <img id="tx" src="$!member.imgurl" class="img-rounded">
+        <input type="hidden" id="imgurl" name="imgurl" value="$!member.imgurl">
+        <span class="help-block"></span>
+        <label>用户手机</label>
+        <input type="hidden" name="id" value="$!member.id">
+        <input type="text" name="phone" id="phone" value="$!member.phone" placeholder="" onblur="canadd(this);">
+        <span class="help-block"></span>
+        <label>用户姓名</label>
+        <input type="text" name="userName" id="userName" value="$!member.userName" placeholder="">
+        <span class="help-block"></span>
+        <label>用户地址</label>
+        <input type="text" name="address" id="address" value="$!member.address" placeholder="">
+        <span class="help-block"></span>
+        <label>用户密码</label>
+        <input type="password" name="password" id="password" value="$!member.password" placeholder="">
+        <span class="help-block"></span>
+        <label>用户权限</label>
+        <select name="role">
+            #foreach($roleitem in $role)
+                <option value="$roleitem.id"
+                    #if($roleitem.id==$!member.role)
+                        selected="selected"
+                    #end>$roleitem.roleName</option>
+            #end
+        </select>
+        <span class="help-block"></span>
+        <button type="button" onclick="resub();" class="btn">取消</button>
+        <button type="button" onclick="sub();" class="btn">提交</button>
+    </fieldset>
+</form>
