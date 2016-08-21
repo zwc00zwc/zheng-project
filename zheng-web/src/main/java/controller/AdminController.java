@@ -19,4 +19,14 @@ public class AdminController {
     public String addAdmin(){
         return "/admin/addadmin";
     }
+
+    @RequestMapping(value = "/role")
+    public String role(){
+        return "admin/role";
+    }
+
+    @RequestMapping(value = "/perm")
+    public String permission(){
+        return "/admin/permission";
+    }
 }
