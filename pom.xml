@@ -209,6 +209,23 @@
             <artifactId>velocity-tools</artifactId>
             <version>2.0</version>
         </dependency>
+        <!--velocity end-->
+
+        <!--quartz-->
+        <dependency>
+            <groupId>org.quartz-scheduler</groupId>
+            <artifactId>quartz</artifactId>
+            <version>2.2.1</version>
+        </dependency>
+        <!--quartz end-->
+
+        <!-- mongodb -->
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongo-java-driver</artifactId>
+            <version>3.2.2</version>
+        </dependency>
+        <!-- mongodb end-->
         <!-- 序列化工具 kryo -->
         <!--<dependency>-->
             <!--<groupId>com.esotericsoftware.kryo</groupId>-->
