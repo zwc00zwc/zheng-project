@@ -7,10 +7,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * Created by Administrator on 2016/8/21.
  */
 @Controller
-@RequestMapping(value = "/member")
-public class MemberController {
+@RequestMapping(value = "/admin")
+public class AdminController {
+
+    @RequestMapping(value = "/index")
+    public String index(){
+        return "/admin/index";
+    }
+
     @RequestMapping(value = "/add")
-    public String addMember(){
-        return "member/addmember";
+    public String addAdmin(){
+        return "/admin/addadmin";
     }
 }
