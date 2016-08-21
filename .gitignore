@@ -6,3 +6,4 @@
 /zheng-core/target
 /zheng-service/*.iml
 /zheng-common/*.iml
+/out
