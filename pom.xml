@@ -12,11 +12,12 @@
         <module>zheng-web</module>
         <module>zheng-service</module>
         <module>zheng-core</module>
+        <module>zheng-common</module>
     </modules>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spring.version>3.2.2.RELEASE</spring.version>
+        <spring.version>4.2.5.RELEASE</spring.version>
         <jackson.version>2.5.0</jackson.version>
     </properties>
 
@@ -81,7 +82,7 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context-support</artifactId>
-            <version>3.2.9.RELEASE</version>
+            <version>${spring.version}</version>
         </dependency>
         <!--spring end-->
 

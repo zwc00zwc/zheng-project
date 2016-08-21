@@ -5,3 +5,4 @@
 /zheng-core/*.iml
 /zheng-core/target
 /zheng-service/*.iml
+/zheng-common/*.iml
