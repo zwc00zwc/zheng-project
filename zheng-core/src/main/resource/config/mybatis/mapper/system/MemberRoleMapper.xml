@@ -5,4 +5,11 @@
 
 
 <mapper namespace="domain.dao.MemberRoleDao">
+    <resultMap id="" type="memberrole">
+        <id column="id" property="id" jdbcType="BIGINT"></id>
+        <result column="memberid" property="memberId" jdbcType="BIGINT"></result>
+        <result column="roleid" property="roleId" jdbcType="BIGINT"></result>
+        <result column="create_time" property="createTime" jdbcType="DATE"></result>
+        <result column="update_time" property="updateTime" jdbcType="DATE"></result>
+    </resultMap>
 </mapper>

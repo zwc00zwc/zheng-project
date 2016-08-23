@@ -5,4 +5,11 @@
 
 
 <mapper namespace="domain.dao.RoleDao">
+    <resultMap id="" type="role">
+        <id column="id" property="id" jdbcType="BIGINT"></id>
+        <result column="rolename" property="roleName" jdbcType="VARCHAR"></result>
+        <result column="displayname" property="displayName" jdbcType="VARCHAR"></result>
+        <result column="create_time" property="createTime" jdbcType="DATE"></result>
+        <result column="update_time" property="updateTime" jdbcType="DATE"></result>
+    </resultMap>
 </mapper>

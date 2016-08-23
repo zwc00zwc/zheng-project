@@ -11,7 +11,7 @@ public class Member extends BaseModel {
     private Long id;
     private String phone;
     private String userName;
-    private String imgurl;
+    private String imgUrl;
     private String password;
     private String address;
     private Date createTime;
@@ -41,12 +41,12 @@ public class Member extends BaseModel {
         this.userName = userName;
     }
 
-    public String getImgurl() {
-        return imgurl;
+    public String getImgUrl() {
+        return imgUrl;
     }
 
-    public void setImgurl(String imgurl) {
-        this.imgurl = imgurl;
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
     }
 
     public String getPassword() {

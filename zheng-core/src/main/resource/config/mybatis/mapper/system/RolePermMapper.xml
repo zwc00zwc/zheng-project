@@ -5,4 +5,12 @@
 
 
 <mapper namespace="domain.dao.RolePerm">
+    <resultMap id="" type="roleperm">
+        <id column="id" property="id" jdbcType="BIGINT"></id>
+        <result column="roleid" property="roleId" jdbcType="BIGINT"></result>
+        <result column="permid" property="permId" jdbcType="BIGINT"></result>
+        <result column="permtype" property="permType" jdbcType="INTEGER"></result>
+        <result column="create_time" property="createTime" jdbcType="DATE"></result>
+        <result column="update_time" property="updateTime" jdbcType="DATE"></result>
+    </resultMap>
 </mapper>

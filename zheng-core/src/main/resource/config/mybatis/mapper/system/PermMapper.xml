@@ -5,4 +5,13 @@
 
 
 <mapper namespace="domain.dao.PermDao">
+    <resultMap id="" type="perm">
+        <id column="id" property="id" jdbcType="BIGINT"></id>
+        <result column="parentid" property="parentId" jdbcType="BIGINT"></result>
+        <result column="type" property="type" jdbcType="INTEGER"></result>
+        <result column="displayname" property="displayName" jdbcType="VARCHAR"></result>
+        <result column="url" property="url" jdbcType="VARCHAR"></result>
+        <result column="create_time" property="createTime" jdbcType="DATE"></result>
+        <result column="update_time" property="updateTime" jdbcType="DATE"></result>
+    </resultMap>
 </mapper>
