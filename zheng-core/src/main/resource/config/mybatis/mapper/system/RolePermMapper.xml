@@ -13,4 +13,8 @@
         <result column="create_time" property="createTime" jdbcType="DATE"></result>
         <result column="update_time" property="updateTime" jdbcType="DATE"></result>
     </resultMap>
+
+    <sql id="select_sql">
+        SELECT id,roleid,permid,permtypt,create_time,update_time
+    </sql>
 </mapper>

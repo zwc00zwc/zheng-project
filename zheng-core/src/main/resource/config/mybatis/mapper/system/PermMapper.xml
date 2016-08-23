@@ -8,10 +8,14 @@
     <resultMap id="" type="perm">
         <id column="id" property="id" jdbcType="BIGINT"></id>
         <result column="parentid" property="parentId" jdbcType="BIGINT"></result>
-        <result column="type" property="type" jdbcType="INTEGER"></result>
+        <result column="permtype" property="type" jdbcType="INTEGER"></result>
         <result column="displayname" property="displayName" jdbcType="VARCHAR"></result>
         <result column="url" property="url" jdbcType="VARCHAR"></result>
         <result column="create_time" property="createTime" jdbcType="DATE"></result>
         <result column="update_time" property="updateTime" jdbcType="DATE"></result>
     </resultMap>
+
+    <sql id="select_sql">
+        SELECT id,parentid,permtype,displayname,url,create_time,update_time
+    </sql>
 </mapper>
