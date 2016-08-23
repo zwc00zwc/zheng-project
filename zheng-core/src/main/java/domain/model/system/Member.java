@@ -14,7 +14,6 @@ public class Member extends BaseModel {
     private String imgurl;
     private String password;
     private String address;
-    private Integer role;
     private Date createTime;
     private Date updateTime;
 
@@ -64,14 +63,6 @@ public class Member extends BaseModel {
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    public Integer getRole() {
-        return role;
-    }
-
-    public void setRole(Integer role) {
-        this.role = role;
     }
 
     public Date getCreateTime() {

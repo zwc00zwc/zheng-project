@@ -1,16 +1,14 @@
 package domain.model.system;
 
-import domain.model.BaseModel;
-
 import java.util.Date;
 
 /**
- * Created by Administrator on 2016/8/21.
+ * Created by XR on 2016/8/23.
  */
-public class Role extends BaseModel {
+public class MemberRole {
     private Long id;
-    private String roleName;
-    private String displayName;
+    private Long memberId;
+    private Long roleId;
     private Date createTime;
     private Date updateTime;
 
@@ -22,20 +20,20 @@ public class Role extends BaseModel {
         this.id = id;
     }
 
-    public String getRoleName() {
-        return roleName;
+    public Long getMemberId() {
+        return memberId;
     }
 
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
+    public void setMemberId(Long memberId) {
+        this.memberId = memberId;
     }
 
-    public String getDisplayName() {
-        return displayName;
+    public Long getRoleId() {
+        return roleId;
     }
 
-    public void setDisplayName(String displayName) {
-        this.displayName = displayName;
+    public void setRoleId(Long roleId) {
+        this.roleId = roleId;
     }
 
     public Date getCreateTime() {
