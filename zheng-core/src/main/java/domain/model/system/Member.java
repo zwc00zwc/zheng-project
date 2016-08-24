@@ -16,6 +16,7 @@ public class Member extends BaseModel {
     private String address;
     private Date createTime;
     private Date updateTime;
+    private Short status;
 
     public Long getId() {
         return id;
@@ -79,5 +80,13 @@ public class Member extends BaseModel {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public Short getStatus() {
+        return status;
+    }
+
+    public void setStatus(Short status) {
+        this.status = status;
     }
 }

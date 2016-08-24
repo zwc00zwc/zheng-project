@@ -15,10 +15,11 @@
         <result column="address" property="address" jdbcType="VARCHAR"></result>
         <result column="create_time" property="createTime" jdbcType="DATE"></result>
         <result column="update_time" property="updateTime" jdbcType="DATE"></result>
+        <result column="status" property="status" jdbcType="INTEGER"></result>
     </resultMap>
     
     <sql id="select_sql">
-        SELECT id,phone,username,img_url,password,address,create_time,update_time
+        SELECT id,phone,username,img_url,password,address,create_time,update_time,status
     </sql>
 
     <select id="querylist" resultMap="result">

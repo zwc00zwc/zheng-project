@@ -1,7 +1,12 @@
 package controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import spi.system.MemberSPI;
+
+import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Created by Administrator on 2016/8/21.
@@ -9,9 +14,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping(value = "/admin")
 public class AdminController {
+    @Resource
+    private MemberSPI memberSPIService;
 
     @RequestMapping(value = "/index")
-    public String index(){
+    public String index(Model model){
+        List list= memberSPIService.querylist();
+        model.addAttribute("memberlist",list);
         return "/admin/index";
     }
 
