@@ -13,6 +13,7 @@ public class Perm extends BaseModel {
     private Integer type;
     private String displayName;
     private String url;
+    private String remark;
     private Date createTime;
     private Date updateTime;
 
@@ -54,6 +55,14 @@ public class Perm extends BaseModel {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 
     public Date getCreateTime() {

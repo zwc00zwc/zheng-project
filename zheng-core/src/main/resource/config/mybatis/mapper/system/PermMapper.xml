@@ -5,17 +5,31 @@
 
 
 <mapper namespace="domain.dao.PermDao">
-    <resultMap id="" type="perm">
+    <resultMap id="result" type="perm">
         <id column="id" property="id" jdbcType="BIGINT"></id>
         <result column="parentid" property="parentId" jdbcType="BIGINT"></result>
         <result column="permtype" property="type" jdbcType="INTEGER"></result>
         <result column="displayname" property="displayName" jdbcType="VARCHAR"></result>
         <result column="url" property="url" jdbcType="VARCHAR"></result>
+        <result column="remark" property="remark" jdbcType="VARCHAR"></result>
         <result column="create_time" property="createTime" jdbcType="DATE"></result>
         <result column="update_time" property="updateTime" jdbcType="DATE"></result>
     </resultMap>
 
     <sql id="select_sql">
-        SELECT id,parentid,permtype,displayname,url,create_time,update_time
+        SELECT id,parentid,permtype,displayname,url,remark,create_time,update_time
     </sql>
+
+    <select id="queryById" parameterType="string" resultMap="result">
+        <include refid="select_sql"/>
+        FROM tb_perm WHERE id=#{id}
+    </select>
+    
+    <insert id="insertPerm" parameterType="perm">
+        INSERT INTO tb_perm(parentid,permtype,displayname,url,remark,create_time,update_time) VALUES (#{parentId},#{type},#{displayName},#{url},#{remark},#{createTime},#{updateTime})
+    </insert>
+
+    <update id="updateById" parameterType="perm">
+        UPDATE tb_perm SET
+    </update>
 </mapper>

@@ -4,19 +4,19 @@
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>权限名：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text" value="" placeholder="" id="adminName" name="adminName">
+                <input type="text" class="input-text" value="" placeholder="" id="displayName" name="displayName">
             </div>
         </div>
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>权限url：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="password" class="input-text" autocomplete="off" value="" placeholder="密码" id="password" name="password">
+                <input type="password" class="input-text" autocomplete="off" value="" placeholder="" id="url" name="url">
             </div>
         </div>
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-3">权限父节点：</label>
             <div class="formControls col-xs-8 col-sm-9"> <span class="select-box" style="width:150px;">
-			<select class="select" name="adminRole" size="1">
+			<select class="select" name="parentId" size="1">
                 <option value="0">超级管理员</option>
                 <option value="1">总编</option>
                 <option value="2">栏目主辑</option>
