@@ -1,7 +1,6 @@
 package spiservice.system;
 
 import domain.dao.MemberDao;
-import domain.manager.MemberManager;
 import domain.model.system.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,8 +14,8 @@ import java.util.List;
 @Service("memberSPIService")
 public class MemberSPIService implements MemberSPI {
     @Autowired
-    private MemberManager memberManagerService;
+    private MemberDao memberDao;
     public List<Member> querylist() {
-        return memberManagerService.querylist();
+        return memberDao.querylist();
     }
 }
