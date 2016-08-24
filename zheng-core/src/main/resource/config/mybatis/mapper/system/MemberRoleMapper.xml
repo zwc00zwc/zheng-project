@@ -5,7 +5,7 @@
 
 
 <mapper namespace="domain.dao.MemberRoleDao">
-    <resultMap id="" type="memberrole">
+    <resultMap id="result" type="memberrole">
         <id column="id" property="id" jdbcType="BIGINT"></id>
         <result column="memberid" property="memberId" jdbcType="BIGINT"></result>
         <result column="roleid" property="roleId" jdbcType="BIGINT"></result>
@@ -16,4 +16,9 @@
     <sql id="select_sql">
         SELECT id,memberid,roleid,create_time,update_time
     </sql>
+    
+    <select id="queryRolesByMemberid" parameterType="long" resultMap="result">
+        <include refid="select_sql"/>
+        FROM tb_member_role WHERE memberid=#{memberid}
+    </select>
 </mapper>

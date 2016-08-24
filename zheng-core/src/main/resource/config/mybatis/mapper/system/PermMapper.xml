@@ -20,7 +20,7 @@
         SELECT id,parentid,permtype,displayname,url,remark,create_time,update_time
     </sql>
 
-    <select id="queryById" parameterType="string" resultMap="result">
+    <select id="queryById" parameterType="long" resultMap="result">
         <include refid="select_sql"/>
         FROM tb_perm WHERE id=#{id}
     </select>
@@ -30,6 +30,30 @@
     </insert>
 
     <update id="updateById" parameterType="perm">
-        UPDATE tb_perm SET
+        UPDATE tb_perm 
+        <set>
+            <if test="parentId!=null">
+                parentid=#{parentId},
+            </if>
+            <if test="type!=null">
+                permtype=#{type},
+            </if>
+            <if test="displayName!=null">
+                permtype=#{displayName},
+            </if>
+            <if test="url!=null">
+                url=#{url},
+            </if>
+            <if test="remark!=null">
+                remark=#{remark},
+            </if>
+            <if test="createTime!=null">
+                create_time=#{createTime},
+            </if>
+            <if test="updateTime!=null">
+                update_time=#{updateTime},
+            </if>
+        </set>
+        WHERE id=#{id}
     </update>
 </mapper>
