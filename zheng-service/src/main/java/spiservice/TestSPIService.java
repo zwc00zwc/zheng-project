@@ -1,4 +1,4 @@
-package spi.imp;
+package spiservice;
 
 import org.springframework.stereotype.Service;
 import spi.TestSPI;

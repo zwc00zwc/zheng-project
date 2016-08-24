@@ -12,12 +12,17 @@
         <result column="username" property="userName" jdbcType="VARCHAR"></result>
         <result column="img_url" property="imgUrl" jdbcType="VARCHAR"></result>
         <result column="password" property="password" jdbcType="VARCHAR"></result>
-        <result column="adress" property="address" jdbcType="VARCHAR"></result>
+        <result column="address" property="address" jdbcType="VARCHAR"></result>
         <result column="create_time" property="createTime" jdbcType="DATE"></result>
         <result column="update_time" property="updateTime" jdbcType="DATE"></result>
     </resultMap>
     
     <sql id="select_sql">
-        SELECT id,phone,username,img_url,password,adress,create_time,update_time
+        SELECT id,phone,username,img_url,password,address,create_time,update_time
     </sql>
+
+    <select id="querylist" resultMap="result">
+        <include refid="select_sql"/>
+        FROM tb_member
+    </select>
 </mapper>

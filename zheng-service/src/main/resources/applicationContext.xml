@@ -11,7 +11,7 @@
 		   http://www.springframework.org/schema/aop/spring-aop-4.2.xsd">
 
     <context:annotation-config/>
-    <context:component-scan base-package="spi.imp"/>
+    <context:component-scan base-package="spiservice"/>
 
     <!-- 强制SPRING使用CGLIB动态代理，不使用JDK代理。 -->
     <aop:config proxy-target-class="true"/>

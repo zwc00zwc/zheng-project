@@ -1,4 +1,4 @@
-package spi.imp;
+package spiservice;
 
 import java.io.Serializable;
 
