@@ -4,6 +4,7 @@ import domain.model.system.Perm;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import spi.system.MemberSPI;
 import spi.system.PermissionSPI;
 
@@ -38,7 +39,7 @@ public class AdminController {
         return "admin/role";
     }
 
-    @RequestMapping(value = "/role/addrole")
+    @RequestMapping(value = "/role/add")
     public String addrole(){
         return "admin/addrole";
     }
@@ -53,14 +54,15 @@ public class AdminController {
         return "/admin/addpermission";
     }
 
+    @ResponseBody
     @RequestMapping(value = "/perm/adding")
     public String addPermissioning(Perm perm){
-        if (perm.getId()>0){    //新增
-            permissionSPIService.insertPerm(perm);
-            return "";
+        if (perm.getId()!=null&&perm.getId()>0){    //新增
+            //permissionSPIService.insertPerm(perm);
+            return "redirect:/perm/index";
         }
-        permissionSPIService.updatePerm(perm);
-        return "";
+        //permissionSPIService.updatePerm(perm);
+        return "redirect:/perm/index";
     }
 
 
