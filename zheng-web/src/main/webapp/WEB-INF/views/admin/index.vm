@@ -35,7 +35,7 @@
             <td>#foreach($role in $item.roles)
                     $!{role},
                 #end</td>
-            <td>$!{item.createtime}</td>
+            <td>$!{item.createTime}</td>
             <td class="td-status">
                 #if($item.status==1)
                     <span class="label label-success radius">已启用</span>
