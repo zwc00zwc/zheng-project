@@ -1,6 +1,7 @@
 package controller;
 
 import common.JsonResult;
+import domain.dto.MemberDto;
 import domain.model.system.Perm;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +12,7 @@ import spi.system.PermissionSPI;
 import spi.system.RoleSPI;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -30,7 +32,14 @@ public class AdminController extends BaseController {
 
     @RequestMapping(value = "/admin/index")
     public String index(Model model){
-        List list= memberSPIService.querylistPage();
+        List<MemberDto> list= memberSPIService.querylistPage();
+        for (MemberDto dto:list) {
+            List<String> str=new ArrayList<String>();
+            str.add("role1");
+            str.add("role2");
+            str.add("role3");
+            dto.setRoles(str);
+        }
         model.addAttribute("memberlist",list);
         return "/admin/index";
     }
