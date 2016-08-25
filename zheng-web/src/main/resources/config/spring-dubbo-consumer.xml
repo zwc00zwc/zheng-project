@@ -14,5 +14,6 @@
 
     <dubbo:reference id="testSPI" interface="spi.TestSPI" timeout="60000" retries="0"/>
     <dubbo:reference id="memberSPIService" interface="spi.system.MemberSPI" timeout="60000" retries="0"/>
+    <dubbo:reference id="permissionSPIService" interface="spi.system.PermissionSPI" timeout="60000" retries="0"/>
 
 </beans>
