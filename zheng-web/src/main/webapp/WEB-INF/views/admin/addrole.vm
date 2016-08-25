@@ -14,7 +14,7 @@
             </div>
         </div>
         <div class="row cl">
-            <label class="form-label col-xs-4 col-sm-3">网站角色：</label>
+            <label class="form-label col-xs-4 col-sm-3">权限资源：</label>
             <div class="formControls col-xs-8 col-sm-9">
                 <dl class="permission-list">
                     <dt>

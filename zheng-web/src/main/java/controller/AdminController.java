@@ -42,7 +42,8 @@ public class AdminController extends BaseController {
     }
 
     @RequestMapping(value = "/role/add")
-    public String addrole(){
+    public String addrole(Model model){
+
         return "admin/addrole";
     }
 
