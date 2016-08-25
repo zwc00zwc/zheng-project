@@ -1,12 +1,12 @@
-package domain.dao;
+package spi.system;
 
 import domain.model.system.Role;
 
 import java.util.List;
 
 /**
- * Created by XR on 2016/8/22.
+ * Created by XR on 2016/8/25.
  */
-public interface RoleDao {
+public interface RoleSPI {
     List<Role> queryByMemberId(Long memberid);
 }

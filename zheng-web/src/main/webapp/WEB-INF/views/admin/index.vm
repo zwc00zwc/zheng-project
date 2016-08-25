@@ -33,7 +33,9 @@
             <td>$!{item.id}</td>
             <td>$!{item.userName}</td>
             <td>$!{item.phone}</td>
-            <td>$!{item.id}</td>
+            <td>#foreach($role in $item.roles)
+                    $!{role},
+                #end</td>
             <td>$!{item.status}</td>
             <td>$!{item.createtime}</td>
             <td class="td-status">

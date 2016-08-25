@@ -5,7 +5,7 @@
 
 
 <mapper namespace="domain.dao.RoleDao">
-    <resultMap id="" type="role">
+    <resultMap id="result" type="role">
         <id column="id" property="id" jdbcType="BIGINT"></id>
         <result column="rolename" property="roleName" jdbcType="VARCHAR"></result>
         <result column="displayname" property="displayName" jdbcType="VARCHAR"></result>
@@ -16,4 +16,9 @@
     <sql id="select_sql">
         SELECT id,rolename,displayname,create_time,update_time
     </sql>
+
+    <select id="queryByMemberId" parameterType="long" resultMap="result">
+        <include refid="select_sql"/>
+        FROM tb_role WHERE id IN (SELECT roleid FROM tb_member_role WHERE memberid=#{memberid})
+    </select>
 </mapper>

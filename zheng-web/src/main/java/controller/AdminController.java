@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import spi.system.MemberSPI;
 import spi.system.PermissionSPI;
+import spi.system.RoleSPI;
 
 import javax.annotation.Resource;
 import java.util.Date;
@@ -24,9 +25,12 @@ public class AdminController extends BaseController {
     @Resource
     private PermissionSPI permissionSPIService;
 
+    @Resource
+    private RoleSPI roleSPIService;
+
     @RequestMapping(value = "/admin/index")
     public String index(Model model){
-        List list= memberSPIService.querylist();
+        List list= memberSPIService.querylistPage();
         model.addAttribute("memberlist",list);
         return "/admin/index";
     }

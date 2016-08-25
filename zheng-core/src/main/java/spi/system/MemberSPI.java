@@ -1,5 +1,6 @@
 package spi.system;
 
+import domain.dto.MemberDto;
 import domain.model.system.Member;
 
 import java.util.List;
@@ -9,4 +10,6 @@ import java.util.List;
  */
 public interface MemberSPI {
     List<Member> querylist();
+
+    List<MemberDto> querylistPage();
 }
