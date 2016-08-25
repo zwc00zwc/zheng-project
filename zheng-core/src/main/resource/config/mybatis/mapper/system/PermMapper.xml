@@ -20,6 +20,11 @@
         SELECT id,parentid,permtype,displayname,url,remark,create_time,update_time
     </sql>
 
+    <select id="queryList" resultMap="result">
+        <include refid="select_sql"/>
+        FROM tb_perm
+    </select>
+
     <select id="queryById" parameterType="long" resultMap="result">
         <include refid="select_sql"/>
         FROM tb_perm WHERE id=#{id}

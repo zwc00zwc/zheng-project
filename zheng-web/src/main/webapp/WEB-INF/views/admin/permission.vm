@@ -17,18 +17,20 @@
             <th width="25"><input type="checkbox" name="" value=""></th>
             <th width="40">ID</th>
             <th width="200">权限名称</th>
-            <th>字段名</th>
+            <th>权限url</th>
             <th width="100">操作</th>
         </tr>
         </thead>
         <tbody>
+        #foreach($item in $permlist)
         <tr class="text-c">
-            <td><input type="checkbox" value="1" name=""></td>
-            <td>1</td>
-            <td>栏目添加</td>
-            <td></td>
+            <td><input type="checkbox" value="$!{item.id}" name=""></td>
+            <td>$!{item.id}</td>
+            <td>$!{item.displayName}</td>
+            <td>$!{item.url}</td>
             <td><a title="编辑" href="javascript:;" onclick="admin_permission_edit('角色编辑','admin-permission-add.html','1','','310')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a> <a title="删除" href="javascript:;" onclick="admin_permission_del(this,'1')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
         </tr>
+        #end
         </tbody>
     </table>
 </div>

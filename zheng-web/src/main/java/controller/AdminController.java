@@ -1,5 +1,6 @@
 package controller;
 
+import common.JsonResult;
 import domain.model.system.Perm;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,13 +10,14 @@ import spi.system.MemberSPI;
 import spi.system.PermissionSPI;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 /**
  * Created by Administrator on 2016/8/21.
  */
 @Controller
-public class AdminController {
+public class AdminController extends BaseController {
     @Resource
     private MemberSPI memberSPIService;
 
@@ -45,24 +47,38 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/perm/index")
-    public String permission(){
+    public String permission(Model model){
+        List list= permissionSPIService.queryList();
+        model.addAttribute("permlist",list);
         return "/admin/permission";
     }
 
     @RequestMapping(value = "/perm/add")
-    public String addPermission(){
+    public String addPermission(Model model){
+        List list= permissionSPIService.queryList();
+        model.addAttribute("permlist",list);
         return "/admin/addpermission";
     }
 
     @ResponseBody
     @RequestMapping(value = "/perm/adding")
-    public String addPermissioning(Perm perm){
-        if (perm.getId()!=null&&perm.getId()>0){    //新增
-            //permissionSPIService.insertPerm(perm);
-            return "redirect:/perm/index";
+    public JsonResult addPermissioning(Perm perm){
+        if (perm.getId()!=null&&perm.getId()>0){    //修改
+            if (perm.getParentId()==null){
+                perm.setParentId((long)0);
+            }
+            perm.setCreateTime(new Date());
+            perm.setUpdateTime(new Date());
+            permissionSPIService.updatePerm(perm);
+            return jsonResult(1,"修改成功");
         }
-        //permissionSPIService.updatePerm(perm);
-        return "redirect:/perm/index";
+        if (perm.getParentId()==null){
+            perm.setParentId((long)0);
+        }
+        perm.setCreateTime(new Date());
+        perm.setUpdateTime(new Date());
+        permissionSPIService.insertPerm(perm);
+        return jsonResult(1,"新增成功");
     }
 
 
