@@ -13,8 +13,8 @@
         <result column="img_url" property="imgUrl" jdbcType="VARCHAR"></result>
         <result column="password" property="password" jdbcType="VARCHAR"></result>
         <result column="address" property="address" jdbcType="VARCHAR"></result>
-        <result column="create_time" property="createTime" jdbcType="DATE"></result>
-        <result column="update_time" property="updateTime" jdbcType="DATE"></result>
+        <result column="create_time" property="createTime" ></result>
+        <result column="update_time" property="updateTime" ></result>
         <result column="status" property="status" jdbcType="INTEGER"></result>
     </resultMap>
     

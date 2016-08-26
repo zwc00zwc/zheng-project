@@ -61,10 +61,9 @@
         <property name= "contentType">
             <value>text/html;charset=utf-8</value>
         </property>
-        <!--<property name="toolboxConfigLocation">-->
-        <!--<value>/WEB-INF/toolbox.xml</value>-->
-        <!--</property>-->
+        <property name="toolboxConfigLocation" value="/WEB-INF/toolbox.xml"/>
         <property name="layoutUrl" value="share/layoutbase.vm" />
+        <property name="viewClass" value="common.VelocityToolbox20View"/>
         <property name="allowSessionOverride" value="true"/>
         <property name="allowRequestOverride" value="true"/>
         <property name="exposeSessionAttributes" value="true"/>
