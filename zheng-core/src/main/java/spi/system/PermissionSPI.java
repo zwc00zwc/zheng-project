@@ -1,5 +1,6 @@
 package spi.system;
 
+import domain.dto.PermLevelDto;
 import domain.model.system.Perm;
 
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
 public interface PermissionSPI {
     List<Perm> queryList();
     Perm queryById(Long id);
+    List<PermLevelDto> queryPermByLevel();
     int insertPerm(Perm perm);
     int updatePerm(Perm perm);
 }

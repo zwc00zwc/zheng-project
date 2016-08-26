@@ -59,7 +59,8 @@ public class AdminController extends BaseController {
 
     @RequestMapping(value = "/role/add")
     public String addrole(Model model){
-
+        List list=permissionSPIService.queryPermByLevel();
+        model.addAttribute("permlist",list);
         return "admin/addrole";
     }
 
@@ -82,9 +83,15 @@ public class AdminController extends BaseController {
     public JsonResult addPermissioning(Perm perm){
         if (perm.getParentId()!=null&&perm.getParentId()>0){
             Perm parent= permissionSPIService.queryById(perm.getParentId());
-            perm.setParentId((long)(parent.getType()+1));
+            if (parent!=null){
+                int type=parent.getType()+1;
+                perm.setType(type);
+            }else {
+                perm.setType(0);
+            }
         }else {
             perm.setParentId((long)0);
+            perm.setType(0);
         }
         if (perm.getId()!=null&&perm.getId()>0){    //修改
             perm.setCreateTime(new Date());

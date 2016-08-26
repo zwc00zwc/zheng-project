@@ -29,6 +29,11 @@
         <include refid="select_sql"/>
         FROM tb_perm WHERE id=#{id}
     </select>
+
+    <select id="queryByParentId" parameterType="long" resultMap="result">
+        <include refid="select_sql"/>
+        FROM tb_perm WHERE parentid=#{id}
+    </select>
     
     <insert id="insertPerm" parameterType="perm">
         INSERT INTO tb_perm(parentid,permtype,displayname,url,remark,create_time,update_time) VALUES (#{parentId},#{type},#{displayName},#{url},#{remark},#{createTime},#{updateTime})

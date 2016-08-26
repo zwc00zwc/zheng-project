@@ -12,6 +12,8 @@ public interface PermDao {
 
     Perm queryById(Long id);
 
+    List<Perm> queryByParentId(Long id);
+
     int insertPerm(Perm perm);
 
     int updateById(Perm perm);

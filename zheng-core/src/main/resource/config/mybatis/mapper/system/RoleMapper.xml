@@ -22,7 +22,7 @@
         FROM tb_role WHERE id IN (SELECT roleid FROM tb_member_role WHERE memberid=#{memberid})
     </select>
 
-    <select id="queryList">
+    <select id="queryList" resultMap="result">
         <include refid="select_sql"/>
         FROM tb_role
     </select>
