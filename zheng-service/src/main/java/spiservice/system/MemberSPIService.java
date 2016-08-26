@@ -7,6 +7,7 @@ import domain.model.system.Member;
 import domain.model.system.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import spi.system.MemberSPI;
 
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import java.util.List;
 /**
  * Created by XR on 2016/8/24.
  */
+@Transactional
 @Service("memberSPIService")
 public class MemberSPIService implements MemberSPI {
     @Autowired

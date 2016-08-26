@@ -6,6 +6,7 @@ import domain.model.system.Perm;
 import org.apache.velocity.runtime.directive.Foreach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import spi.system.PermissionSPI;
 
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import java.util.List;
 /**
  * Created by XR on 2016/8/25.
  */
+@Transactional
 @Service("permissionSPIService")
 public class PermissionSPIService implements PermissionSPI {
     @Autowired
