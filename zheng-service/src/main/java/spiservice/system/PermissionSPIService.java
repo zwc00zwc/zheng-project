@@ -26,4 +26,8 @@ public class PermissionSPIService implements PermissionSPI {
     public int updatePerm(Perm perm) {
         return permDao.updateById(perm);
     }
+
+    public Perm queryById(Long id) {
+        return permDao.queryById(id);
+    }
 }

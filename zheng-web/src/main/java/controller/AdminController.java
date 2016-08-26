@@ -33,24 +33,27 @@ public class AdminController extends BaseController {
     @RequestMapping(value = "/admin/index")
     public String index(Model model){
         List<MemberDto> list= memberSPIService.querylistPage();
-        for (MemberDto dto:list) {
-            List<String> str=new ArrayList<String>();
-            str.add("role1");
-            str.add("role2");
-            str.add("role3");
-            dto.setRoles(str);
-        }
         model.addAttribute("memberlist",list);
         return "/admin/index";
     }
 
     @RequestMapping(value = "/admin/add")
-    public String addAdmin(){
+    public String addAdmin(Model model){
+        List list= roleSPIService.queryList();
+        model.addAttribute("rolelist",list);
         return "/admin/addadmin";
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/admin/adding")
+    public JsonResult addAdmining(){
+        return jsonResult(1,"新增成功");
+    }
+
     @RequestMapping(value = "/role/index")
-    public String role(){
+    public String role(Model model){
+        List list=roleSPIService.queryList();
+        model.addAttribute("rolelist",list);
         return "admin/role";
     }
 
@@ -77,17 +80,17 @@ public class AdminController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "/perm/adding")
     public JsonResult addPermissioning(Perm perm){
+        if (perm.getParentId()!=null&&perm.getParentId()>0){
+            Perm parent= permissionSPIService.queryById(perm.getParentId());
+            perm.setParentId((long)(parent.getType()+1));
+        }else {
+            perm.setParentId((long)0);
+        }
         if (perm.getId()!=null&&perm.getId()>0){    //修改
-            if (perm.getParentId()==null){
-                perm.setParentId((long)0);
-            }
             perm.setCreateTime(new Date());
             perm.setUpdateTime(new Date());
             permissionSPIService.updatePerm(perm);
             return jsonResult(1,"修改成功");
-        }
-        if (perm.getParentId()==null){
-            perm.setParentId((long)0);
         }
         perm.setCreateTime(new Date());
         perm.setUpdateTime(new Date());

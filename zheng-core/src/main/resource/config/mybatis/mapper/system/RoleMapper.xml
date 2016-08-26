@@ -21,4 +21,9 @@
         <include refid="select_sql"/>
         FROM tb_role WHERE id IN (SELECT roleid FROM tb_member_role WHERE memberid=#{memberid})
     </select>
+
+    <select id="queryList">
+        <include refid="select_sql"/>
+        FROM tb_role
+    </select>
 </mapper>

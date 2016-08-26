@@ -9,4 +9,6 @@ import java.util.List;
  */
 public interface RoleDao {
     List<Role> queryByMemberId(Long memberid);
+
+    List<Role> queryList();
 }

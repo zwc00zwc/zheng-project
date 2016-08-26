@@ -18,4 +18,8 @@ public class RoleSPIService implements RoleSPI {
     public List<Role> queryByMemberId(Long memberid) {
         return roleDao.queryByMemberId(memberid);
     }
+
+    public List<Role> queryList() {
+        return roleDao.queryList();
+    }
 }

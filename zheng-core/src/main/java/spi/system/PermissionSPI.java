@@ -9,6 +9,7 @@ import java.util.List;
  */
 public interface PermissionSPI {
     List<Perm> queryList();
+    Perm queryById(Long id);
     int insertPerm(Perm perm);
     int updatePerm(Perm perm);
 }
