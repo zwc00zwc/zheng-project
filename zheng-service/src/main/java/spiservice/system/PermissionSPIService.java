@@ -63,4 +63,8 @@ public class PermissionSPIService implements PermissionSPI {
         }
         return list;
     }
+
+    public List<Perm> queryByType(List<Integer> types) {
+        return permDao.queryByType(types);
+    }
 }

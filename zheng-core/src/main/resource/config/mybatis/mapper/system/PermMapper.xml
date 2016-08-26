@@ -34,6 +34,14 @@
         <include refid="select_sql"/>
         FROM tb_perm WHERE parentid=#{id}
     </select>
+
+    <select id="queryByType" resultMap="result">
+        <include refid="select_sql"/>
+        FROM tb_perm WHERE
+        <foreach collection="list" item="type" index="index" separator="OR">
+            permtype=#{type}
+        </foreach>
+    </select>
     
     <insert id="insertPerm" parameterType="perm">
         INSERT INTO tb_perm(parentid,permtype,displayname,url,remark,create_time,update_time) VALUES (#{parentId},#{type},#{displayName},#{url},#{remark},#{createTime},#{updateTime})

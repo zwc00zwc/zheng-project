@@ -64,6 +64,12 @@ public class AdminController extends BaseController {
         return "admin/addrole";
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/role/adding")
+    public JsonResult addroleing(Model model){
+        return jsonResult(1,"新增成功");
+    }
+
     @RequestMapping(value = "/perm/index")
     public String permission(Model model){
         List list= permissionSPIService.queryList();
@@ -73,7 +79,10 @@ public class AdminController extends BaseController {
 
     @RequestMapping(value = "/perm/add")
     public String addPermission(Model model){
-        List list= permissionSPIService.queryList();
+        List<Integer> integerList=new ArrayList<Integer>();
+        integerList.add(0);
+        integerList.add(1);
+        List list= permissionSPIService.queryByType(integerList);
         model.addAttribute("permlist",list);
         return "/admin/addpermission";
     }
