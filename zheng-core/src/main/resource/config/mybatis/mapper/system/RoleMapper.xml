@@ -6,7 +6,7 @@
 
 <mapper namespace="domain.dao.RoleDao">
     <resultMap id="result" type="role">
-        <id column="id" property="id" jdbcType="BIGINT"></id>
+        <id column="id" property="id" jdbcType="BIGINT" javaType="long"></id>
         <result column="rolename" property="roleName" jdbcType="VARCHAR"></result>
         <result column="displayname" property="displayName" jdbcType="VARCHAR"></result>
         <result column="create_time" property="createTime" jdbcType="DATE"></result>
@@ -26,4 +26,8 @@
         <include refid="select_sql"/>
         FROM tb_role
     </select>
+
+    <insert id="insertRoleAndReturnId" parameterType="domain.model.system.Role" useGeneratedKeys="true" keyProperty="id">
+        INSERT tb_role(rolename,displayname,create_time,update_time) VALUES (#{roleName},#{displayName},#{createTime},#{updateTime})
+    </insert>
 </mapper>

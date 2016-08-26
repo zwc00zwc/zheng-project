@@ -11,6 +11,7 @@ public class Role extends BaseModel {
     private Long id;
     private String roleName;
     private String displayName;
+    private String remark;
     private Date createTime;
     private Date updateTime;
 
@@ -36,6 +37,14 @@ public class Role extends BaseModel {
 
     public void setDisplayName(String displayName) {
         this.displayName = displayName;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 
     public Date getCreateTime() {

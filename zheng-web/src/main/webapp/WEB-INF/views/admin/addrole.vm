@@ -4,13 +4,19 @@
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>角色名称：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text" value="" placeholder="" id="roleName" name="roleName" datatype="*4-16" nullmsg="用户账户不能为空">
+                <input type="text" class="input-text" value="" placeholder="" id="roleName" name="roleName" datatype="*4-16" nullmsg="角色名称不能为空">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>显示名称：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="" placeholder="" id="displayName" name="displayName" datatype="*4-16" nullmsg="显示名称不能为空">
             </div>
         </div>
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-3">备注：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text" value="" placeholder="" id="" name="">
+                <input type="text" class="input-text" value="" placeholder="" id="remark" name="remark">
             </div>
         </div>
         <div class="row cl">
@@ -20,7 +26,7 @@
                     <dl class="permission-list">
                         <dt>
                             <label>
-                                <input type="checkbox" value="" name="user-Character-0" id="user-Character-0">
+                                <input type="checkbox" value="$!{item.id}" name="user-Character-0" id="user-Character-0">
                                 $!{item.displayName}</label>
                         </dt>
                         #foreach($item2 in $item.permLevelDtos)
@@ -28,13 +34,13 @@
                                 <dl class="cl permission-list2">
                             <dt>
                                 <label class="">
-                                    <input type="checkbox" value="" name="user-Character-0-0" id="user-Character-0-0">
+                                    <input type="checkbox" value="$!{item2.id}" name="user-Character-0-0" id="user-Character-0-0">
                                     $!{item2.displayName}</label>
                             </dt>
                             <dd>
                                 #foreach($item3 in $item2.permLevelDtos)
                                     <label class="">
-                                        <input type="checkbox" value="" name="user-Character-0-0-0" id="user-Character-0-0-0">
+                                        <input type="checkbox" value="$!{item3.id}" name="user-Character-0-0-0" id="user-Character-0-0-0">
                                         $!{item3.displayName}</label>
                                 #end
                             </dd>
@@ -43,6 +49,7 @@
                 #end
             </div>
         </div>
+        <input type="hidden" name="permids" id="permids">
         <div class="row cl">
             <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
                 <button type="submit" class="btn btn-success radius" id="admin-role-save" name="admin-role-save"><i class="icon-ok"></i> 确定</button>
@@ -55,6 +62,31 @@
 
 <script type="text/javascript">
     $(function(){
+
+        $("#admin-role-save").click(function(){
+            var permids='';
+            $("input[type=checkbox]").each(function(){
+                if (this.checked){
+                    permids+=$(this).val()+',';
+                }
+            })
+            $('#permids').val(permids);
+            jQuery.ajax({
+                url: '$!{request.getContextPath()}/role/adding',
+                data: jQuery('#form-admin-role-add').serialize(),
+                type: "post",
+                success: function (data) {
+                    if (data.code > 0) {
+                        alert("成功！");
+                        window.parent.location.reload();
+                    }
+                    else {
+                        alert(data.msg);
+                    }
+                }
+            });
+        });
+
         $(".permission-list dt input:checkbox").click(function(){
             $(this).closest("dl").find("dd input:checkbox").prop("checked",$(this).prop("checked"));
         });

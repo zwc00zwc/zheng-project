@@ -3,9 +3,11 @@ package controller;
 import common.JsonResult;
 import domain.dto.MemberDto;
 import domain.model.system.Perm;
+import domain.model.system.Role;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import spi.system.MemberSPI;
 import spi.system.PermissionSPI;
@@ -66,7 +68,13 @@ public class AdminController extends BaseController {
 
     @ResponseBody
     @RequestMapping(value = "/role/adding")
-    public JsonResult addroleing(Model model){
+    public JsonResult addroleing(Role role, @RequestParam(value = "permids") String ids){
+        role.setCreateTime(new Date());
+        role.setUpdateTime(new Date());
+        roleSPIService.insertRoleAndReturnId(role);
+
+        System.out.println(role.getId());
+
         return jsonResult(1,"新增成功");
     }
 

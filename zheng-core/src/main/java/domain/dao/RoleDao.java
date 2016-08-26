@@ -11,4 +11,6 @@ public interface RoleDao {
     List<Role> queryByMemberId(Long memberid);
 
     List<Role> queryList();
+
+    int insertRoleAndReturnId(Role role);
 }

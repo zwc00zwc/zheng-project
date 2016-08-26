@@ -4,6 +4,7 @@ import domain.dao.RoleDao;
 import domain.model.system.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import spi.system.RoleSPI;
 
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.List;
 /**
  * Created by XR on 2016/8/25.
  */
+@Transactional
 @Service("roleSPIService")
 public class RoleSPIService implements RoleSPI {
     @Autowired
@@ -21,5 +23,9 @@ public class RoleSPIService implements RoleSPI {
 
     public List<Role> queryList() {
         return roleDao.queryList();
+    }
+
+    public int insertRoleAndReturnId(Role role) {
+        return roleDao.insertRoleAndReturnId(role);
     }
 }
