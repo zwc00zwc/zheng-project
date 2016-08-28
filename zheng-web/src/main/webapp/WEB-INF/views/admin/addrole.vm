@@ -52,7 +52,7 @@
         <input type="hidden" name="permids" id="permids">
         <div class="row cl">
             <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
-                <button type="submit" class="btn btn-success radius" id="admin-role-save" name="admin-role-save"><i class="icon-ok"></i> 确定</button>
+                <button type="submit" class="btn btn-success radius" name="admin-role-save"><i class="icon-ok"></i> 确定</button>
             </div>
         </div>
     </form>
@@ -62,31 +62,6 @@
 
 <script type="text/javascript">
     $(function(){
-
-        $("#admin-role-save").click(function(){
-            var permids='';
-            $("input[type=checkbox]").each(function(){
-                if (this.checked){
-                    permids+=$(this).val()+',';
-                }
-            })
-            $('#permids').val(permids);
-            jQuery.ajax({
-                url: '$!{request.getContextPath()}/role/adding',
-                data: jQuery('#form-admin-role-add').serialize(),
-                type: "post",
-                success: function (data) {
-                    if (data.code > 0) {
-                        alert("成功！");
-                        window.parent.location.reload();
-                    }
-                    else {
-                        alert(data.msg);
-                    }
-                }
-            });
-        });
-
         $(".permission-list dt input:checkbox").click(function(){
             $(this).closest("dl").find("dd input:checkbox").prop("checked",$(this).prop("checked"));
         });
@@ -117,9 +92,30 @@
             focusCleanup:true,
             success:"valid",
             submitHandler:function(form){
-                $(form).ajaxSubmit();
-                var index = parent.layer.getFrameIndex(window.name);
-                parent.layer.close(index);
+                var permids='';
+                $("input[type=checkbox]").each(function(){
+                    if (this.checked){
+                        permids+=$(this).val()+',';
+                    }
+                })
+                $('#permids').val(permids);
+                jQuery.ajax({
+                    url: '$!{request.getContextPath()}/role/adding',
+                    data: jQuery('#form-admin-role-add').serialize(),
+                    type: "post",
+                    success: function (data) {
+                        if (data.code > 0) {
+                            alert("成功！");
+//                            var index = parent.layer.getFrameIndex(window.name);
+//                            parent.layer.close(index);
+                            window.parent.location.reload();
+                        }
+                        else {
+                            alert(data.msg);
+                        }
+                    }
+                });
+
             }
         });
     });
