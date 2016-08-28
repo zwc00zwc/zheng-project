@@ -5,7 +5,7 @@
 
 
 <mapper namespace="domain.dao.RolePermDao">
-    <resultMap id="" type="roleperm">
+    <resultMap id="result" type="roleperm">
         <id column="id" property="id" jdbcType="BIGINT"></id>
         <result column="roleid" property="roleId" jdbcType="BIGINT"></result>
         <result column="permid" property="permId" jdbcType="BIGINT"></result>
@@ -17,4 +17,20 @@
     <sql id="select_sql">
         SELECT id,roleid,permid,permtypt,create_time,update_time
     </sql>
+
+    <select id="queryListByRoleId" parameterType="long" resultMap="result">
+        <include refid="select_sql"/>
+        FROM tb_role_perm WHERE roleid=#{roleid}
+    </select>
+
+    <insert id="insertRolePermByList" parameterType="list">
+        INSERT INTO tb_role_perm (roleid,permid,permtype,create_time,update_time) VALUES
+        <foreach collection="list" index="index" item="item" separator=",">
+            (#{item.roleId},#{item.permId},#{item.permType},#{item.createTime},#{item.updateTime})
+        </foreach>
+    </insert>
+
+    <delete id="deleteByRoleId" parameterType="long">
+        DELETE FROM tb_role_perm WHERE roleid=#{roleid}
+    </delete>
 </mapper>

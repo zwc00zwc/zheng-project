@@ -12,5 +12,5 @@ public interface RoleSPI {
 
     List<Role> queryList();
 
-    int insertRoleAndReturnId(Role role);
+    Role insertRoleAndReturnId(Role role);
 }

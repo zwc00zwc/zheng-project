@@ -4,6 +4,7 @@ import common.JsonResult;
 import domain.dto.MemberDto;
 import domain.model.system.Perm;
 import domain.model.system.Role;
+import domain.model.system.RolePerm;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import spi.system.MemberSPI;
 import spi.system.PermissionSPI;
+import spi.system.RolePermSPI;
 import spi.system.RoleSPI;
 
 import javax.annotation.Resource;
@@ -31,6 +33,9 @@ public class AdminController extends BaseController {
 
     @Resource
     private RoleSPI roleSPIService;
+
+    @Resource
+    private RolePermSPI rolePermSPIService;
 
     @RequestMapping(value = "/admin/index")
     public String index(Model model){
@@ -71,10 +76,13 @@ public class AdminController extends BaseController {
     public JsonResult addroleing(Role role, @RequestParam(value = "permids") String ids){
         role.setCreateTime(new Date());
         role.setUpdateTime(new Date());
-        roleSPIService.insertRoleAndReturnId(role);
-
-        System.out.println(role.getId());
-
+        if (role.getId()!=null&&role.getId()>0){   //修改
+            return jsonResult(1,"修改成功");
+        }
+        role= roleSPIService.insertRoleAndReturnId(role);
+        if (role.getId()!=null&&role.getId()>0){
+            rolePermSPIService.insertRolePermByList(ids,role.getId());
+        }
         return jsonResult(1,"新增成功");
     }
 

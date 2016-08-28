@@ -27,7 +27,11 @@
         FROM tb_role
     </select>
 
-    <insert id="insertRoleAndReturnId" parameterType="domain.model.system.Role" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insertRoleAndReturnId" parameterType="role" useGeneratedKeys="true" keyProperty="id">
         INSERT tb_role(rolename,displayname,create_time,update_time) VALUES (#{roleName},#{displayName},#{createTime},#{updateTime})
     </insert>
+
+    <update id="updateRole" parameterType="role">
+        UPDATE tb_role SET rolename=#{roleName},displayname=#{displayName},create_time=#{createTime},update_time=#{updateTime} WHERE id=#{id}
+    </update>
 </mapper>

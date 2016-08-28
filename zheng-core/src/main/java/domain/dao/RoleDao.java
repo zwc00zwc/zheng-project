@@ -13,4 +13,6 @@ public interface RoleDao {
     List<Role> queryList();
 
     int insertRoleAndReturnId(Role role);
+
+    int updateRole(Role role);
 }

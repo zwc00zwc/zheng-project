@@ -25,7 +25,8 @@ public class RoleSPIService implements RoleSPI {
         return roleDao.queryList();
     }
 
-    public int insertRoleAndReturnId(Role role) {
-        return roleDao.insertRoleAndReturnId(role);
+    public Role insertRoleAndReturnId(Role role) {
+        roleDao.insertRoleAndReturnId(role);
+        return role;
     }
 }
