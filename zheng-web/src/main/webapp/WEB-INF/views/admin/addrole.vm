@@ -105,7 +105,6 @@
                     type: "post",
                     success: function (data) {
                         if (data.code > 0) {
-                            alert("成功！");
 //                            var index = parent.layer.getFrameIndex(window.name);
 //                            parent.layer.close(index);
                             window.parent.location.reload();

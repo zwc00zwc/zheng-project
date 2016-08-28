@@ -29,4 +29,8 @@ public class RoleSPIService implements RoleSPI {
         roleDao.insertRoleAndReturnId(role);
         return role;
     }
+
+    public int deleteRole(Long id) {
+        return roleDao.deleteRole(id);
+    }
 }

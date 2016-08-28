@@ -13,4 +13,6 @@ public interface RoleSPI {
     List<Role> queryList();
 
     Role insertRoleAndReturnId(Role role);
+
+    int deleteRole(Long id);
 }

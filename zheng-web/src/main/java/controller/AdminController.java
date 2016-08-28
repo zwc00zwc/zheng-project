@@ -86,6 +86,17 @@ public class AdminController extends BaseController {
         return jsonResult(1,"新增成功");
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/role/delete")
+    public JsonResult deleteRole(@RequestParam(value = "roleid") Long id){
+        if (id>0){
+            if (roleSPIService.deleteRole(id)>0){
+                return jsonResult(1,"删除成功");
+            }
+        }
+        return jsonResult(-1,"删除失败");
+    }
+
     @RequestMapping(value = "/perm/index")
     public String permission(Model model){
         List list= permissionSPIService.queryList();

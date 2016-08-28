@@ -15,4 +15,6 @@ public interface RoleDao {
     int insertRoleAndReturnId(Role role);
 
     int updateRole(Role role);
+
+    int deleteRole(Long id);
 }

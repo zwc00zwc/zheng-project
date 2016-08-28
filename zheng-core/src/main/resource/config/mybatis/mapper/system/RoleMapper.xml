@@ -34,4 +34,8 @@
     <update id="updateRole" parameterType="role">
         UPDATE tb_role SET rolename=#{roleName},displayname=#{displayName},create_time=#{createTime},update_time=#{updateTime} WHERE id=#{id}
     </update>
+
+    <delete id="deleteRole" parameterType="long">
+        DELETE FROM tb_role WHERE id=#{id}
+    </delete>
 </mapper>
