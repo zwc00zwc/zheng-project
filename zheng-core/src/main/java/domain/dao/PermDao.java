@@ -1,6 +1,7 @@
 package domain.dao;
 
 import domain.model.system.Perm;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -16,6 +17,8 @@ public interface PermDao {
     List<Perm> queryByParentId(Long id);
 
     List<Perm> queryByType(List<Integer> types);
+
+    List<Perm> queryByMemberIdAndParentId(@Param("roleid") Long roleid,@Param("parentid") Long parentid);
 
     int insertPerm(Perm perm);
 

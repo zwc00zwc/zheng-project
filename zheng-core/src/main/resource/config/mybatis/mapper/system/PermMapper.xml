@@ -42,6 +42,11 @@
             permtype=#{type}
         </foreach>
     </select>
+
+    <select id="queryByMemberIdAndParentId" resultMap="result">
+        <include refid="select_sql"/>
+        FROM tb_perm WHERE id in (SELECT permid FROM tb_role_perm WHERE roleid IN (SELECT roleid FROM tb_member_role WHERE memberid=#{memberid})) AND parentid=#{parentid}
+    </select>
     
     <insert id="insertPerm" parameterType="perm">
         INSERT INTO tb_perm(parentid,permtype,displayname,url,remark,create_time,update_time) VALUES (#{parentId},#{type},#{displayName},#{url},#{remark},#{createTime},#{updateTime})

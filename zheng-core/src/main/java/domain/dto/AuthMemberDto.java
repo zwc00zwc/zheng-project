@@ -1,6 +1,5 @@
 package domain.dto;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -13,7 +12,7 @@ public class AuthMemberDto extends BaseDto {
     private String password;
     private String imgUrl;
     private String address;
-    private List<AuthRole> roles;
+    private List<AuthPerm> roles;
     private Short status;
 
     public Long getId() {
@@ -64,11 +63,11 @@ public class AuthMemberDto extends BaseDto {
         this.address = address;
     }
 
-    public List<AuthRole> getRoles() {
+    public List<AuthPerm> getRoles() {
         return roles;
     }
 
-    public void setRoles(List<AuthRole> roles) {
+    public void setRoles(List<AuthPerm> roles) {
         this.roles = roles;
     }
 
@@ -78,35 +77,5 @@ public class AuthMemberDto extends BaseDto {
 
     public void setStatus(Short status) {
         this.status = status;
-    }
-
-    private class AuthRole{
-        private String name;
-        private String url;
-        private List<AuthRole> roles;
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getUrl() {
-            return url;
-        }
-
-        public void setUrl(String url) {
-            this.url = url;
-        }
-
-        public List<AuthRole> getRoles() {
-            return roles;
-        }
-
-        public void setRoles(List<AuthRole> roles) {
-            this.roles = roles;
-        }
     }
 }

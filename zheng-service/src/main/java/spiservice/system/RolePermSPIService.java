@@ -34,8 +34,6 @@ public class RolePermSPIService implements RolePermSPI {
             if (perm!=null){
                 RolePerm roleperm=new RolePerm();
                 roleperm.setPermId(perm.getId());
-                roleperm.setPermType(perm.getType());
-                roleperm.setUpdateTime(new Date());
                 roleperm.setCreateTime(new Date());
                 roleperm.setRoleId(roleid);
                 list.add(roleperm);
