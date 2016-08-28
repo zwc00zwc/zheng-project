@@ -9,4 +9,6 @@ import java.util.List;
  */
 public interface MemberDao {
     List<Member> querylist();
+
+    Member queryByUsername(String username);
 }

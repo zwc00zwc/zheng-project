@@ -1,5 +1,6 @@
 package spi.system;
 
+import domain.dto.AuthMemberDto;
 import domain.dto.MemberDto;
 import domain.model.system.Member;
 
@@ -12,4 +13,6 @@ public interface MemberSPI {
     List<Member> querylist();
 
     List<MemberDto> querylistPage();
+
+    AuthMemberDto loginQuery(String username);
 }

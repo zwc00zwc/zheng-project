@@ -2,7 +2,10 @@ package controller;
 
 import common.JsonResult;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.net.URLEncoder;
 
 /**
  * Created by XR on 2016/8/25.
@@ -14,6 +17,13 @@ public abstract class BaseController {
             return true;
         }
         return false;
+    }
+
+    protected void setCookie(HttpServletResponse response, String value)throws  Exception{
+        Cookie cookie=new Cookie("curruser", URLEncoder.encode(value, "UTF-8"));
+        cookie.setMaxAge(30 * 60);// 设置为30min
+        cookie.setPath("/");
+        response.addCookie(cookie);
     }
 
     protected JsonResult jsonResult(Integer _code, String _msg){

@@ -22,6 +22,11 @@
         SELECT id,phone,username,img_url,password,address,create_time,update_time,status
     </sql>
 
+    <select id="queryByUsername" parameterType="string" resultMap="result">
+        <include refid="select_sql" />
+        FROM tb_member WHERE username=#{username}
+    </select>
+
     <select id="querylist" resultMap="result">
         <include refid="select_sql"/>
         FROM tb_member

@@ -2,6 +2,7 @@ package spiservice.system;
 
 import domain.dao.MemberDao;
 import domain.dao.RoleDao;
+import domain.dto.AuthMemberDto;
 import domain.dto.MemberDto;
 import domain.model.system.Member;
 import domain.model.system.Role;
@@ -48,5 +49,11 @@ public class MemberSPIService implements MemberSPI {
             listDto.add(memberDto);
         }
         return listDto;
+    }
+
+    public AuthMemberDto loginQuery(String username) {
+        AuthMemberDto authMemberDto=new AuthMemberDto();
+        memberDao.queryByUsername(username);
+        return authMemberDto;
     }
 }
