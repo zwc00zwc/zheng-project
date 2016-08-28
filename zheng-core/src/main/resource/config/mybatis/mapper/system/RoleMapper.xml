@@ -17,6 +17,11 @@
         SELECT id,rolename,displayname,create_time,update_time
     </sql>
 
+    <select id="queryById" parameterType="long" resultMap="result">
+        <include refid="select_sql"/>
+        FROM tb_role WHERE id=#{id}
+    </select>
+
     <select id="queryByMemberId" parameterType="long" resultMap="result">
         <include refid="select_sql"/>
         FROM tb_role WHERE id IN (SELECT roleid FROM tb_member_role WHERE memberid=#{memberid})

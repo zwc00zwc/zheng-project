@@ -1,12 +1,14 @@
 package spiservice.system;
 
 import domain.dao.MemberDao;
+import domain.dao.MemberRoleDao;
 import domain.dao.PermDao;
 import domain.dao.RoleDao;
 import domain.dto.AuthMemberDto;
 import domain.dto.AuthPerm;
 import domain.dto.MemberDto;
 import domain.model.system.Member;
+import domain.model.system.MemberRole;
 import domain.model.system.Perm;
 import domain.model.system.Role;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import spi.system.MemberSPI;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by XR on 2016/8/24.
@@ -31,6 +30,8 @@ public class MemberSPIService implements MemberSPI {
     private RoleDao roleDao;
     @Autowired
     private PermDao permDao;
+    @Autowired
+    private MemberRoleDao memberRoleDao;
     public List<Member> querylist() {
         return memberDao.querylist();
     }
@@ -91,8 +92,23 @@ public class MemberSPIService implements MemberSPI {
         return authMemberDto;
     }
 
-    public Member insertMember(Member member) {
-        memberDao.insertmember(member);
+    public Member insertMember(Member member,String roleids) {
+        if (memberDao.insertmember(member)>0){
+            List<MemberRole> list=new ArrayList<MemberRole>();
+            String[] idsstr= roleids.split(",");
+            for (String id:idsstr) {
+                long roleid= Long.parseLong(id);
+                Role role= roleDao.queryById(roleid);
+                if (role!=null){
+                    MemberRole memberRole=new MemberRole();
+                    memberRole.setRoleId(role.getId());
+                    memberRole.setMemberId(member.getId());
+                    memberRole.setCreateTime(new Date());
+                    list.add(memberRole);
+                }
+            }
+            memberRoleDao.insertMemberRole(list);
+        }
         return member;
     }
 }

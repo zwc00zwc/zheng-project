@@ -13,8 +13,10 @@
         <result column="img_url" property="imgUrl" jdbcType="VARCHAR"></result>
         <result column="password" property="password" jdbcType="VARCHAR"></result>
         <result column="address" property="address" jdbcType="VARCHAR"></result>
+        <result column="sex" property="sex" jdbcType="INTEGER"></result>
         <result column="create_time" property="createTime" ></result>
         <result column="update_time" property="updateTime" ></result>
+        <result column="remark" property="remark"></result>
         <result column="status" property="status" jdbcType="INTEGER"></result>
     </resultMap>
     
@@ -33,7 +35,7 @@
     </select>
     
     <insert id="insertmember" parameterType="member" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO tb_member(phone,username,img_url,password,address,create_time,,update_time,status)
-        VALUES (#{phone},#{userName},#{imgUrl},#{password},#{address},#{createTime},#{updateTime},#{status})
+        INSERT INTO tb_member(phone,username,img_url,password,address,sex,create_time,update_time,remark,status)
+        VALUES (#{phone},#{userName},#{imgUrl},#{password},#{address},#{sex},#{createTime},#{updateTime},#{remark},#{status})
     </insert>
 </mapper>

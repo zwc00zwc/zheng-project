@@ -10,7 +10,6 @@
         <result column="memberid" property="memberId" jdbcType="BIGINT"></result>
         <result column="roleid" property="roleId" jdbcType="BIGINT"></result>
         <result column="create_time" property="createTime" jdbcType="DATE"></result>
-        <result column="update_time" property="updateTime" jdbcType="DATE"></result>
     </resultMap>
 
     <sql id="select_sql">
@@ -21,4 +20,15 @@
         <include refid="select_sql"/>
         FROM tb_member_role WHERE memberid=#{memberid}
     </select>
+
+    <insert id="insertMemberRole" parameterType="list">
+        INSERT INTO tb_member_role(memberid,roleid,create_time) VALUES
+        <foreach collection="list" index="index" item="item" separator=",">
+            (#{item.memberId},#{item.roleId},#{item.createTime})
+        </foreach>
+    </insert>
+
+    <delete id="deleteByMemberId" parameterType="long">
+        DELETE FROM tb_member_role WHERE memberid=#{memberid}
+    </delete>
 </mapper>

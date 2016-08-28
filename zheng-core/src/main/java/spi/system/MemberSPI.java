@@ -16,5 +16,5 @@ public interface MemberSPI {
 
     AuthMemberDto loginQuery(String username);
 
-    Member insertMember(Member member);
+    Member insertMember(Member member,String roleids);
 }

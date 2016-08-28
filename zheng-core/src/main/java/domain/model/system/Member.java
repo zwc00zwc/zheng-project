@@ -14,8 +14,10 @@ public class Member extends BaseModel {
     private String imgUrl;
     private String password;
     private String address;
+    private Short sex;
     private Date createTime;
     private Date updateTime;
+    private String remark;
     private Short status;
 
     public Long getId() {
@@ -66,6 +68,14 @@ public class Member extends BaseModel {
         this.address = address;
     }
 
+    public Short getSex() {
+        return sex;
+    }
+
+    public void setSex(Short sex) {
+        this.sex = sex;
+    }
+
     public Date getCreateTime() {
         return createTime;
     }
@@ -80,6 +90,14 @@ public class Member extends BaseModel {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 
     public Short getStatus() {
