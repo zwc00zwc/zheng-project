@@ -90,4 +90,9 @@ public class MemberSPIService implements MemberSPI {
         }
         return authMemberDto;
     }
+
+    public Member insertMember(Member member) {
+        memberDao.insertmember(member);
+        return member;
+    }
 }

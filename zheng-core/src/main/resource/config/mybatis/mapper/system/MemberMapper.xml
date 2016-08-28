@@ -31,4 +31,9 @@
         <include refid="select_sql"/>
         FROM tb_member
     </select>
+    
+    <insert id="insertmember" parameterType="member" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO tb_member(phone,username,img_url,password,address,create_time,,update_time,status)
+        VALUES (#{phone},#{userName},#{imgUrl},#{password},#{address},#{createTime},#{updateTime},#{status})
+    </insert>
 </mapper>

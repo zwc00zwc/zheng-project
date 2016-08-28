@@ -11,4 +11,6 @@ public interface MemberDao {
     List<Member> querylist();
 
     Member queryByUsername(String username);
+
+    int insertmember(Member member);
 }

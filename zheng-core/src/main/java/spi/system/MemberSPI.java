@@ -15,4 +15,6 @@ public interface MemberSPI {
     List<MemberDto> querylistPage();
 
     AuthMemberDto loginQuery(String username);
+
+    Member insertMember(Member member);
 }

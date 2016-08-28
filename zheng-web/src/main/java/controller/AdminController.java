@@ -2,6 +2,7 @@ package controller;
 
 import common.JsonResult;
 import domain.dto.MemberDto;
+import domain.model.system.Member;
 import domain.model.system.Perm;
 import domain.model.system.Role;
 import domain.model.system.RolePerm;
@@ -53,7 +54,8 @@ public class AdminController extends BaseController {
 
     @ResponseBody
     @RequestMapping(value = "/admin/adding")
-    public JsonResult addAdmining(){
+    public JsonResult addAdmining(Member member){
+        //memberSPIService.
         return jsonResult(1,"新增成功");
     }
 
