@@ -43,4 +43,8 @@
     <delete id="deleteMember" parameterType="long">
         DELETE FROM tb_member WHERE id=#{id}
     </delete>
+    
+    <update id="updateStatus">
+        UPDATE tb_member SET status=#{status} WHERE id=#{memberid}
+    </update>
 </mapper>

@@ -1,6 +1,7 @@
 package domain.dao;
 
 import domain.model.system.Member;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -15,4 +16,6 @@ public interface MemberDao {
     int insertmember(Member member);
 
     int deleteMember(Long id);
+
+    int updateStatus(@Param("memberid") Long memberid, @Param("status") Short status);
 }

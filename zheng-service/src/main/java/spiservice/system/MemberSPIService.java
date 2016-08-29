@@ -136,4 +136,8 @@ public class MemberSPIService implements MemberSPI {
     public int deleteMember(Long id) {
         return memberDao.deleteMember(id);
     }
+
+    public int updateStatus(Long memberid, Short status) {
+        return memberDao.updateStatus(memberid,status);
+    }
 }

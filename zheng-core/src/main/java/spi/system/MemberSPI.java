@@ -22,4 +22,6 @@ public interface MemberSPI {
     Member insertMember(Member member,String roleids);
 
     int deleteMember(Long id);
+
+    int updateStatus(Long memberid,Short status);
 }

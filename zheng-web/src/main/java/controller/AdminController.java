@@ -69,6 +69,25 @@ public class AdminController extends BaseController {
 
     @Auth
     @ResponseBody
+    @RequestMapping(value = "/admin/start")
+    public JsonResult startAdmin(@RequestParam(value = "memberid") Long id){
+        if (memberSPIService.updateStatus(id,(short) 1)>0){
+            return jsonResult(1,"启用成功");
+        }
+        return jsonResult(-1,"启用失败");
+    }
+    @Auth
+    @ResponseBody
+    @RequestMapping(value = "/admin/stop")
+    public JsonResult stopAdmin(@RequestParam(value = "memberid") Long id){
+        if (memberSPIService.updateStatus(id,(short)-1)>0){
+            return jsonResult(1,"禁用成功");
+        }
+        return jsonResult(-1,"禁用失败");
+    }
+
+    @Auth
+    @ResponseBody
     @RequestMapping(value = "/admin/delete")
     public JsonResult deleteAdmin(@RequestParam(value = "memberid") Long id){
         if (id>0){
