@@ -13,7 +13,7 @@ public interface RoleSPI {
 
     List<Role> queryList();
 
-    Role insertRoleAndReturnId(Role role);
+    boolean insertRole(Role role,String ids);
 
     RolePermDto queryDtoById(Long id);
 

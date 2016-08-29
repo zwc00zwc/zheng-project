@@ -9,9 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import spi.system.MemberSPI;
 import spi.system.PermissionSPI;
-import spi.system.RolePermSPI;
 import spi.system.RoleSPI;
 
 import javax.annotation.Resource;
@@ -29,9 +27,6 @@ public class RoleController extends BaseController {
 
     @Resource
     private RoleSPI roleSPIService;
-
-    @Resource
-    private RolePermSPI rolePermSPIService;
     @Auth
     @RequestMapping(value = "/role/index")
     public String index(Model model){
@@ -41,14 +36,14 @@ public class RoleController extends BaseController {
     }
     @Auth
     @RequestMapping(value = "/role/add")
-    public String add(Model model,@RequestParam(value = "roleid",required = false) Long id){
+    public String add(Model model,@RequestParam(value = "roleid",defaultValue = "0",required = false) Long id){
         List list=permissionSPIService.queryPermByLevel();
         RolePermDto rolePermDto=new RolePermDto();
         if (id>0){
             rolePermDto=roleSPIService.queryDtoById(id);
         }
         model.addAttribute("permlist",list);
-        model.addAttribute("perm",rolePermDto);
+        model.addAttribute("role",rolePermDto);
         return "/role/add";
     }
     @Auth
@@ -60,11 +55,10 @@ public class RoleController extends BaseController {
         if (role.getId()!=null&&role.getId()>0){   //修改
             return jsonResult(1,"修改成功");
         }
-        role= roleSPIService.insertRoleAndReturnId(role);
-        if (role.getId()!=null&&role.getId()>0){
-            rolePermSPIService.insertRolePermByList(ids,role.getId());
+        if (roleSPIService.insertRole(role,ids)){
+            return jsonResult(1,"新增成功");
         }
-        return jsonResult(1,"新增成功");
+        return jsonResult(-1,"新增失败");
     }
     @Auth
     @ResponseBody

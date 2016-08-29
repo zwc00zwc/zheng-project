@@ -4,23 +4,17 @@ import annotation.Auth;
 import common.JsonResult;
 import domain.dto.MemberDto;
 import domain.model.system.Member;
-import domain.model.system.Perm;
-import domain.model.system.Role;
-import domain.model.system.RolePerm;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import spi.system.MemberSPI;
-import spi.system.PermissionSPI;
-import spi.system.RolePermSPI;
 import spi.system.RoleSPI;
 import utility.MD5Utility;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -45,7 +39,7 @@ public class AdminController extends BaseController {
     }
     @Auth
     @RequestMapping(value = "/admin/add")
-    public String add(Model model,@RequestParam(value = "memberid",required = false) Long id){
+    public String add(Model model,@RequestParam(value = "memberid",required = false,defaultValue = "0") Long id){
         MemberDto member=new MemberDto();
         List list= roleSPIService.queryList();
         if (id>0){

@@ -7,10 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import spi.system.MemberSPI;
 import spi.system.PermissionSPI;
-import spi.system.RolePermSPI;
-import spi.system.RoleSPI;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -52,11 +49,11 @@ public class PermController extends BaseController {
                 int type=parent.getType()+1;
                 perm.setType(type);
             }else {
-                perm.setType(0);
+                perm.setType(1);
             }
         }else {
             perm.setParentId((long)0);
-            perm.setType(0);
+            perm.setType(1);
         }
         if (perm.getId()!=null&&perm.getId()>0){    //修改
             perm.setCreateTime(new Date());
