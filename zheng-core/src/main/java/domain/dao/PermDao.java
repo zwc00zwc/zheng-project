@@ -25,4 +25,6 @@ public interface PermDao {
     int insertPerm(Perm perm);
 
     int updateById(Perm perm);
+
+    int deleteById(Long id);
 }

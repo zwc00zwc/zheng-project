@@ -28,7 +28,7 @@
             <td>$!{item.id}</td>
             <td>$!{item.displayName}</td>
             <td>$!{item.url}</td>
-            <td><a title="编辑" href="javascript:;" onclick="admin_permission_edit('角色编辑','admin-permission-add.html','1','','310')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a> <a title="删除" href="javascript:;" onclick="admin_permission_del(this,'1')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+            <td><a title="编辑" href="javascript:;" onclick="admin_permission_edit('角色编辑','$!{request.getContextPath()}/perm/add?permid=$!{item.id}','1','','310')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a> <a title="删除" href="javascript:;" onclick="admin_permission_del(this,$!{item.id})" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
         </tr>
         #end
         </tbody>
@@ -63,8 +63,20 @@
     /*管理员-权限-删除*/
     function admin_permission_del(obj,id){
         layer.confirm('角色删除须谨慎，确认要删除吗？',function(index){
-            $(obj).parents("tr").remove();
-            layer.msg('已删除!',{icon:1,time:1000});
+            jQuery.ajax({
+                url: '$!{request.getContextPath()}/perm/delete',
+                data: {permid:id},
+                type: "post",
+                success: function (data) {
+                    if (data.code > 0) {
+                        $(obj).parents("tr").remove();
+                        layer.msg('已删除!',{icon:1,time:1000});
+                    }
+                    else {
+                        alert(data.msg);
+                    }
+                }
+            });
         });
     }
 </script>

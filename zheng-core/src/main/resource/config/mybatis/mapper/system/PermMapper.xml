@@ -67,7 +67,7 @@
                 permtype=#{type},
             </if>
             <if test="displayName!=null">
-                permtype=#{displayName},
+                displayname=#{displayName},
             </if>
             <if test="url!=null">
                 url=#{url},
@@ -84,4 +84,8 @@
         </set>
         WHERE id=#{id}
     </update>
+
+    <delete id="deleteById" parameterType="long">
+        DELETE FROM tb_perm WHERE id=#{id}
+    </delete>
 </mapper>

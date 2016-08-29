@@ -15,4 +15,6 @@ public interface PermissionSPI {
     List<Perm> queryByType(List<Integer> types);
     int insertPerm(Perm perm);
     int updatePerm(Perm perm);
+
+    int deletePerm(Long id);
 }

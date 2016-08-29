@@ -1,16 +1,17 @@
 #set($layout =  "share/hi-layout.vm" )
 <article class="page-container">
     <form class="form form-horizontal" id="form-perm-add" method="post">
+        <input type="hidden" name="id" value="$!{perm.id}">
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>权限名：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text" value="" placeholder="" id="displayName" name="displayName">
+                <input type="text" class="input-text" value="$!{perm.displayName}" placeholder="" id="displayName" name="displayName">
             </div>
         </div>
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>权限url：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <input type="text" class="input-text" autocomplete="off" value="" placeholder="" id="url" name="url">
+                <input type="text" class="input-text" autocomplete="off" value="$!{perm.url}" placeholder="" id="url" name="url">
             </div>
         </div>
         <div class="row cl">
@@ -19,7 +20,8 @@
 			<select class="select" name="parentId" size="1">
                 <option value="0">无</option>
                 #foreach($item in $permlist)
-                    <option value="$!{item.id}">$!{item.displayName}</option>
+                    <option value="$!{item.id}" #if($perm.parentId==$item.id) selected
+                    #end >$!{item.displayName}</option>
                 #end
             </select>
 			</span> </div>
@@ -27,13 +29,13 @@
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-3">备注：</label>
             <div class="formControls col-xs-8 col-sm-9">
-                <textarea name="" cols="" rows="" class="textarea"  placeholder="说点什么...100个字符以内" dragonfly="true" onKeyUp="textarealength(this,100)"></textarea>
+                <textarea name="remark" cols="" rows="" class="textarea"  placeholder="说点什么...100个字符以内" dragonfly="true" onKeyUp="textarealength(this,100)">$!{perm.remark}</textarea>
                 <p class="textarea-numberbar"><em class="textarea-length">0</em>/100</p>
             </div>
         </div>
         <div class="row cl">
             <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
-                <input class="btn btn-primary radius" id="submit" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+                <input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
             </div>
         </div>
     </form>
@@ -41,29 +43,13 @@
 #parse("share/hi-footer.vm")
 <script type="text/javascript">
     $(function(){
-        $('#submit').click(function(){
-            jQuery.ajax({
-                url: '$!{request.getContextPath()}/perm/adding',
-                data: jQuery('#form-perm-add').serialize(),
-                type: "post",
-                success: function (data) {
-                    if (data.code > 0) {
-                        alert("成功！");
-                        window.parent.location.reload();
-                    }
-                    else {
-                        alert(data.msg);
-                    }
-                }
-            });
-        })
         $('.skin-minimal input').iCheck({
             checkboxClass: 'icheckbox-blue',
             radioClass: 'iradio-blue',
             increaseArea: '20%'
         });
 
-        $("#form-admin-add").validate({
+        $("#form-perm-add").validate({
             rules:{
                 adminName:{
                     required:true,
@@ -96,10 +82,20 @@
             focusCleanup:true,
             success:"valid",
             submitHandler:function(form){
-                $(form).ajaxSubmit();
-                var index = parent.layer.getFrameIndex(window.name);
-                parent.$('.btn-refresh').click();
-                parent.layer.close(index);
+                jQuery.ajax({
+                    url: '$!{request.getContextPath()}/perm/adding',
+                    data: jQuery('#form-perm-add').serialize(),
+                    type: "post",
+                    success: function (data) {
+                        if (data.code > 0) {
+                            alert("成功！");
+                            window.parent.location.reload();
+                        }
+                        else {
+                            alert(data.msg);
+                        }
+                    }
+                });
             }
         });
     });
