@@ -20,4 +20,6 @@ public interface MemberSPI {
     List<AuthPerm> queryAuthPerm(Long memberid);
 
     Member insertMember(Member member,String roleids);
+
+    int deleteMember(Long id);
 }

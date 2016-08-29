@@ -39,4 +39,8 @@
         INSERT INTO tb_member(phone,username,displayname,img_url,password,address,sex,create_time,update_time,remark,status)
         VALUES (#{phone},#{userName},#{displayName},#{imgUrl},#{password},#{address},#{sex},#{createTime},#{updateTime},#{remark},#{status})
     </insert>
+
+    <delete id="deleteMember" parameterType="long">
+        DELETE FROM tb_member WHERE id=#{id}
+    </delete>
 </mapper>

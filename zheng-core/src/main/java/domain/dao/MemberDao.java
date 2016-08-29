@@ -13,4 +13,6 @@ public interface MemberDao {
     Member queryByUsername(String username);
 
     int insertmember(Member member);
+
+    int deleteMember(Long id);
 }

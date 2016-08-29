@@ -64,6 +64,18 @@ public class AdminController extends BaseController {
         memberSPIService.insertMember(member,ids);
         return jsonResult(1,"新增成功");
     }
+
+    @Auth
+    @ResponseBody
+    @RequestMapping(value = "/admin/delete")
+    public JsonResult deleteAdmin(@RequestParam(value = "memberid") Long id){
+        if (id>0){
+            if (memberSPIService.deleteMember(id)>0){
+                return jsonResult(1,"删除成功");
+            }
+        }
+        return jsonResult(-1,"删除失败");
+    }
     @Auth
     @RequestMapping(value = "/role/index")
     public String role(Model model){

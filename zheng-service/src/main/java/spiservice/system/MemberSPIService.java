@@ -132,4 +132,8 @@ public class MemberSPIService implements MemberSPI {
         }
         return member;
     }
+
+    public int deleteMember(Long id) {
+        return memberDao.deleteMember(id);
+    }
 }
