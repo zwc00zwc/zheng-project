@@ -13,12 +13,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 import spi.system.MemberSPI;
 import utility.MD5Utility;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Created by Administrator on 2016/8/21.
@@ -65,5 +67,11 @@ public class LoginController extends BaseController {
             return new ModelAndView("redirect:/");
         }
         return modelAndView;
+    }
+
+    @RequestMapping(value = "/loginout")
+    public RedirectView loginout(HttpSession httpSession){
+        httpSession.removeAttribute(Constants.SESSION_USER_KEY);
+        return new RedirectView("/login", true);
     }
 }

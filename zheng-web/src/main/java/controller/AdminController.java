@@ -58,6 +58,8 @@ public class AdminController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "/admin/adding")
     public JsonResult addAdmining(Member member,@RequestParam(value = "roleids") String ids){
+        member.setStatus((short)1);
+        member.setCreateTime(new Date());
         member.setPassword(MD5Utility.toMD5(member.getPassword()));
         memberSPIService.insertMember(member,ids);
         return jsonResult(1,"新增成功");
