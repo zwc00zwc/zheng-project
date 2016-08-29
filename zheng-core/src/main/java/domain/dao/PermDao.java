@@ -20,6 +20,8 @@ public interface PermDao {
 
     List<Perm> queryByMemberIdAndParentId(@Param("memberid") Long memberid,@Param("parentid") Long parentid);
 
+    List<Perm> queryByRoleIdAndType(@Param("roleid") Long roleid,@Param("type") int type);
+
     int insertPerm(Perm perm);
 
     int updateById(Perm perm);

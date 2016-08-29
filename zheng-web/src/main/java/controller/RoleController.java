@@ -2,6 +2,7 @@ package controller;
 
 import annotation.Auth;
 import common.JsonResult;
+import domain.dto.RolePermDto;
 import domain.model.system.Role;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,9 +41,14 @@ public class RoleController extends BaseController {
     }
     @Auth
     @RequestMapping(value = "/role/add")
-    public String add(Model model){
+    public String add(Model model,@RequestParam(value = "roleid",required = false) Long id){
         List list=permissionSPIService.queryPermByLevel();
+        RolePermDto rolePermDto=new RolePermDto();
+        if (id>0){
+            rolePermDto=roleSPIService.queryDtoById(id);
+        }
         model.addAttribute("permlist",list);
+        model.addAttribute("perm",rolePermDto);
         return "/role/add";
     }
     @Auth

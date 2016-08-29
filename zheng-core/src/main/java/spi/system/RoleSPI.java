@@ -1,5 +1,6 @@
 package spi.system;
 
+import domain.dto.RolePermDto;
 import domain.model.system.Role;
 
 import java.util.List;
@@ -13,6 +14,8 @@ public interface RoleSPI {
     List<Role> queryList();
 
     Role insertRoleAndReturnId(Role role);
+
+    RolePermDto queryDtoById(Long id);
 
     int deleteRole(Long id);
 }

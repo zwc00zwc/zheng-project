@@ -43,6 +43,11 @@
         </foreach>
     </select>
 
+    <select id="queryByRoleIdAndType" resultMap="result">
+        <include refid="select_sql"/>
+        FROM tb_perm WHERE id IN (SELECT permid FROM tb_role_perm WHERE roleid=#{roleid}) AND permtype=#{type}
+    </select>
+
     <select id="queryByMemberIdAndParentId" resultMap="result">
         <include refid="select_sql"/>
         FROM tb_perm WHERE id in (SELECT permid FROM tb_role_perm WHERE roleid IN (SELECT roleid FROM tb_member_role WHERE memberid=#{memberid})) AND parentid=#{parentid}
