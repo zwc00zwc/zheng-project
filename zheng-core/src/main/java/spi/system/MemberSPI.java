@@ -15,6 +15,8 @@ public interface MemberSPI {
 
     List<MemberDto> querylistPage();
 
+    MemberDto queryById(Long id);
+
     Member queryByUsername(String username);
 
     List<AuthPerm> queryAuthPerm(Long memberid);

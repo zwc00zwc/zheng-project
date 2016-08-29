@@ -10,11 +10,14 @@ public class MemberDto extends BaseDto {
     private Long id;
     private String phone;
     private String userName;
+    private String displayName;
+    private Short sex;
     private String imgUrl;
     private String address;
-    private List<String> roles;
+    private List<MemberRoleDto> roles;
     private Date createTime;
     private Date updateTime;
+    private String remark;
     private Short status;
 
     public Long getId() {
@@ -41,6 +44,22 @@ public class MemberDto extends BaseDto {
         this.userName = userName;
     }
 
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
+
+    public Short getSex() {
+        return sex;
+    }
+
+    public void setSex(Short sex) {
+        this.sex = sex;
+    }
+
     public String getImgUrl() {
         return imgUrl;
     }
@@ -57,11 +76,11 @@ public class MemberDto extends BaseDto {
         this.address = address;
     }
 
-    public List<String> getRoles() {
+    public List<MemberRoleDto> getRoles() {
         return roles;
     }
 
-    public void setRoles(List<String> roles) {
+    public void setRoles(List<MemberRoleDto> roles) {
         this.roles = roles;
     }
 
@@ -79,6 +98,14 @@ public class MemberDto extends BaseDto {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 
     public Short getStatus() {

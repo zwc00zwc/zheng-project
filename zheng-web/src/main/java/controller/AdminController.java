@@ -51,9 +51,17 @@ public class AdminController extends BaseController {
     }
     @Auth
     @RequestMapping(value = "/admin/add")
-    public String addAdmin(Model model){
+    public String addAdmin(Model model,@RequestParam(value = "memberid",required = false) Long id){
+        MemberDto member=new MemberDto();
         List list= roleSPIService.queryList();
+        if (id>0){
+            member=memberSPIService.queryById(id);
+            model.addAttribute("rolelist",list);
+            model.addAttribute("member",member);
+            return "/admin/editadmin";
+        }
         model.addAttribute("rolelist",list);
+        model.addAttribute("member",member);
         return "/admin/addadmin";
     }
     @Auth

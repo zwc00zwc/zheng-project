@@ -7,6 +7,7 @@ import domain.dao.RoleDao;
 import domain.dto.AuthMemberDto;
 import domain.dto.AuthPerm;
 import domain.dto.MemberDto;
+import domain.dto.MemberRoleDto;
 import domain.model.system.Member;
 import domain.model.system.MemberRole;
 import domain.model.system.Perm;
@@ -48,15 +49,42 @@ public class MemberSPIService implements MemberSPI {
             memberDto.setStatus(member.getStatus());
             memberDto.setUpdateTime(member.getUpdateTime());
             memberDto.setCreateTime(member.getCreateTime());
-            List<String> liststr=new ArrayList<String>();
+            List<MemberRoleDto> liststr=new ArrayList<MemberRoleDto>();
             List<Role> rolelist= roleDao.queryByMemberId(member.getId());
             for (Role role:rolelist) {
-                liststr.add(role.getDisplayName());
+                MemberRoleDto memberRoleDto=new MemberRoleDto();
+                memberRoleDto.setId(role.getId());
+                memberRoleDto.setName(role.getDisplayName());
+                liststr.add(memberRoleDto);
             }
             memberDto.setRoles(liststr);
             listDto.add(memberDto);
         }
         return listDto;
+    }
+
+    public MemberDto queryById(Long id) {
+        MemberDto memberDto=new MemberDto();
+        Member member=memberDao.queryById(id);
+        memberDto.setId(member.getId());
+        memberDto.setUserName(member.getUserName());
+        memberDto.setDisplayName(member.getDisplayName());
+        memberDto.setSex(member.getSex());
+        memberDto.setImgUrl(member.getImgUrl());
+        memberDto.setPhone(member.getPhone());
+        memberDto.setAddress(member.getAddress());
+        memberDto.setRemark(member.getRemark());
+        memberDto.setStatus(member.getStatus());
+        List<Role> rolelist= roleDao.queryByMemberId(id);
+        List<MemberRoleDto> memberRoleDtos=new ArrayList<MemberRoleDto>();
+        for (Role role:rolelist) {
+            MemberRoleDto memberRoleDto=new MemberRoleDto();
+            memberRoleDto.setId(role.getId());
+            memberRoleDto.setName(role.getDisplayName());
+            memberRoleDtos.add(memberRoleDto);
+        }
+        memberDto.setRoles(memberRoleDtos);
+        return memberDto;
     }
 
     public Member queryByUsername(String username) {

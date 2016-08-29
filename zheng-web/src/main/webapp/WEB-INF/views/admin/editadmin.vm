@@ -1,0 +1,144 @@
+#set($layout =  "share/hi-layout.vm" )
+<article class="page-container">
+    <form class="form form-horizontal" id="form-admin-add">
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>登录名：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="$!{member.userName}" placeholder="" id="userName" name="userName">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>用户名：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="$!{member.displayName}" placeholder="" id="displayName" name="displayName">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>性别：</label>
+            <div class="formControls col-xs-8 col-sm-9 skin-minimal">
+                <div class="radio-box">
+                    <input name="sex" type="radio" value="1" id="sex-1" #if($member.sex==1) checked #end >
+                    <label for="sex-1">男</label>
+                </div>
+                <div class="radio-box">
+                    <input type="radio" id="sex-2" value="2" name="sex" #if($member.sex==2) checked #end>
+                    <label for="sex-2">女</label>
+                </div>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>手机：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="$!{member.phone}" placeholder="" id="phone" name="phone">
+            </div>
+        </div>
+    ##        <div class="row cl">
+    ##            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>邮箱：</label>
+    ##            <div class="formControls col-xs-8 col-sm-9">
+    ##                <input type="text" class="input-text" placeholder="@" name="email" id="email">
+    ##            </div>
+    ##        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3">角色：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <dl class="permission-list">
+                    <dd>
+                        #foreach($item in $rolelist)
+                            <label class="">
+                                <input type="checkbox" value="$!{item.id}" name="user-Character-0-0-0" #foreach($role in $member.roles)
+                                    #if($item.id==$role.id)
+                                        checked
+                                    #end
+                                #end id="user-Character-0-0-0">
+                                $!{item.displayName}</label>
+                        #end
+                    </dd>
+                </dl>
+            </div>
+        </div>
+        <input type="hidden" name="roleids" id="roleids">
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3">备注：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <textarea name="remark" cols="" rows="" class="textarea"  placeholder="说点什么...100个字符以内" dragonfly="true" onKeyUp="textarealength(this,100)">
+                    $!{member.remark}
+                </textarea>
+                <p class="textarea-numberbar"><em class="textarea-length">0</em>/100</p>
+            </div>
+        </div>
+        <div class="row cl">
+            <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+                <input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+            </div>
+        </div>
+    </form>
+</article>
+#parse("share/hi-footer.vm")
+<script type="text/javascript">
+    $(function(){
+        $('.skin-minimal input').iCheck({
+            checkboxClass: 'icheckbox-blue',
+            radioClass: 'iradio-blue',
+            increaseArea: '20%'
+        });
+
+        $("#form-admin-add").validate({
+            rules:{
+                adminName:{
+                    required:true,
+                    minlength:4,
+                    maxlength:16
+                },
+                password:{
+                    required:true,
+                },
+                password2:{
+                    required:true,
+                    equalTo: "#password"
+                },
+                sex:{
+                    required:true,
+                },
+                phone:{
+                    required:true,
+                    isPhone:true,
+                },
+                email:{
+                    required:true,
+                    email:true,
+                },
+                adminRole:{
+                    required:true,
+                },
+            },
+            onkeyup:false,
+            focusCleanup:true,
+            success:"valid",
+            submitHandler:function(form){
+
+                var roleids='';
+                $("input[type=checkbox]").each(function(){
+                    if (this.checked){
+                        roleids+=$(this).val()+',';
+                    }
+                })
+                $('#roleids').val(roleids);
+                jQuery.ajax({
+                    url: '$!{request.getContextPath()}/admin/adding',
+                    data: jQuery('#form-admin-add').serialize(),
+                    type: "post",
+                    success: function (data) {
+                        if (data.code > 0) {
+//                            var index = parent.layer.getFrameIndex(window.name);
+//                            parent.layer.close(index);
+                            window.parent.location.reload();
+                        }
+                        else {
+                            alert(data.msg);
+                        }
+                    }
+                });
+            }
+        });
+    });
+</script>
