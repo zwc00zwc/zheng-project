@@ -41,7 +41,7 @@ public class LoginController extends BaseController {
            modelAndView.addObject("msg","请输入用户名密码");
            return modelAndView;
         }
-        AuthMemberDto member= memberSPIService.loginQuery(username);
+        Member member= memberSPIService.loginQuery(username);
         if (member==null){
             modelAndView.addObject("msg","用户名密码错误");
             return modelAndView;

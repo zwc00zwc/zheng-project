@@ -1,6 +1,7 @@
 package spi.system;
 
 import domain.dto.AuthMemberDto;
+import domain.dto.AuthPerm;
 import domain.dto.MemberDto;
 import domain.model.system.Member;
 
@@ -14,7 +15,9 @@ public interface MemberSPI {
 
     List<MemberDto> querylistPage();
 
-    AuthMemberDto loginQuery(String username);
+    Member loginQuery(String username);
+
+    List<AuthPerm> queryAuthPerm(Long memberid);
 
     Member insertMember(Member member,String roleids);
 }

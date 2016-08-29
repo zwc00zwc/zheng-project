@@ -1,18 +1,25 @@
 package controller;
 
+import common.AuthUser;
+import common.Constants;
 import common.JsonResult;
-import exception.AuthException;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.net.URLEncoder;
 
 /**
  * Created by XR on 2016/8/25.
  */
 public abstract class BaseController {
+
+    protected AuthUser getAuthUser(HttpSession httpSession){
+        AuthUser userInfo	=(AuthUser) httpSession.getAttribute(Constants.SESSION_USER_KEY);
+        return userInfo;
+    }
+
     protected boolean isAjax(HttpServletRequest request){
         String requestheader= request.getHeader("X-Requested-With");
         if (requestheader!=null){
