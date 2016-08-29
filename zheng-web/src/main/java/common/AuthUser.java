@@ -6,7 +6,7 @@ package common;
 public class AuthUser {
     private long id;
     private String userName;
-    private int role;
+    private String displayName;
 
     public long getId() {
         return id;
@@ -24,11 +24,11 @@ public class AuthUser {
         this.userName = userName;
     }
 
-    public int getRole() {
-        return role;
+    public String getDisplayName() {
+        return displayName;
     }
 
-    public void setRole(int role) {
-        this.role = role;
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 }

@@ -59,7 +59,7 @@ public class MemberSPIService implements MemberSPI {
         return listDto;
     }
 
-    public Member loginQuery(String username) {
+    public Member queryByUsername(String username) {
 //        AuthMemberDto authMemberDto=new AuthMemberDto();
         Member member= memberDao.queryByUsername(username);
 //        if (member!=null){

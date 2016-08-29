@@ -19,6 +19,7 @@ import spi.system.RoleSPI;
 import utility.MD5Utility;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -42,9 +43,10 @@ public class AdminController extends BaseController {
 
     @Auth
     @RequestMapping(value = "/admin/index")
-    public String index(Model model){
+    public String index(Model model, HttpSession httpSession){
         List<MemberDto> list= memberSPIService.querylistPage();
         model.addAttribute("memberlist",list);
+        model.addAttribute("user",getAuthUser(httpSession));
         return "/admin/index";
     }
     @Auth

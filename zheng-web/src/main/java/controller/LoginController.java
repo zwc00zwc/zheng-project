@@ -43,7 +43,7 @@ public class LoginController extends BaseController {
            modelAndView.addObject("msg","请输入用户名密码");
            return modelAndView;
         }
-        Member member= memberSPIService.loginQuery(username);
+        Member member= memberSPIService.queryByUsername(username);
         if (member==null){
             modelAndView.addObject("msg","用户名密码错误");
             return modelAndView;
@@ -63,6 +63,7 @@ public class LoginController extends BaseController {
             AuthUser authUser=new AuthUser();
             authUser.setId(member.getId());
             authUser.setUserName(member.getUserName());
+            authUser.setDisplayName(member.getDisplayName());
             request.getSession().setAttribute(Constants.SESSION_USER_KEY,authUser);
             return new ModelAndView("redirect:/");
         }
