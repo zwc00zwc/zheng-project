@@ -10,6 +10,7 @@
         <id column="id" property="id" jdbcType="BIGINT" ></id>
         <result column="phone" property="phone" jdbcType="VARCHAR"></result>
         <result column="username" property="userName" jdbcType="VARCHAR"></result>
+        <result column="displayname" property="displayName" jdbcType="VARCHAR"></result>
         <result column="img_url" property="imgUrl" jdbcType="VARCHAR"></result>
         <result column="password" property="password" jdbcType="VARCHAR"></result>
         <result column="address" property="address" jdbcType="VARCHAR"></result>
@@ -21,7 +22,7 @@
     </resultMap>
     
     <sql id="select_sql">
-        SELECT id,phone,username,img_url,password,address,create_time,update_time,status
+        SELECT id,phone,username,displayname,img_url,password,address,create_time,update_time,status
     </sql>
 
     <select id="queryByUsername" parameterType="string" resultMap="result">
@@ -35,7 +36,7 @@
     </select>
     
     <insert id="insertmember" parameterType="member" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO tb_member(phone,username,img_url,password,address,sex,create_time,update_time,remark,status)
-        VALUES (#{phone},#{userName},#{imgUrl},#{password},#{address},#{sex},#{createTime},#{updateTime},#{remark},#{status})
+        INSERT INTO tb_member(phone,username,displayname,img_url,password,address,sex,create_time,update_time,remark,status)
+        VALUES (#{phone},#{userName},#{displayName},#{imgUrl},#{password},#{address},#{sex},#{createTime},#{updateTime},#{remark},#{status})
     </insert>
 </mapper>

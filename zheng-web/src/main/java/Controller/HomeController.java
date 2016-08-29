@@ -32,6 +32,7 @@ public class HomeController extends BaseController {
         AuthUser authUser=getAuthUser(httpSession);
         List<AuthPerm> list= memberSPIService.queryAuthPerm(authUser.getId());
         model.addAttribute("perms",list);
+        model.addAttribute("user",authUser);
         return "index";
     }
 

@@ -11,6 +11,7 @@ public class Member extends BaseModel {
     private Long id;
     private String phone;
     private String userName;
+    private String displayName;
     private String imgUrl;
     private String password;
     private String address;
@@ -42,6 +43,14 @@ public class Member extends BaseModel {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 
     public String getImgUrl() {
