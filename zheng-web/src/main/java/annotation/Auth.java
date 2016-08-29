@@ -9,6 +9,6 @@ import java.lang.annotation.Target;
  * Created by XR on 2016/8/29.
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.METHOD,ElementType.TYPE})
+@Target({ElementType.METHOD})
 public @interface Auth {
 }

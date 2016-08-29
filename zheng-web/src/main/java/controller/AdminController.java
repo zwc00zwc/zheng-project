@@ -1,5 +1,6 @@
 package controller;
 
+import annotation.Auth;
 import common.JsonResult;
 import domain.dto.MemberDto;
 import domain.model.system.Member;
@@ -39,20 +40,21 @@ public class AdminController extends BaseController {
     @Resource
     private RolePermSPI rolePermSPIService;
 
+    @Auth
     @RequestMapping(value = "/admin/index")
     public String index(Model model){
         List<MemberDto> list= memberSPIService.querylistPage();
         model.addAttribute("memberlist",list);
         return "/admin/index";
     }
-
+    @Auth
     @RequestMapping(value = "/admin/add")
     public String addAdmin(Model model){
         List list= roleSPIService.queryList();
         model.addAttribute("rolelist",list);
         return "/admin/addadmin";
     }
-
+    @Auth
     @ResponseBody
     @RequestMapping(value = "/admin/adding")
     public JsonResult addAdmining(Member member,@RequestParam(value = "roleids") String ids){
@@ -60,21 +62,21 @@ public class AdminController extends BaseController {
         memberSPIService.insertMember(member,ids);
         return jsonResult(1,"新增成功");
     }
-
+    @Auth
     @RequestMapping(value = "/role/index")
     public String role(Model model){
         List list=roleSPIService.queryList();
         model.addAttribute("rolelist",list);
         return "admin/role";
     }
-
+    @Auth
     @RequestMapping(value = "/role/add")
     public String addrole(Model model){
         List list=permissionSPIService.queryPermByLevel();
         model.addAttribute("permlist",list);
         return "admin/addrole";
     }
-
+    @Auth
     @ResponseBody
     @RequestMapping(value = "/role/adding")
     public JsonResult addroleing(Role role, @RequestParam(value = "permids") String ids){
@@ -89,7 +91,7 @@ public class AdminController extends BaseController {
         }
         return jsonResult(1,"新增成功");
     }
-
+    @Auth
     @ResponseBody
     @RequestMapping(value = "/role/delete")
     public JsonResult deleteRole(@RequestParam(value = "roleid") Long id){
@@ -100,14 +102,14 @@ public class AdminController extends BaseController {
         }
         return jsonResult(-1,"删除失败");
     }
-
+    @Auth
     @RequestMapping(value = "/perm/index")
     public String permission(Model model){
         List list= permissionSPIService.queryList();
         model.addAttribute("permlist",list);
         return "/admin/permission";
     }
-
+    @Auth
     @RequestMapping(value = "/perm/add")
     public String addPermission(Model model){
         List<Integer> integerList=new ArrayList<Integer>();
@@ -117,7 +119,7 @@ public class AdminController extends BaseController {
         model.addAttribute("permlist",list);
         return "/admin/addpermission";
     }
-
+    @Auth
     @ResponseBody
     @RequestMapping(value = "/perm/adding")
     public JsonResult addPermissioning(Perm perm){

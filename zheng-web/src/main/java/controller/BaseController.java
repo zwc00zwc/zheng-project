@@ -1,6 +1,8 @@
 package controller;
 
 import common.JsonResult;
+import exception.AuthException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -35,4 +37,13 @@ public abstract class BaseController {
         JsonResult jsonResult=new JsonResult(_code,_msg,_data);
         return jsonResult;
     }
+
+//    @ExceptionHandler
+//    public String exp(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception ex){
+//        if (ex instanceof AuthException){
+//            return null;
+//        }
+//        System.out.println(ex.getMessage());
+//        return "404";
+//    }
 }

@@ -13,8 +13,12 @@ import javax.servlet.http.HttpServletResponse;
 public class AuthExceptionHandler implements HandlerExceptionResolver {
     public ModelAndView resolveException(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) {
         if (e instanceof AuthException){
+            String requestheader= httpServletRequest.getHeader("X-Requested-With");
+            if (requestheader!=null){
+                return new ModelAndView("redirect:/nologin");
+            }
             return new ModelAndView("redirect:/login");
         }
-        return null;
+        return new ModelAndView("redirect:/404");
     }
 }
