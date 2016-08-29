@@ -59,6 +59,10 @@ public class AdminController extends BaseController {
         member.setStatus((short)1);
         member.setCreateTime(new Date());
         member.setPassword(MD5Utility.toMD5(member.getPassword()));
+        if (member.getId()>0){
+
+            return jsonResult(1,"修改成功");
+        }
         memberSPIService.insertMember(member,ids);
         return jsonResult(1,"新增成功");
     }

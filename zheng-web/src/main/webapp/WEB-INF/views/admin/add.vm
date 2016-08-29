@@ -1,6 +1,7 @@
 #set($layout =  "share/hi-layout.vm" )
 <article class="page-container">
     <form class="form form-horizontal" id="form-admin-add">
+        <input type="hidden" name="id" value="0">
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>登录名：</label>
             <div class="formControls col-xs-8 col-sm-9">
