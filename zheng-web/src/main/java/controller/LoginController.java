@@ -62,7 +62,7 @@ public class LoginController extends BaseController {
             authUser.setId(member.getId());
             authUser.setUserName(member.getUserName());
             request.getSession().setAttribute(Constants.SESSION_USER_KEY,authUser);
-            return new ModelAndView("redirect:/Member/index");
+            return new ModelAndView("redirect:/");
         }
         return modelAndView;
     }

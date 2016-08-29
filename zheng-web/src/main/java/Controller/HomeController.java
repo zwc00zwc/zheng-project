@@ -1,5 +1,6 @@
 package controller;
 
+import annotation.Auth;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,6 +19,7 @@ public class HomeController {
     private MemberSPI memberSPIService;
     @Resource
     private TestSPI testSPI;
+    @Auth
     @RequestMapping(value = "/")
     public String index(){
         testSPI.test();

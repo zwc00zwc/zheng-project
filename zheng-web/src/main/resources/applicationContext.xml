@@ -18,4 +18,10 @@
     <import resource="classpath:config/spring-mvc.xml"/>
     <import resource="classpath:config/spring-dubbo-consumer.xml"/>
 
+    <bean id="authExceptionHandler" class="handler.AuthExceptionHandler"></bean>
+
+    <context:component-scan base-package="aopservice"></context:component-scan>
+    <!--支持aspectj-->
+    <aop:aspectj-autoproxy/>
+
 </beans>
