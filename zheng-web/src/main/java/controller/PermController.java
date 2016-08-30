@@ -23,14 +23,14 @@ public class PermController extends BaseController {
 
     @Resource
     private PermissionSPI permissionSPIService;
-    @Auth
+    @Auth(rule = "/perm/index")
     @RequestMapping(value = "/perm/index")
     public String permission(Model model){
         List list= permissionSPIService.queryList();
         model.addAttribute("permlist",list);
         return "/perm/index";
     }
-    @Auth
+    @Auth(rule = "/perm/add")
     @RequestMapping(value = "/perm/add")
     public String add(Model model, @RequestParam(value = "permid",required = false,defaultValue = "0") Long id){
         List<Integer> integerList=new ArrayList<Integer>();
@@ -45,7 +45,7 @@ public class PermController extends BaseController {
         model.addAttribute("perm",perm);
         return "/perm/add";
     }
-    @Auth
+    @Auth(rule = "/perm/adding")
     @ResponseBody
     @RequestMapping(value = "/perm/adding")
     public JsonResult adding(Perm perm){
@@ -72,7 +72,7 @@ public class PermController extends BaseController {
         return jsonResult(1,"新增成功");
     }
 
-    @Auth
+    @Auth(rule = "/perm/delete")
     @ResponseBody
     @RequestMapping(value = "/perm/delete")
     public JsonResult delete(@RequestParam(value = "permid",defaultValue = "0") Long id){

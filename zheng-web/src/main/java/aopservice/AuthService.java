@@ -1,8 +1,12 @@
 package aopservice;
 
+import annotation.Auth;
 import common.AuthUser;
 import common.Constants;
 import exception.AuthException;
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
@@ -23,13 +27,28 @@ public class AuthService {
 
     }
 
-    @Before("methodPointcut()")
-    public void before() throws AuthException {
+//    @Before("methodPointcut()")
+//    public void before() throws AuthException {
+//        System.out.println("before方法");
+//        ServletRequestAttributes requestAttributes= (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+//        HttpServletRequest request= requestAttributes.getRequest();
+//        AuthUser authUser=(AuthUser) request.getSession().getAttribute(Constants.SESSION_USER_KEY);
+//        if (authUser==null){
+//            throw new AuthException("未登陆");
+//        }
+//    }
+
+
+
+    @Around(value = "@annotation(auth)")
+    public Object aroundMethod(ProceedingJoinPoint proceedingJoinPoint,Auth auth) throws Throwable {
+        System.out.println("auth:"+auth.rule());
         ServletRequestAttributes requestAttributes= (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request= requestAttributes.getRequest();
         AuthUser authUser=(AuthUser) request.getSession().getAttribute(Constants.SESSION_USER_KEY);
         if (authUser==null){
-            throw new AuthException(1);
+            throw new AuthException("未登陆");
         }
+        return proceedingJoinPoint.proceed();
     }
 }

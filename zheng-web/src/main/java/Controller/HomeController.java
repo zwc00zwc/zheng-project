@@ -26,7 +26,7 @@ public class HomeController extends BaseController {
     private MemberSPI memberSPIService;
     @Resource
     private TestSPI testSPI;
-    @Auth
+    @Auth(rule = "/home")
     @RequestMapping(value = "/")
     public String index(HttpSession httpSession, Model model){
         AuthUser authUser=getAuthUser(httpSession);

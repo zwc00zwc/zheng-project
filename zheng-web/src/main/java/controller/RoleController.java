@@ -28,14 +28,14 @@ public class RoleController extends BaseController {
 
     @Resource
     private RoleSPI roleSPIService;
-    @Auth
+    @Auth(rule = "/role/index")
     @RequestMapping(value = "/role/index")
     public String index(Model model){
         List list=roleSPIService.queryList();
         model.addAttribute("rolelist",list);
         return "/role/index";
     }
-    @Auth
+    @Auth(rule = "/role/add")
     @RequestMapping(value = "/role/add")
     public String add(Model model,@RequestParam(value = "roleid",defaultValue = "0",required = false) Long id) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         List list=permissionSPIService.queryPermByLevel();
@@ -47,7 +47,7 @@ public class RoleController extends BaseController {
         model.addAttribute("role",rolePermDto);
         return "/role/add";
     }
-    @Auth
+    @Auth(rule = "/role/add")
     @ResponseBody
     @RequestMapping(value = "/role/adding")
     public JsonResult adding(Role role, @RequestParam(value = "permids") String ids){
@@ -61,7 +61,7 @@ public class RoleController extends BaseController {
         }
         return jsonResult(-1,"新增失败");
     }
-    @Auth
+    @Auth(rule = "/role/delete")
     @ResponseBody
     @RequestMapping(value = "/role/delete")
     public JsonResult delete(@RequestParam(value = "roleid") Long id){

@@ -30,7 +30,7 @@ public class AdminController extends BaseController {
     @Resource
     private RoleSPI roleSPIService;
 
-    @Auth
+    @Auth(rule = "/admin/index")
     @RequestMapping(value = "/admin/index")
     public String index(Model model, HttpSession httpSession) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         List<MemberDto> list= memberSPIService.querylistPage();
@@ -38,7 +38,7 @@ public class AdminController extends BaseController {
         model.addAttribute("user",getAuthUser(httpSession));
         return "/admin/index";
     }
-    @Auth
+    @Auth(rule = "/admin/add")
     @RequestMapping(value = "/admin/add")
     public String add(Model model,@RequestParam(value = "memberid",required = false,defaultValue = "0") Long id) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         MemberDto member=new MemberDto();
@@ -53,7 +53,7 @@ public class AdminController extends BaseController {
         model.addAttribute("member",member);
         return "/admin/add";
     }
-    @Auth
+    @Auth(rule ="/admin/adding" )
     @ResponseBody
     @RequestMapping(value = "/admin/adding")
     public JsonResult adding(Member member,@RequestParam(value = "roleids") String ids){
@@ -68,7 +68,7 @@ public class AdminController extends BaseController {
         return jsonResult(1,"新增成功");
     }
 
-    @Auth
+    @Auth(rule = "/admin/start" )
     @ResponseBody
     @RequestMapping(value = "/admin/start")
     public JsonResult start(@RequestParam(value = "memberid") Long id){
@@ -77,7 +77,7 @@ public class AdminController extends BaseController {
         }
         return jsonResult(-1,"启用失败");
     }
-    @Auth
+    @Auth(rule = "/admin/stop")
     @ResponseBody
     @RequestMapping(value = "/admin/stop")
     public JsonResult stop(@RequestParam(value = "memberid") Long id){
@@ -87,7 +87,7 @@ public class AdminController extends BaseController {
         return jsonResult(-1,"禁用失败");
     }
 
-    @Auth
+    @Auth(rule = "/admin/delete")
     @ResponseBody
     @RequestMapping(value = "/admin/delete")
     public JsonResult delete(@RequestParam(value = "memberid") Long id){

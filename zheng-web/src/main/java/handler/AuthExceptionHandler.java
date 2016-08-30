@@ -1,6 +1,7 @@
 package handler;
 
 import exception.AuthException;
+import log.LogUtility;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class AuthExceptionHandler implements HandlerExceptionResolver {
     public ModelAndView resolveException(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) {
+        //LogUtility.insertLog(e.getClass().getName(),e.getMessage());
         if (e instanceof AuthException){
             String requestheader= httpServletRequest.getHeader("X-Requested-With");
             if (requestheader!=null){
