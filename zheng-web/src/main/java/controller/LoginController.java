@@ -8,6 +8,7 @@ import domain.model.system.Member;
 import org.apache.commons.lang.StringUtils;
 import org.jboss.netty.handler.codec.http.HttpResponse;
 import org.springframework.http.HttpRequest;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 import spi.system.MemberSPI;
+import thread.TestThread;
 import utility.MD5Utility;
 
 import javax.annotation.Resource;
@@ -30,8 +32,12 @@ public class LoginController extends BaseController {
     @Resource
     private MemberSPI memberSPIService;
 
+    @Resource
+    private ThreadPoolTaskExecutor taskExecutor;
+
     @RequestMapping(value = "/login",method = {RequestMethod.GET})
     public String login(){
+        taskExecutor.execute(new TestThread());
         return "login";
     }
 

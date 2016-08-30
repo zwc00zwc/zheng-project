@@ -237,6 +237,15 @@
             <artifactId>mongo-java-driver</artifactId>
             <version>3.2.2</version>
         </dependency>
+
+        <!-- 属性转换 -->
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>1.9.2</version>
+        </dependency>
+        <!-- 属性转换 end -->
+
         <!-- mongodb end-->
         <!-- 序列化工具 kryo -->
         <!--<dependency>-->

@@ -7,11 +7,13 @@ import domain.dto.RolePermDto;
 import domain.model.system.Perm;
 import domain.model.system.Role;
 import domain.model.system.RolePerm;
+import org.apache.commons.beanutils.PropertyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import spi.system.RoleSPI;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -59,13 +61,10 @@ public class RoleSPIService implements RoleSPI {
         return false;
     }
 
-    public RolePermDto queryDtoById(Long id) {
+    public RolePermDto queryDtoById(Long id) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         RolePermDto rolePermDto=new RolePermDto();
         Role role= roleDao.queryById(id);
-        rolePermDto.setId(role.getId());
-        rolePermDto.setRoleName(role.getRoleName());
-        rolePermDto.setDisplayName(role.getDisplayName());
-        rolePermDto.setRemark(role.getRemark());
+        PropertyUtils.copyProperties(rolePermDto,role);
         List<Perm> perms1= permDao.queryByRoleIdAndType(id,1);
         List<Long> ids1=new ArrayList<Long>();
         for (Perm perm:perms1) {

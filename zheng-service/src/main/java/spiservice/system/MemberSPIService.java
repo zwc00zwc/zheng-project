@@ -12,11 +12,13 @@ import domain.model.system.Member;
 import domain.model.system.MemberRole;
 import domain.model.system.Perm;
 import domain.model.system.Role;
+import org.apache.commons.beanutils.PropertyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import spi.system.MemberSPI;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 /**
@@ -37,18 +39,12 @@ public class MemberSPIService implements MemberSPI {
         return memberDao.querylist();
     }
 
-    public List<MemberDto> querylistPage() {
+    public List<MemberDto> querylistPage() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         List<MemberDto> listDto=new ArrayList<MemberDto>();
         List<Member> list= memberDao.querylist();
         for (Member member:list) {
             MemberDto memberDto=new  MemberDto();
-            memberDto.setId(member.getId());
-            memberDto.setUserName(member.getUserName());
-            memberDto.setPhone(member.getPhone());
-            memberDto.setImgUrl(member.getImgUrl());
-            memberDto.setStatus(member.getStatus());
-            memberDto.setUpdateTime(member.getUpdateTime());
-            memberDto.setCreateTime(member.getCreateTime());
+            PropertyUtils.copyProperties(memberDto,member);
             List<MemberRoleDto> liststr=new ArrayList<MemberRoleDto>();
             List<Role> rolelist= roleDao.queryByMemberId(member.getId());
             for (Role role:rolelist) {
@@ -63,18 +59,10 @@ public class MemberSPIService implements MemberSPI {
         return listDto;
     }
 
-    public MemberDto queryById(Long id) {
+    public MemberDto queryById(Long id) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         MemberDto memberDto=new MemberDto();
         Member member=memberDao.queryById(id);
-        memberDto.setId(member.getId());
-        memberDto.setUserName(member.getUserName());
-        memberDto.setDisplayName(member.getDisplayName());
-        memberDto.setSex(member.getSex());
-        memberDto.setImgUrl(member.getImgUrl());
-        memberDto.setPhone(member.getPhone());
-        memberDto.setAddress(member.getAddress());
-        memberDto.setRemark(member.getRemark());
-        memberDto.setStatus(member.getStatus());
+        PropertyUtils.copyProperties(memberDto,member);
         List<Role> rolelist= roleDao.queryByMemberId(id);
         List<MemberRoleDto> memberRoleDtos=new ArrayList<MemberRoleDto>();
         for (Role role:rolelist) {
