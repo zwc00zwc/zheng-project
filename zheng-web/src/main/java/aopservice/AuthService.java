@@ -15,6 +15,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * Created by XR on 2016/8/29.
@@ -46,6 +47,7 @@ public class AuthService {
         ServletRequestAttributes requestAttributes= (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         HttpServletRequest request= requestAttributes.getRequest();
         AuthUser authUser=(AuthUser) request.getSession().getAttribute(Constants.SESSION_USER_KEY);
+        String perms=(String) request.getSession().getAttribute(Constants.SESSION_USER_PERM_KEY);
         if (authUser==null){
             throw new AuthException("未登陆");
         }

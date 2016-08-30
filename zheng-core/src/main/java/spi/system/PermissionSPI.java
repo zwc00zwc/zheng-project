@@ -13,6 +13,8 @@ public interface PermissionSPI {
     Perm queryById(Long id);
     List<PermLevelDto> queryPermByLevel();
     List<Perm> queryByType(List<Integer> types);
+
+    List<String> queryByMemberId(Long id);
     int insertPerm(Perm perm);
     int updatePerm(Perm perm);
 

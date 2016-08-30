@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 import spi.system.MemberSPI;
+import spi.system.PermissionSPI;
 import thread.TestThread;
 import utility.MD5Utility;
 
@@ -23,6 +24,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * Created by Administrator on 2016/8/21.
@@ -31,6 +33,9 @@ import javax.servlet.http.HttpSession;
 public class LoginController extends BaseController {
     @Resource
     private MemberSPI memberSPIService;
+
+    @Resource
+    private PermissionSPI permissionSPIService;
 
     @Resource
     private ThreadPoolTaskExecutor taskExecutor;
@@ -70,7 +75,13 @@ public class LoginController extends BaseController {
             authUser.setId(member.getId());
             authUser.setUserName(member.getUserName());
             authUser.setDisplayName(member.getDisplayName());
+            List<String> perms= permissionSPIService.queryByMemberId(member.getId());
+            StringBuilder sp=new StringBuilder();
+            for (String perm:perms) {
+                sp.append(perm+",");
+            }
             request.getSession().setAttribute(Constants.SESSION_USER_KEY,authUser);
+            request.getSession().setAttribute(Constants.SESSION_USER_PERM_KEY,sp.toString());
             return new ModelAndView("redirect:/");
         }
         return modelAndView;

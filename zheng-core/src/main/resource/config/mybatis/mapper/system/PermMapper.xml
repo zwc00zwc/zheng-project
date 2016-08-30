@@ -48,6 +48,10 @@
         FROM tb_perm WHERE id IN (SELECT permid FROM tb_role_perm WHERE roleid=#{roleid}) AND permtype=#{type}
     </select>
 
+    <select id="queryByMemberId" parameterType="long" resultType="string">
+        SELECT url FROM tb_perm P JOIN (SELECT permid FROM tb_role_perm RP JOIN (SELECT roleid FROM tb_member_role WHERE id=#{id}) MR  WHERE RP.roleid=MR.roleid) LRP WHERE p.id=LRP.permid
+    </select>
+
     <select id="queryByMemberIdAndParentId" resultMap="result">
         <include refid="select_sql"/>
         FROM tb_perm WHERE id in (SELECT permid FROM tb_role_perm WHERE roleid IN (SELECT roleid FROM tb_member_role WHERE memberid=#{memberid})) AND parentid=#{parentid}

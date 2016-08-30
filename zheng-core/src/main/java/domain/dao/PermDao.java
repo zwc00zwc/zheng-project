@@ -22,6 +22,8 @@ public interface PermDao {
 
     List<Perm> queryByRoleIdAndType(@Param("roleid") Long roleid,@Param("type") int type);
 
+    List<String> queryByMemberId(Long id);
+
     int insertPerm(Perm perm);
 
     int updateById(Perm perm);
