@@ -2,6 +2,7 @@ package mongodb;
 
 import com.mongodb.*;
 import com.mongodb.client.MongoDatabase;
+import utility.BeanUtility;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,5 +35,37 @@ public class MongodbManager {
      */
     public static void insert(DBCollection collection,BasicDBObject basicDBObject){
         collection.insert(basicDBObject);
+    }
+
+    /**
+     * 分页查询
+     * @param collection 表名
+     * @param query 查询条件
+     * @param pageNo 页数
+     * @param pageSize 页大小
+     * @return
+     */
+    public static List<DBObject> queryPage(DBCollection collection,BasicDBObject query,Integer pageNo,Integer pageSize){
+        List<DBObject> list = new ArrayList<DBObject>();
+        DBCursor cursor = collection.find(query).skip((pageNo-1)*pageSize).limit(pageSize);
+        while (cursor.hasNext()){
+            list.add(cursor.next());
+        }
+        return list;
+    }
+
+    /**
+     * 查询
+     * @param collection 表名
+     * @param query 查询条件
+     * @return
+     */
+    public static List<DBObject> query(DBCollection collection,BasicDBObject query){
+        List<DBObject> list = new ArrayList<DBObject>();
+        DBCursor cursor = collection.find(query);
+        while (cursor.hasNext()){
+            list.add(cursor.next());
+        }
+        return list;
     }
 }

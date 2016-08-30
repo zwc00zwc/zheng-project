@@ -15,6 +15,7 @@ import utility.MD5Utility;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class AdminController extends BaseController {
 
     @Auth
     @RequestMapping(value = "/admin/index")
-    public String index(Model model, HttpSession httpSession){
+    public String index(Model model, HttpSession httpSession) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         List<MemberDto> list= memberSPIService.querylistPage();
         model.addAttribute("memberlist",list);
         model.addAttribute("user",getAuthUser(httpSession));
@@ -39,7 +40,7 @@ public class AdminController extends BaseController {
     }
     @Auth
     @RequestMapping(value = "/admin/add")
-    public String add(Model model,@RequestParam(value = "memberid",required = false,defaultValue = "0") Long id){
+    public String add(Model model,@RequestParam(value = "memberid",required = false,defaultValue = "0") Long id) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         MemberDto member=new MemberDto();
         List list= roleSPIService.queryList();
         if (id>0){

@@ -13,6 +13,7 @@ import spi.system.PermissionSPI;
 import spi.system.RoleSPI;
 
 import javax.annotation.Resource;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
 import java.util.List;
 
@@ -36,7 +37,7 @@ public class RoleController extends BaseController {
     }
     @Auth
     @RequestMapping(value = "/role/add")
-    public String add(Model model,@RequestParam(value = "roleid",defaultValue = "0",required = false) Long id){
+    public String add(Model model,@RequestParam(value = "roleid",defaultValue = "0",required = false) Long id) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         List list=permissionSPIService.queryPermByLevel();
         RolePermDto rolePermDto=new RolePermDto();
         if (id>0){
