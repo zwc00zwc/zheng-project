@@ -90,6 +90,7 @@ public class LoginController extends BaseController {
     @RequestMapping(value = "/loginout")
     public RedirectView loginout(HttpSession httpSession){
         httpSession.removeAttribute(Constants.SESSION_USER_KEY);
+        httpSession.removeAttribute(Constants.SESSION_USER_PERM_KEY);
         return new RedirectView("/login", true);
     }
 }

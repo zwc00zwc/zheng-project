@@ -4,6 +4,7 @@ import annotation.Auth;
 import common.AuthUser;
 import common.Constants;
 import exception.AuthException;
+import exception.LoginException;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -28,29 +29,46 @@ public class AuthService {
 
     }
 
-//    @Before("methodPointcut()")
-//    public void before() throws AuthException {
-//        System.out.println("before方法");
+    @Before("@annotation(auth)")
+    public void before(Auth auth) throws AuthException {
+        System.out.println("before方法");
+        ServletRequestAttributes requestAttributes= (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        HttpServletRequest request= requestAttributes.getRequest();
+        AuthUser authUser=(AuthUser) request.getSession().getAttribute(Constants.SESSION_USER_KEY);
+        if (authUser==null){
+            throw new LoginException("未登陆");
+        }
+        String permstr=(String) request.getSession().getAttribute(Constants.SESSION_USER_PERM_KEY);
+        String[] perms=permstr.split(",");
+        boolean isauth=false;
+        for (String perm:perms) {
+            if (auth.rule()==perm){
+                isauth=true;
+                break;
+            }
+        }
+        if (!isauth){
+            throw new AuthException("没有权限");
+        }
+    }
+
+
+
+//    @Around(value = "@annotation(auth)")
+//    public Object aroundMethod(ProceedingJoinPoint proceedingJoinPoint,Auth auth) throws Throwable {
 //        ServletRequestAttributes requestAttributes= (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
 //        HttpServletRequest request= requestAttributes.getRequest();
 //        AuthUser authUser=(AuthUser) request.getSession().getAttribute(Constants.SESSION_USER_KEY);
 //        if (authUser==null){
-//            throw new AuthException("未登陆");
+//            throw new LoginException("未登陆");
 //        }
+//        String permstr=(String) request.getSession().getAttribute(Constants.SESSION_USER_PERM_KEY);
+//        String[] perms=permstr.split(",");
+//        for (String perm:perms) {
+//            if (auth.rule()==perm){
+//                return proceedingJoinPoint.proceed();
+//            }
+//        }
+//        throw new AuthException("没有权限");
 //    }
-
-
-
-    @Around(value = "@annotation(auth)")
-    public Object aroundMethod(ProceedingJoinPoint proceedingJoinPoint,Auth auth) throws Throwable {
-        System.out.println("auth:"+auth.rule());
-        ServletRequestAttributes requestAttributes= (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        HttpServletRequest request= requestAttributes.getRequest();
-        AuthUser authUser=(AuthUser) request.getSession().getAttribute(Constants.SESSION_USER_KEY);
-        String perms=(String) request.getSession().getAttribute(Constants.SESSION_USER_PERM_KEY);
-        if (authUser==null){
-            throw new AuthException("未登陆");
-        }
-        return proceedingJoinPoint.proceed();
-    }
 }
