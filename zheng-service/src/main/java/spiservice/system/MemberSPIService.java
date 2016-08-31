@@ -36,15 +36,13 @@ public class MemberSPIService implements MemberSPI {
     private MemberManager memberManager;
     @Autowired
     private PermManager permManager;
-    @Autowired
-    private MemberDao memberDao;
     public List<Member> querylist() {
-        return memberDao.querylist();
+        return memberManager.querylist();
     }
 
     public List<MemberDto> querylistPage() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         List<MemberDto> listDto=new ArrayList<MemberDto>();
-        List<Member> list= memberDao.querylist();
+        List<Member> list= memberManager.querylist();
         for (Member member:list) {
             MemberDto memberDto=new  MemberDto();
             PropertyUtils.copyProperties(memberDto,member);
@@ -64,7 +62,7 @@ public class MemberSPIService implements MemberSPI {
 
     public MemberDto queryById(Long id) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         MemberDto memberDto=new MemberDto();
-        Member member=memberDao.queryById(id);
+        Member member=memberManager.queryById(id);
         PropertyUtils.copyProperties(memberDto,member);
         //List<Role> rolelist= roleDao.queryByMemberId(id);
         List<Role> rolelist=roleManager.queryByMemberId(id);

@@ -26,6 +26,9 @@ public class RoleManager {
     @Autowired
     private RolePermDao rolePermDao;
 
+    public List<Role> queryList(){
+        return roleDao.queryList();
+    }
     /**
      * 查询用户的所有角色
      * @param memberid

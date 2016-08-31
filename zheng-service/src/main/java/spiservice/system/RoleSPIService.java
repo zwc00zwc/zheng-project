@@ -27,12 +27,6 @@ import java.util.List;
 @Service("roleSPIService")
 public class RoleSPIService implements RoleSPI {
     @Autowired
-    private RoleDao roleDao;
-    @Autowired
-    private PermDao permDao;
-    @Autowired
-    private RolePermDao rolePermDao;
-    @Autowired
     private PermManager permManager;
     @Autowired
     private RoleManager roleManager;
@@ -41,7 +35,7 @@ public class RoleSPIService implements RoleSPI {
     }
 
     public List<Role> queryList() {
-        return roleDao.queryList();
+        return roleManager.queryList();
     }
 
     public boolean insertRole(Role role,String ids) {
