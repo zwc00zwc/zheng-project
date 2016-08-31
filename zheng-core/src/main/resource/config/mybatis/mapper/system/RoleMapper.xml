@@ -22,9 +22,12 @@
         FROM tb_role WHERE id=#{id}
     </select>
 
-    <select id="queryByMemberId" parameterType="long" resultMap="result">
+    <select id="queryByIds" resultMap="result">
         <include refid="select_sql"/>
-        FROM tb_role WHERE id IN (SELECT roleid FROM tb_member_role WHERE memberid=#{memberid})
+        FROM tb_role WHERE
+        <foreach collection="list" item="id" index="index" separator="OR">
+            id=#{id}
+        </foreach>
     </select>
 
     <select id="queryList" resultMap="result">

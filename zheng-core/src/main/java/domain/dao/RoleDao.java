@@ -8,7 +8,7 @@ import java.util.List;
  * Created by XR on 2016/8/22.
  */
 public interface RoleDao {
-    List<Role> queryByMemberId(Long memberid);
+    List<Role> queryByIds(List<Long> ids);
 
     Role queryById(Long id);
 

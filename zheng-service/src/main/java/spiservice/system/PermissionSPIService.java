@@ -2,6 +2,7 @@ package spiservice.system;
 
 import domain.dao.PermDao;
 import domain.dto.PermLevelDto;
+import domain.manager.PermManager;
 import domain.model.system.Perm;
 import org.apache.velocity.runtime.directive.Foreach;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,42 +20,42 @@ import java.util.List;
 @Service("permissionSPIService")
 public class PermissionSPIService implements PermissionSPI {
     @Autowired
-    private PermDao permDao;
+    private PermManager permManager;
     public List<Perm> queryList() {
-        return permDao.queryList();
+        return permManager.queryList();
     }
 
     public int insertPerm(Perm perm) {
-        return permDao.insertPerm(perm);
+        return permManager.insertPerm(perm);
     }
 
     public int updatePerm(Perm perm) {
-        return permDao.updateById(perm);
+        return permManager.updateById(perm);
     }
 
     public int deletePerm(Long id) {
-        return permDao.deleteById(id);
+        return permManager.deleteById(id);
     }
 
     public Perm queryById(Long id) {
-        return permDao.queryById(id);
+        return permManager.queryById(id);
     }
 
     public List<PermLevelDto> queryPermByLevel() {
         List<PermLevelDto> list=new ArrayList<PermLevelDto>();
-        List<Perm> permList1= permDao.queryByParentId((long)0);
+        List<Perm> permList1= permManager.queryByParentId((long)0);
         for (Perm perm1:permList1) {
             PermLevelDto dto1=new PermLevelDto();
             dto1.setId(perm1.getId());
             dto1.setDisplayName(perm1.getDisplayName());
             List<PermLevelDto> list2=new ArrayList<PermLevelDto>();
-            List<Perm> permList2= permDao.queryByParentId(perm1.getId());
+            List<Perm> permList2= permManager.queryByParentId(perm1.getId());
             for (Perm perm2:permList2) {
                 PermLevelDto dto2=new PermLevelDto();
                 dto2.setId(perm2.getId());
                 dto2.setDisplayName(perm2.getDisplayName());
                 List<PermLevelDto> list3=new ArrayList<PermLevelDto>();
-                List<Perm> permList3=permDao.queryByParentId(perm2.getId());
+                List<Perm> permList3=permManager.queryByParentId(perm2.getId());
                 for (Perm perm3:permList3) {
                     PermLevelDto dto3=new PermLevelDto();
                     dto3.setId(perm3.getId());
@@ -71,10 +72,10 @@ public class PermissionSPIService implements PermissionSPI {
     }
 
     public List<Perm> queryByType(List<Integer> types) {
-        return permDao.queryByType(types);
+        return permManager.queryByType(types);
     }
 
     public List<String> queryByMemberId(Long id) {
-        return permDao.queryByMemberId(id);
+        return permManager.queryByMemberId(id);
     }
 }

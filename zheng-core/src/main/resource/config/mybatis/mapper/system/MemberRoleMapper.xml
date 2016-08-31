@@ -8,24 +8,16 @@
     <resultMap id="result" type="memberrole">
         <id column="id" property="id" jdbcType="BIGINT"></id>
         <result column="memberid" property="memberId" jdbcType="BIGINT"></result>
-        <result column="roleid" property="roleId" jdbcType="BIGINT"></result>
+        <result column="roleids" property="roleIds" jdbcType="VARCHAR"></result>
         <result column="create_time" property="createTime" jdbcType="DATE"></result>
     </resultMap>
 
-    <sql id="select_sql">
-        SELECT id,memberid,roleid,create_time,update_time
-    </sql>
-    
-    <select id="queryRolesByMemberid" parameterType="long" resultMap="result">
-        <include refid="select_sql"/>
-        FROM tb_member_role WHERE memberid=#{memberid}
+    <select id="queryRolesByMemberId" parameterType="long" resultType="string">
+        SELECT roleids FROM tb_member_role WHERE memberid=#{memberid}
     </select>
-
-    <insert id="insertMemberRole" parameterType="list">
-        INSERT INTO tb_member_role(memberid,roleid,create_time) VALUES
-        <foreach collection="list" index="index" item="item" separator=",">
-            (#{item.memberId},#{item.roleId},#{item.createTime})
-        </foreach>
+    
+    <insert id="insertMemberRole" parameterType="memberrole">
+        INSERT INTO tb_member_role(memberid,roleids,create_time) VALUES (#{memberId},#{roleIds},#{createTime})
     </insert>
 
     <delete id="deleteByMemberId" parameterType="long">

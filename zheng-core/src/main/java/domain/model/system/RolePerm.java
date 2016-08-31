@@ -10,7 +10,7 @@ import java.util.Date;
 public class RolePerm extends BaseModel {
     private Long id;
     private Long roleId;
-    private Long permId;
+    private String permIds;
     private Date createTime;
 
     public Long getId() {
@@ -29,12 +29,12 @@ public class RolePerm extends BaseModel {
         this.roleId = roleId;
     }
 
-    public Long getPermId() {
-        return permId;
+    public String getPermIds() {
+        return permIds;
     }
 
-    public void setPermId(Long permId) {
-        this.permId = permId;
+    public void setPermIds(String permIds) {
+        this.permIds = permIds;
     }
 
     public Date getCreateTime() {

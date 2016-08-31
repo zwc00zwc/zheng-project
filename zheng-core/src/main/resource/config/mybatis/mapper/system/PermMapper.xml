@@ -43,18 +43,29 @@
         </foreach>
     </select>
 
-    <select id="queryByRoleIdAndType" resultMap="result">
+    <select id="queryByIdsAndType" resultMap="result">
         <include refid="select_sql"/>
-        FROM tb_perm WHERE id IN (SELECT permid FROM tb_role_perm WHERE roleid=#{roleid}) AND permtype=#{type}
+        FROM tb_perm WHERE
+        <foreach collection="ids" item="id" index="index" separator="OR" open="(" close=")">
+            id=#{id}
+        </foreach>
+        AND permtype=#{type}
     </select>
 
-    <select id="queryByMemberId" parameterType="long" resultType="string">
-        SELECT url FROM tb_perm P JOIN (SELECT permid FROM tb_role_perm RP JOIN (SELECT roleid FROM tb_member_role WHERE id=#{id}) MR  WHERE RP.roleid=MR.roleid) LRP WHERE p.id=LRP.permid
+    <select id="queryUrlByListId" resultType="string">
+        SELECT url FROM tb_perm WHERE
+        <foreach collection="list" item="id" index="index" separator="OR">
+            id=#{id}
+        </foreach>
     </select>
 
-    <select id="queryByMemberIdAndParentId" resultMap="result">
+    <select id="queryByIdsAndParentId" resultMap="result">
         <include refid="select_sql"/>
-        FROM tb_perm WHERE id in (SELECT permid FROM tb_role_perm WHERE roleid IN (SELECT roleid FROM tb_member_role WHERE memberid=#{memberid})) AND parentid=#{parentid}
+        FROM tb_perm WHERE
+        <foreach collection="ids" item="id" index="index" separator="OR" open="(" close=")">
+            id=#{id}
+        </foreach>
+        AND parentid=#{parentid}
     </select>
     
     <insert id="insertPerm" parameterType="perm">

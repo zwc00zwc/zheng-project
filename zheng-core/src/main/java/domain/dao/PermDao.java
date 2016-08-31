@@ -18,11 +18,11 @@ public interface PermDao {
 
     List<Perm> queryByType(List<Integer> types);
 
-    List<Perm> queryByMemberIdAndParentId(@Param("memberid") Long memberid,@Param("parentid") Long parentid);
+    List<Perm> queryByIdsAndParentId(@Param("ids") List<Long> ids,@Param("parentid") Long par);
 
-    List<Perm> queryByRoleIdAndType(@Param("roleid") Long roleid,@Param("type") int type);
+    List<String> queryUrlByListId(List<Long> ids);
 
-    List<String> queryByMemberId(Long id);
+    List<Perm> queryByIdsAndType(@Param("ids") List<Long> ids,@Param("type") Integer type);
 
     int insertPerm(Perm perm);
 

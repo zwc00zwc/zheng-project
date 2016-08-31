@@ -8,6 +8,9 @@ import domain.dto.AuthMemberDto;
 import domain.dto.AuthPerm;
 import domain.dto.MemberDto;
 import domain.dto.MemberRoleDto;
+import domain.manager.MemberManager;
+import domain.manager.PermManager;
+import domain.manager.RoleManager;
 import domain.model.system.Member;
 import domain.model.system.MemberRole;
 import domain.model.system.Perm;
@@ -28,13 +31,13 @@ import java.util.*;
 @Service("memberSPIService")
 public class MemberSPIService implements MemberSPI {
     @Autowired
+    private RoleManager roleManager;
+    @Autowired
+    private MemberManager memberManager;
+    @Autowired
+    private PermManager permManager;
+    @Autowired
     private MemberDao memberDao;
-    @Autowired
-    private RoleDao roleDao;
-    @Autowired
-    private PermDao permDao;
-    @Autowired
-    private MemberRoleDao memberRoleDao;
     public List<Member> querylist() {
         return memberDao.querylist();
     }
@@ -46,7 +49,7 @@ public class MemberSPIService implements MemberSPI {
             MemberDto memberDto=new  MemberDto();
             PropertyUtils.copyProperties(memberDto,member);
             List<MemberRoleDto> liststr=new ArrayList<MemberRoleDto>();
-            List<Role> rolelist= roleDao.queryByMemberId(member.getId());
+            List<Role> rolelist= roleManager.queryByMemberId(member.getId());
             for (Role role:rolelist) {
                 MemberRoleDto memberRoleDto=new MemberRoleDto();
                 memberRoleDto.setId(role.getId());
@@ -63,7 +66,8 @@ public class MemberSPIService implements MemberSPI {
         MemberDto memberDto=new MemberDto();
         Member member=memberDao.queryById(id);
         PropertyUtils.copyProperties(memberDto,member);
-        List<Role> rolelist= roleDao.queryByMemberId(id);
+        //List<Role> rolelist= roleDao.queryByMemberId(id);
+        List<Role> rolelist=roleManager.queryByMemberId(id);
         List<MemberRoleDto> memberRoleDtos=new ArrayList<MemberRoleDto>();
         for (Role role:rolelist) {
             MemberRoleDto memberRoleDto=new MemberRoleDto();
@@ -77,7 +81,8 @@ public class MemberSPIService implements MemberSPI {
 
     public Member queryByUsername(String username) {
 //        AuthMemberDto authMemberDto=new AuthMemberDto();
-        Member member= memberDao.queryByUsername(username);
+        //Member member= memberDao.queryByUsername(username);
+        Member member=memberManager.queryByUsername(username);
 //        if (member!=null){
 //            authMemberDto.setId(member.getId());
 //            authMemberDto.setPhone(member.getPhone());
@@ -110,12 +115,12 @@ public class MemberSPIService implements MemberSPI {
 
     public List<AuthPerm> queryAuthPerm(Long memberid) {
         List<AuthPerm> authpermlist=new ArrayList<AuthPerm>();
-        List<Perm> perms= permDao.queryByMemberIdAndParentId(memberid,(long)0);
+        List<Perm> perms= permManager.queryByMemberIdAndParentId(memberid,(long)0);
         for (Perm perm:perms) {
             AuthPerm authperm=new AuthPerm();
             authperm.setName(perm.getDisplayName());
             authperm.setUrl(perm.getUrl());
-            List<Perm> perms2= permDao.queryByMemberIdAndParentId(memberid,perm.getId());
+            List<Perm> perms2= permManager.queryByMemberIdAndParentId(memberid,perm.getId());
             List<AuthPerm> authpermlist2=new ArrayList<AuthPerm>();
             for (Perm perm2:perms2) {
                 AuthPerm authperm2=new AuthPerm();
@@ -130,30 +135,15 @@ public class MemberSPIService implements MemberSPI {
     }
 
     public Member insertMember(Member member, String roleids) {
-        if (memberDao.insertmember(member)>0){
-            List<MemberRole> list=new ArrayList<MemberRole>();
-            String[] idsstr= roleids.split(",");
-            for (String id:idsstr) {
-                long roleid= Long.parseLong(id);
-                Role role= roleDao.queryById(roleid);
-                if (role!=null){
-                    MemberRole memberRole=new MemberRole();
-                    memberRole.setRoleId(role.getId());
-                    memberRole.setMemberId(member.getId());
-                    memberRole.setCreateTime(new Date());
-                    list.add(memberRole);
-                }
-            }
-            memberRoleDao.insertMemberRole(list);
-        }
+        memberManager.insertmember(member,roleids);
         return member;
     }
 
     public int deleteMember(Long id) {
-        return memberDao.deleteMember(id);
+        return memberManager.deleteMember(id);
     }
 
     public int updateStatus(Long memberid, Short status) {
-        return memberDao.updateStatus(memberid,status);
+        return memberManager.updateStatus(memberid,status);
     }
 }

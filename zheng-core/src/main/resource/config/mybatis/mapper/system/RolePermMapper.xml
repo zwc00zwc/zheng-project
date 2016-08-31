@@ -8,7 +8,7 @@
     <resultMap id="result" type="roleperm">
         <id column="id" property="id" jdbcType="BIGINT"></id>
         <result column="roleid" property="roleId" jdbcType="BIGINT"></result>
-        <result column="permid" property="permId" jdbcType="BIGINT"></result>
+        <result column="permids" property="permIds" jdbcType="VARCHAR"></result>
         <result column="create_time" property="createTime" jdbcType="DATE"></result>
     </resultMap>
 
@@ -16,16 +16,19 @@
         SELECT id,roleid,permid,create_time
     </sql>
 
-    <select id="queryListByRoleId" parameterType="long" resultMap="result">
-        <include refid="select_sql"/>
-        FROM tb_role_perm WHERE roleid=#{roleid}
+    <select id="queryPermIdByRoleIds" resultType="string">
+        SELECT permids FROM tb_role_perm WHERE
+        <foreach collection="list" item="role" index="index" separator="OR">
+            roleid=#{role}
+        </foreach>
+    </select>
+    
+    <select id="queryPermsByRoleId" parameterType="long" resultType="string">
+        SELECT permids FROM tb_role_perm WHERE roleid=#{roleid}
     </select>
 
-    <insert id="insertRolePermByList" parameterType="list">
-        INSERT INTO tb_role_perm (roleid,permid,create_time) VALUES
-        <foreach collection="list" index="index" item="item" separator=",">
-            (#{item.roleId},#{item.permId},#{item.createTime})
-        </foreach>
+    <insert id="insertRolePerm" parameterType="roleperm">
+        INSERT INTO tb_role_perm (roleid,permids,create_time) VALUES (#{roleId},#{permIds},#{createTime})
     </insert>
 
     <delete id="deleteByRoleId" parameterType="long">

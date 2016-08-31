@@ -8,7 +8,7 @@ import java.util.Date;
 public class MemberRole {
     private Long id;
     private Long memberId;
-    private Long roleId;
+    private String roleIds;
     private Date createTime;
 
     public Long getId() {
@@ -27,12 +27,12 @@ public class MemberRole {
         this.memberId = memberId;
     }
 
-    public Long getRoleId() {
-        return roleId;
+    public String getRoleIds() {
+        return roleIds;
     }
 
-    public void setRoleId(Long roleId) {
-        this.roleId = roleId;
+    public void setRoleIds(String roleIds) {
+        this.roleIds = roleIds;
     }
 
     public Date getCreateTime() {
