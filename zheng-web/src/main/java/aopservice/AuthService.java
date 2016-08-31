@@ -41,10 +41,14 @@ public class AuthService {
         String permstr=(String) request.getSession().getAttribute(Constants.SESSION_USER_PERM_KEY);
         String[] perms=permstr.split(",");
         boolean isauth=false;
-        for (String perm:perms) {
-            if (auth.rule()==perm){
-                isauth=true;
-                break;
+        if (auth.rule().equals("/")){
+            isauth=true;
+        }else {
+            for (String perm:perms) {
+                if (auth.rule().equals(perm)){
+                    isauth=true;
+                    break;
+                }
             }
         }
         if (!isauth){

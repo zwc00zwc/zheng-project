@@ -15,13 +15,13 @@ public class AuthExceptionHandler implements HandlerExceptionResolver {
     public ModelAndView resolveException(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) {
         //LogUtility.insertLog(e.getClass().getName(),e.getMessage());
         String requestheader= httpServletRequest.getHeader("X-Requested-With");
-        if (e instanceof AuthException){
+        if (e instanceof LoginException){
             if (requestheader!=null){
                 return new ModelAndView("redirect:/nologin");
             }
             return new ModelAndView("redirect:/login");
         }
-        if (e instanceof LoginException){
+        if (e instanceof AuthException){
             if (requestheader!=null){
                 return new ModelAndView("redirect:/noauthorized/ajax");
             }
