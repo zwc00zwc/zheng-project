@@ -14,7 +14,7 @@
     </resultMap>
 
     <sql id="select_sql">
-        SELECT id,roleid,permid,create_time,update_time
+        SELECT id,roleid,permids,create_time,update_time
     </sql>
 
     <select id="queryPermIdByRoleIds" resultType="string">

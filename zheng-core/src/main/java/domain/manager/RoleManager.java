@@ -69,6 +69,7 @@ public class RoleManager {
             String permids= StringUtils.join(perms,",");
             RolePerm rolePerm= rolePermDao.queryByRoleId(role.getId());
             rolePerm.setPermIds(permids);
+            rolePerm.setUpdateTime(new Date());
             if (rolePermDao.updateById(rolePerm)>0){
                 return true;
             }
