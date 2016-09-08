@@ -22,6 +22,11 @@
         FROM tb_role WHERE id=#{id}
     </select>
 
+    <select id="queryByName" parameterType="string" resultMap="result">
+        <include refid="select_sql"/>
+        FROM tb_role WHERE rolename=#{name}
+    </select>
+
     <select id="queryByIds" resultMap="result">
         <include refid="select_sql"/>
         FROM tb_role WHERE

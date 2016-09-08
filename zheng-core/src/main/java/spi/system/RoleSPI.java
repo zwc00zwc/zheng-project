@@ -19,4 +19,6 @@ public interface RoleSPI {
     RolePermDto queryDtoById(Long id) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException;
 
     int deleteRole(Long id);
+
+    boolean resetadmin();
 }

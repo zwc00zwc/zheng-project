@@ -10,10 +10,11 @@
         <result column="roleid" property="roleId" jdbcType="BIGINT"></result>
         <result column="permids" property="permIds" jdbcType="VARCHAR"></result>
         <result column="create_time" property="createTime" jdbcType="DATE"></result>
+        <result column="update_time" property="updateTime" javaType="DATE"></result>
     </resultMap>
 
     <sql id="select_sql">
-        SELECT id,roleid,permid,create_time
+        SELECT id,roleid,permid,create_time,update_time
     </sql>
 
     <select id="queryPermIdByRoleIds" resultType="string">
@@ -27,9 +28,18 @@
         SELECT permids FROM tb_role_perm WHERE roleid=#{roleid}
     </select>
 
+    <select id="queryByRoleId" parameterType="long" resultMap="result">
+        <include refid="select_sql"/>
+        FROM tb_role_perm WHERE roleid=#{roleid}
+    </select>
+
     <insert id="insertRolePerm" parameterType="roleperm">
-        INSERT INTO tb_role_perm (roleid,permids,create_time) VALUES (#{roleId},#{permIds},#{createTime})
+        INSERT INTO tb_role_perm (roleid,permids,create_time,update_time) VALUES (#{roleId},#{permIds},#{createTime},#{updateTime})
     </insert>
+
+    <update id="updateById" parameterType="roleperm">
+        UPDATE tb_role_perm SET roleid=#{roleId},permids=#{permIds},update_time=#{updateTime} WHERE id=#{id}
+    </update>
 
     <delete id="deleteByRoleId" parameterType="long">
         DELETE FROM tb_role_perm WHERE roleid=#{roleid}

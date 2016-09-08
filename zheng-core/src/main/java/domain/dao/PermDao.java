@@ -22,6 +22,8 @@ public interface PermDao {
 
     List<String> queryUrlByListId(List<Long> ids);
 
+    List<String> queryIds();
+
     List<Perm> queryByIdsAndType(@Param("ids") List<Long> ids,@Param("type") Integer type);
 
     int insertPerm(Perm perm);

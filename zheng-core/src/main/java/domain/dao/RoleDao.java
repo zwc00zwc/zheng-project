@@ -18,5 +18,7 @@ public interface RoleDao {
 
     int updateRole(Role role);
 
+    Role queryByName(String name);
+
     int deleteRole(Long id);
 }

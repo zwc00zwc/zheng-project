@@ -1,6 +1,7 @@
 package domain.manager;
 
 import domain.dao.MemberRoleDao;
+import domain.dao.PermDao;
 import domain.dao.RoleDao;
 import domain.dao.RolePermDao;
 import domain.model.system.Role;
@@ -23,6 +24,8 @@ public class RoleManager {
     private MemberRoleDao memberRoleDao;
     @Autowired
     private RoleDao roleDao;
+    @Autowired
+    private PermDao permDao;
     @Autowired
     private RolePermDao rolePermDao;
 
@@ -59,7 +62,26 @@ public class RoleManager {
         return false;
     }
 
+    public boolean resetadmin(){
+        Role role= roleDao.queryByName("admin");
+        if (role!=null){
+            List<String> perms= permDao.queryIds();
+            String permids= StringUtils.join(perms,",");
+            RolePerm rolePerm= rolePermDao.queryByRoleId(role.getId());
+            rolePerm.setPermIds(permids);
+            if (rolePermDao.updateById(rolePerm)>0){
+                return true;
+            }
+        }
+        return false;
+    }
+
     public int deleteRole(Long id){
         return roleDao.deleteRole(id);
+    }
+
+    public Role queryByName(String rolename){
+        Role role=new Role();
+        return role;
     }
 }

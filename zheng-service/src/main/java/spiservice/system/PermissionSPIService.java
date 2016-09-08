@@ -76,6 +76,6 @@ public class PermissionSPIService implements PermissionSPI {
     }
 
     public List<String> queryByMemberId(Long id) {
-        return permManager.queryByMemberId(id);
+        return permManager.queryUrlByMemberId(id);
     }
 }

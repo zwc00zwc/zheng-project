@@ -14,7 +14,11 @@ public interface RolePermDao {
 
     String queryPermsByRoleId(Long roleid);
 
+    RolePerm queryByRoleId(Long roleid);
+
     int insertRolePerm(RolePerm rolePerm);
+
+    int updateById(RolePerm rolePerm);
 
     int deleteByRoleId(Long roleid);
 }

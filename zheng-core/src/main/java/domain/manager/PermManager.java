@@ -43,7 +43,7 @@ public class PermManager {
         return permDao.queryByIdsAndType(ids,type);
     }
 
-    public List<String> queryByMemberId(Long memberid){
+    public List<String> queryUrlByMemberId(Long memberid){
         List<String> strings=new ArrayList<String>();
         List<Perm> list=new ArrayList<Perm>();
         List<Long> roleids=new ArrayList<Long>();
@@ -55,6 +55,12 @@ public class PermManager {
             ids.addAll(StringUtility.StringToListLong(perm));
         }
         return permDao.queryUrlByListId(ids);
+    }
+
+    public List<String> queryIds(){
+        List<String> list=new ArrayList<String>();
+        list= permDao.queryIds();
+        return list;
     }
 
     public List<Perm> queryList(){

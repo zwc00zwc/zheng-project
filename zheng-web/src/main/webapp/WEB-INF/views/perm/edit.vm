@@ -84,7 +84,7 @@
             submitHandler:function(form){
                 jQuery.ajax({
                     url: '$!{request.getContextPath()}/perm/editing',
-                    data: jQuery('#form-perm-add').serialize(),
+                    data: jQuery('#form-perm-edit').serialize(),
                     type: "post",
                     success: function (data) {
                         if (data.code > 0) {

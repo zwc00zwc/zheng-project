@@ -59,6 +59,10 @@
         </foreach>
     </select>
 
+    <select id="queryIds" resultType="string">
+        SELECT id FROM tb_perm
+    </select>
+
     <select id="queryByIdsAndParentId" resultMap="result">
         <include refid="select_sql"/>
         FROM tb_perm WHERE

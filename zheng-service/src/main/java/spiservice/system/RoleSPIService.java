@@ -70,4 +70,8 @@ public class RoleSPIService implements RoleSPI {
     public int deleteRole(Long id) {
         return permManager.deleteById(id);
     }
+
+    public boolean resetadmin() {
+        return roleManager.resetadmin();
+    }
 }

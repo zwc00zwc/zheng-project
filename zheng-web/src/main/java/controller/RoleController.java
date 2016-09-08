@@ -87,4 +87,14 @@ public class RoleController extends BaseController {
         }
         return jsonResult(-1,"删除失败");
     }
+
+    @Auth(rule = "/role/resetadmin")
+    @ResponseBody
+    @RequestMapping(value = "/role/resetadmin")
+    public JsonResult resetAdmin(){
+        if (roleSPIService.resetadmin()){
+            return jsonResult(1,"重置成功");
+        }
+        return jsonResult(-1,"重置失败");
+    }
 }

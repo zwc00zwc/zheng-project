@@ -128,7 +128,7 @@
                 $('#permids').val(permids);
                 jQuery.ajax({
                     url: '$!{request.getContextPath()}/role/editing',
-                    data: jQuery('#form-admin-role-add').serialize(),
+                    data: jQuery('#form-admin-role-edit').serialize(),
                     type: "post",
                     success: function (data) {
                         if (data.code > 0) {
