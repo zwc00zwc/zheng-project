@@ -57,7 +57,6 @@ public class RoleController extends BaseController {
     }
 
     @Auth(rule = "/role/edit")
-    @ResponseBody
     @RequestMapping(value = "/role/edit")
     public String edit(Model model,@RequestParam(value = "roleid",defaultValue = "0",required = false) Long id) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         List list=permissionSPIService.queryPermByLevel();

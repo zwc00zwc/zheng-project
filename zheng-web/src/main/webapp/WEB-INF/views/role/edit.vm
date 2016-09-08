@@ -1,6 +1,6 @@
 #set($layout =  "share/hi-layout.vm" )
 <article class="page-container">
-    <form action="" method="post" class="form form-horizontal" id="form-admin-role-add">
+    <form action="" method="post" class="form form-horizontal" id="form-admin-role-edit">
         <input type="hidden" name="id" value="$!{role.id}">
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>角色名称：</label>
@@ -108,7 +108,7 @@
             }
         });
 
-        $("#form-admin-role-add").validate({
+        $("#form-admin-role-edit").validate({
             rules:{
                 roleName:{
                     required:true,

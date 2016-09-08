@@ -65,7 +65,6 @@ public class PermController extends BaseController {
     }
 
     @Auth(rule = "/perm/edit")
-    @ResponseBody
     @RequestMapping(value = "/perm/edit")
     public String edit(Model model, @RequestParam(value = "permid",required = false,defaultValue = "0") Long id){
         List<Integer> integerList=new ArrayList<Integer>();

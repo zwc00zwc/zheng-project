@@ -1,6 +1,6 @@
 #set($layout =  "share/hi-layout.vm" )
 <article class="page-container">
-    <form class="form form-horizontal" id="form-perm-add" method="post">
+    <form class="form form-horizontal" id="form-perm-edit" method="post">
         <input type="hidden" name="id" value="$!{perm.id}">
         <div class="row cl">
             <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>权限名：</label>
@@ -49,7 +49,7 @@
             increaseArea: '20%'
         });
 
-        $("#form-perm-add").validate({
+        $("#form-perm-edit").validate({
             rules:{
                 adminName:{
                     required:true,

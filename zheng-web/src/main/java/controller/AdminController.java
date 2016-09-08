@@ -69,7 +69,6 @@ public class AdminController extends BaseController {
     }
 
     @Auth(rule = "/admin/edit")
-    @ResponseBody
     @RequestMapping(value = "/admin/edit")
     public String edit(){
         return "/admin/edit";
