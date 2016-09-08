@@ -53,7 +53,7 @@ public class AdminController extends BaseController {
         model.addAttribute("member",member);
         return "/admin/add";
     }
-    @Auth(rule ="/admin/adding" )
+    @Auth(rule ="/admin/add" )
     @ResponseBody
     @RequestMapping(value = "/admin/adding")
     public JsonResult adding(Member member,@RequestParam(value = "roleids") String ids){
@@ -66,6 +66,20 @@ public class AdminController extends BaseController {
         }
         memberSPIService.insertMember(member,ids);
         return jsonResult(1,"新增成功");
+    }
+
+    @Auth(rule = "/admin/edit")
+    @ResponseBody
+    @RequestMapping(value = "/admin/edit")
+    public String edit(){
+        return "/admin/edit";
+    }
+
+    @Auth(rule = "/admin/edit")
+    @ResponseBody
+    @RequestMapping(value = "/admin/editing")
+    public JsonResult editing(){
+        return jsonResult(-1,"修改失败");
     }
 
     @Auth(rule = "/admin/start" )

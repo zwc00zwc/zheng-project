@@ -91,7 +91,7 @@
 
         $("#form-admin-add").validate({
             rules:{
-                adminName:{
+                userName:{
                     required:true,
                     minlength:4,
                     maxlength:16
@@ -108,7 +108,7 @@
                 },
                 phone:{
                     required:true,
-                    isPhone:true,
+                    isMobile:true,
                 },
                 email:{
                     required:true,

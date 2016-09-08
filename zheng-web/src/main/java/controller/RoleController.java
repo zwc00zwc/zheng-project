@@ -37,12 +37,9 @@ public class RoleController extends BaseController {
     }
     @Auth(rule = "/role/add")
     @RequestMapping(value = "/role/add")
-    public String add(Model model,@RequestParam(value = "roleid",defaultValue = "0",required = false) Long id) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+    public String add(Model model){
         List list=permissionSPIService.queryPermByLevel();
         RolePermDto rolePermDto=new RolePermDto();
-        if (id>0){
-            rolePermDto=roleSPIService.queryDtoById(id);
-        }
         model.addAttribute("permlist",list);
         model.addAttribute("role",rolePermDto);
         return "/role/add";
@@ -53,14 +50,33 @@ public class RoleController extends BaseController {
     public JsonResult adding(Role role, @RequestParam(value = "permids") String ids){
         role.setCreateTime(new Date());
         role.setUpdateTime(new Date());
-        if (role.getId()!=null&&role.getId()>0){   //修改
-            return jsonResult(1,"修改成功");
-        }
         if (roleSPIService.insertRole(role,ids)){
             return jsonResult(1,"新增成功");
         }
         return jsonResult(-1,"新增失败");
     }
+
+    @Auth(rule = "/role/edit")
+    @ResponseBody
+    @RequestMapping(value = "/role/edit")
+    public String edit(Model model,@RequestParam(value = "roleid",defaultValue = "0",required = false) Long id) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+        List list=permissionSPIService.queryPermByLevel();
+        RolePermDto rolePermDto=roleSPIService.queryDtoById(id);
+        model.addAttribute("permlist",list);
+        model.addAttribute("role",rolePermDto);
+        return "/role/edit";
+    }
+
+    @Auth(rule = "/role/edit")
+    @ResponseBody
+    @RequestMapping(value = "/role/editing")
+    public JsonResult editing(Role role, @RequestParam(value = "permids") String ids){
+        if (role.getId()!=null&&role.getId()>0){   //修改
+            return jsonResult(1,"修改成功");
+        }
+        return jsonResult(-1,"修改失败");
+    }
+
     @Auth(rule = "/role/delete")
     @ResponseBody
     @RequestMapping(value = "/role/delete")

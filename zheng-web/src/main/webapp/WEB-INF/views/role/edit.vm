@@ -1,0 +1,147 @@
+#set($layout =  "share/hi-layout.vm" )
+<article class="page-container">
+    <form action="" method="post" class="form form-horizontal" id="form-admin-role-add">
+        <input type="hidden" name="id" value="$!{role.id}">
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>角色名称：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="$!{role.roleName}" placeholder="" id="roleName" name="roleName" datatype="*4-16" nullmsg="角色名称不能为空">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>显示名称：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="$!{role.displayName}" placeholder="" id="displayName" name="displayName" datatype="*4-16" nullmsg="显示名称不能为空">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3">备注：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                <input type="text" class="input-text" value="$!{role.remark}" placeholder="" id="remark" name="remark">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3">权限资源：</label>
+            <div class="formControls col-xs-8 col-sm-9">
+                #foreach($item in $permlist)
+                <dl class="permission-list">
+                    <dt>
+                        <label>
+                            <input type="checkbox" value="$!{item.id}" name="user-Character-0" #foreach($permitem1 in $role.permids1)
+                                #if($permitem1==$!{item.id})
+                                   checked
+                                #end
+                            #end id="user-Character-0">
+                            $!{item.displayName}</label>
+                    </dt>
+                <dd>
+                    #foreach($item2 in $item.permLevelDtos)
+                        <dl class="cl permission-list2">
+                        <dt>
+                            <label class="">
+                                <input type="checkbox" value="$!{item2.id}" name="user-Character-0-0" #foreach($permitem2 in $role.permids2)
+                                    #if($permitem2==$!{item2.id})
+                                       checked
+                                    #end
+                                #end id="user-Character-0-0">
+                                $!{item2.displayName}</label>
+                        </dt>
+                        <dd>
+                            #foreach($item3 in $item2.permLevelDtos)
+                                <label class="">
+                                    <input type="checkbox" value="$!{item3.id}" name="user-Character-0-0-0" #foreach($permitem3 in $role.permids3)
+                                        #if($permitem3==$!{item3.id})
+                                           checked
+                                        #end
+                                    #end id="user-Character-0-0-0">
+                                    $!{item3.displayName}</label>
+                            #end
+                        </dd>
+                    </dl>
+                    #end
+                    </dd>
+                    </dl>
+                #end
+            </div>
+        </div>
+        <input type="hidden" name="permids" id="permids">
+        <div class="row cl">
+            <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+                <button type="submit" class="btn btn-success radius" name="admin-role-save"><i class="icon-ok"></i> 确定</button>
+            </div>
+        </div>
+    </form>
+</article>
+
+#parse("share/hi-footer.vm")
+
+<script type="text/javascript">
+    $(function(){
+        $(".permission-list dt input:checkbox").click(function(){
+            $(this).closest("dl").find("dd input:checkbox").prop("checked",$(this).prop("checked"));
+        });
+        $(".permission-list2 dd input:checkbox").click(function(){
+            var l =$(this).parent().parent().find("input:checked").length;
+            var l2=$(this).parents(".permission-list").find(".permission-list2 dd").find("input:checked").length;
+            if($(this).prop("checked")){
+                $(this).closest("dl").find("dt input:checkbox").prop("checked",true);
+                $(this).parents(".permission-list").find("dt").first().find("input:checkbox").prop("checked",true);
+            }
+            else{
+                if(l==0){
+                    $(this).closest("dl").find("dt input:checkbox").prop("checked",false);
+                }
+                if(l2==0){
+                    $(this).parents(".permission-list").find("dt").first().find("input:checkbox").prop("checked",false);
+                }
+            }
+        });
+
+        $(".permission-list2 dt input:checkbox").click(function(){
+            var l2=$(this).parents(".permission-list").find(".permission-list2 dt").find("input:checked").length;
+            if($(this).prop("checked")){
+                $(this).parents(".permission-list").find("dt").first().find("input:checkbox").prop("checked",true);
+            }else {
+                if (l2==0){
+                    $(this).parents(".permission-list").find("dt").first().find("input:checkbox").prop("checked",false);
+                }
+            }
+        });
+
+        $("#form-admin-role-add").validate({
+            rules:{
+                roleName:{
+                    required:true,
+                },
+            },
+            onkeyup:false,
+            focusCleanup:true,
+            success:"valid",
+            submitHandler:function(form){
+                var permids='';
+                $("input[type=checkbox]").each(function(){
+                    if (this.checked){
+                        permids+=$(this).val()+',';
+                    }
+                })
+                $('#permids').val(permids);
+                jQuery.ajax({
+                    url: '$!{request.getContextPath()}/role/editing',
+                    data: jQuery('#form-admin-role-add').serialize(),
+                    type: "post",
+                    success: function (data) {
+                        if (data.code > 0) {
+//                            var index = parent.layer.getFrameIndex(window.name);
+//                            parent.layer.close(index);
+                            window.parent.location.reload();
+                        }
+                        else {
+                            alert(data.msg);
+                        }
+                    }
+                });
+
+            }
+        });
+    });
+</script>

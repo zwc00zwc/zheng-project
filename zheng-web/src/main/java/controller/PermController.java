@@ -32,23 +32,56 @@ public class PermController extends BaseController {
     }
     @Auth(rule = "/perm/add")
     @RequestMapping(value = "/perm/add")
-    public String add(Model model, @RequestParam(value = "permid",required = false,defaultValue = "0") Long id){
+    public String add(Model model){
         List<Integer> integerList=new ArrayList<Integer>();
         integerList.add(1);
         integerList.add(2);
         List list= permissionSPIService.queryByType(integerList);
         Perm perm=new Perm();
-        if (id>0){
-            perm= permissionSPIService.queryById(id);
-        }
         model.addAttribute("permlist",list);
         model.addAttribute("perm",perm);
         return "/perm/add";
     }
-    @Auth(rule = "/perm/adding")
+    @Auth(rule = "/perm/add")
     @ResponseBody
     @RequestMapping(value = "/perm/adding")
     public JsonResult adding(Perm perm){
+        if (perm.getParentId()!=null&&perm.getParentId()>0){
+            Perm parent= permissionSPIService.queryById(perm.getParentId());
+            if (parent!=null){
+                int type=parent.getType()+1;
+                perm.setType(type);
+            }else {
+                perm.setType(1);
+            }
+        }else {
+            perm.setParentId((long)0);
+            perm.setType(1);
+        }
+        perm.setCreateTime(new Date());
+        perm.setUpdateTime(new Date());
+        permissionSPIService.insertPerm(perm);
+        return jsonResult(1,"新增成功");
+    }
+
+    @Auth(rule = "/perm/edit")
+    @ResponseBody
+    @RequestMapping(value = "/perm/edit")
+    public String edit(Model model, @RequestParam(value = "permid",required = false,defaultValue = "0") Long id){
+        List<Integer> integerList=new ArrayList<Integer>();
+        integerList.add(1);
+        integerList.add(2);
+        List list= permissionSPIService.queryByType(integerList);
+        Perm perm= permissionSPIService.queryById(id);
+        model.addAttribute("permlist",list);
+        model.addAttribute("perm",perm);
+        return "/perm/edit";
+    }
+
+    @Auth(rule = "/perm/edit")
+    @ResponseBody
+    @RequestMapping(value = "/perm/editing")
+    public JsonResult editing(Perm perm){
         if (perm.getParentId()!=null&&perm.getParentId()>0){
             Perm parent= permissionSPIService.queryById(perm.getParentId());
             if (parent!=null){
@@ -66,10 +99,7 @@ public class PermController extends BaseController {
             permissionSPIService.updatePerm(perm);
             return jsonResult(1,"修改成功");
         }
-        perm.setCreateTime(new Date());
-        perm.setUpdateTime(new Date());
-        permissionSPIService.insertPerm(perm);
-        return jsonResult(1,"新增成功");
+        return jsonResult(-1,"修改失败");
     }
 
     @Auth(rule = "/perm/delete")
