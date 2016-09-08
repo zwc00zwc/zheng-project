@@ -87,25 +87,26 @@
                 $(this).closest("dl").find("dt input:checkbox").prop("checked",true);
                 $(this).parents(".permission-list").find("dt").first().find("input:checkbox").prop("checked",true);
             }
-            else{
-                if(l==0){
-                    $(this).closest("dl").find("dt input:checkbox").prop("checked",false);
-                }
-                if(l2==0){
-                    $(this).parents(".permission-list").find("dt").first().find("input:checkbox").prop("checked",false);
-                }
-            }
+//            else{
+//                if(l==0){
+//                    $(this).closest("dl").find("dt input:checkbox").prop("checked",false);
+//                }
+//                if(l2==0){
+//                    $(this).parents(".permission-list").find("dt").first().find("input:checkbox").prop("checked",false);
+//                }
+//            }
         });
 
         $(".permission-list2 dt input:checkbox").click(function(){
             var l2=$(this).parents(".permission-list").find(".permission-list2 dt").find("input:checked").length;
             if($(this).prop("checked")){
                 $(this).parents(".permission-list").find("dt").first().find("input:checkbox").prop("checked",true);
-            }else {
-                if (l2==0){
-                    $(this).parents(".permission-list").find("dt").first().find("input:checkbox").prop("checked",false);
-                }
             }
+//            else {
+//                if (l2==0){
+//                    $(this).parents(".permission-list").find("dt").first().find("input:checkbox").prop("checked",false);
+//                }
+//            }
         });
 
         $("#form-admin-role-add").validate({
