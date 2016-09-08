@@ -3,6 +3,7 @@ package aopservice;
 import annotation.Auth;
 import common.AuthUser;
 import common.Constants;
+import common.PermissionUtility;
 import exception.AuthException;
 import exception.LoginException;
 import org.aspectj.lang.JoinPoint;
@@ -39,6 +40,7 @@ public class AuthService {
             throw new LoginException("未登陆");
         }
         String permstr=(String) request.getSession().getAttribute(Constants.SESSION_USER_PERM_KEY);
+        PermissionUtility.changePerms(permstr);
         String[] perms=permstr.split(",");
         boolean isauth=false;
         if (auth.rule().equals("/")){

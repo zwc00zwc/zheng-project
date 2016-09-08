@@ -3,6 +3,7 @@ package controller;
 import ch.qos.logback.core.util.StringCollectionUtil;
 import common.AuthUser;
 import common.Constants;
+import common.PermissionUtility;
 import domain.dto.AuthMemberDto;
 import domain.model.system.Member;
 import org.apache.commons.lang.StringUtils;
@@ -25,6 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Administrator on 2016/8/21.
@@ -75,7 +77,7 @@ public class LoginController extends BaseController {
             authUser.setId(member.getId());
             authUser.setUserName(member.getUserName());
             authUser.setDisplayName(member.getDisplayName());
-            List<String> perms= permissionSPIService.queryByMemberId(member.getId());
+            Set<String> perms= permissionSPIService.queryUrlsByMemberId(member.getId());
             StringBuilder sp=new StringBuilder();
             for (String perm:perms) {
                 sp.append(perm+",");

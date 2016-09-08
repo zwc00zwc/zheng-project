@@ -11,7 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 import spi.system.PermissionSPI;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by XR on 2016/8/25.
@@ -75,7 +77,12 @@ public class PermissionSPIService implements PermissionSPI {
         return permManager.queryByType(types);
     }
 
-    public List<String> queryByMemberId(Long id) {
-        return permManager.queryUrlByMemberId(id);
+    public Set<String> queryUrlsByMemberId(Long id) {
+        Set<String> stringSet =new HashSet<String>();
+        List<String> urls=permManager.queryUrlByMemberId(id);
+        for (String url:urls) {
+            stringSet.add(url);
+        }
+        return stringSet;
     }
 }

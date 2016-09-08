@@ -4,6 +4,7 @@ import domain.dto.PermLevelDto;
 import domain.model.system.Perm;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by XR on 2016/8/25.
@@ -14,7 +15,7 @@ public interface PermissionSPI {
     List<PermLevelDto> queryPermByLevel();
     List<Perm> queryByType(List<Integer> types);
 
-    List<String> queryByMemberId(Long id);
+    Set<String> queryUrlsByMemberId(Long id);
     int insertPerm(Perm perm);
     int updatePerm(Perm perm);
 
