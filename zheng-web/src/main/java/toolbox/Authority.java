@@ -1,4 +1,4 @@
-package common;
+package toolbox;
 
 import common.PermissionUtility;
 import org.springframework.stereotype.Component;
