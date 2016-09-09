@@ -1,0 +1,11 @@
+#macro(pagination $pageModel $search)
+    ##当前页
+    #set($currpage=$pageModel.currpage)
+    ##总页数
+    #set($pagecount=$pageModel.pagecount)
+    ##页大小
+    #set($pagesize=$pageModel.pagesize)
+
+    #if($currpage<$pagecount)
+    #end
+#end
