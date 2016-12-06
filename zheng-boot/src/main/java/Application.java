@@ -16,14 +16,14 @@ public class Application {
     }
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
-        MqListener.listen();
-//        for (int i=0;i<10;i++){
-//            try {
-//                Thread.sleep(1000);
-//                System.out.print("现在时间"+new Date().toString());
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//        }
+//        MqListener.listen();
+        for (int i=0;i<10;i++){
+            try {
+                Thread.sleep(1000);
+                System.out.print("现在时间"+new Date().toString());
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
