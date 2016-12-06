@@ -16,13 +16,7 @@ public class Application {
     }
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
-        try {
-            MqListener.main(args);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        MqListener.listen();
 //        for (int i=0;i<10;i++){
 //            try {
 //                Thread.sleep(1000);
