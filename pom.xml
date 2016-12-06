@@ -15,6 +15,7 @@
         <module>zheng-common</module>
         <module>zheng-elasticjob</module>
         <module>zheng-boot</module>
+        <module>zheng-rabbitmq</module>
     </modules>
 
     <properties>
@@ -284,6 +285,12 @@
             <version>0.7</version>
         </dependency>
         <!--dubbo依赖 end-->
+
+        <dependency>
+            <groupId>org.springframework.amqp</groupId>
+            <artifactId>spring-rabbit</artifactId>
+            <version>1.2.2.RELEASE</version>
+        </dependency>
 
         <!-- 引入elastic-job核心模块 -->
         <dependency>

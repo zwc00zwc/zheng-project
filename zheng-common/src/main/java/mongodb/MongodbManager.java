@@ -4,13 +4,58 @@ import com.mongodb.*;
 import com.mongodb.client.MongoDatabase;
 import utility.BeanUtility;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Properties;
 
 /**
  * Created by Administrator on 2016/8/21.
  */
 public class MongodbManager {
+
+    private static Properties props = new Properties();
+    static {
+        try {
+            props.load(Thread.currentThread().getContextClassLoader().getResourceAsStream("mongo.properties"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    private static MongoClient client=null;
+
+    private static MongoDatabase mongoDatabase=null;
+
+    private static MongoClient authClient=null;
+
+    private static MongoDatabase authMongoDatabase=null;
+
+    public static MongoDatabase getDatabase(String database){
+        if (mongoDatabase==null){
+            if (client==null){
+                client=new MongoClient(props.getProperty("mongo_ip"),Integer.parseInt(props.getProperty("mongo_port")));
+            }
+            mongoDatabase=client.getDatabase(database);
+        }
+        return mongoDatabase;
+    }
+
+    /**
+     * 认证
+     * @return
+     */
+    public static MongoDatabase getAuthDatabase(){
+        if (authMongoDatabase==null){
+            if (authClient==null){
+                MongoCredential credential = MongoCredential.createCredential(props.getProperty("db_username"), props.getProperty("db_name"), props.getProperty("db_password").toCharArray());
+                authClient=new MongoClient(new ServerAddress(props.getProperty("mongo_ip"),Integer.parseInt(props.getProperty("mongo_port"))), Arrays.asList(credential));
+            }
+            authMongoDatabase=authClient.getDatabase(props.getProperty("db_name"));
+        }
+        return authMongoDatabase;
+    }
+
     public static MongoDatabase getMongoClient(String host, int port,String database){
         MongoClient client=new MongoClient(host,port);
 
