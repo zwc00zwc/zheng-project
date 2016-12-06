@@ -1,10 +1,8 @@
 package spiservice.system;
 
-import domain.dao.PermDao;
 import domain.dto.PermLevelDto;
 import domain.manager.PermManager;
 import domain.model.system.Perm;
-import org.apache.velocity.runtime.directive.Foreach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
