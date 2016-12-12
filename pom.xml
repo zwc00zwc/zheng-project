@@ -295,10 +295,15 @@
             </dependency>
             <!--dubbo依赖 end-->
 
+            <!--<dependency>-->
+                <!--<groupId>org.springframework.amqp</groupId>-->
+                <!--<artifactId>spring-rabbit</artifactId>-->
+                <!--<version>${rabbit.version}</version>-->
+            <!--</dependency>-->
             <dependency>
-                <groupId>org.springframework.amqp</groupId>
-                <artifactId>spring-rabbit</artifactId>
-                <version>${rabbit.version}</version>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-amqp</artifactId>
+                <version>1.4.0.RELEASE</version>
             </dependency>
 
             <!-- 引入elastic-job核心模块 -->
