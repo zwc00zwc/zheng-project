@@ -1,8 +1,7 @@
-package mongodb;
+package common.mongodb;
 
 import com.mongodb.*;
 import com.mongodb.client.MongoDatabase;
-import utility.BeanUtility;
 
 import java.io.IOException;
 import java.util.ArrayList;

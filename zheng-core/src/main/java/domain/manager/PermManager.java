@@ -6,7 +6,7 @@ import domain.dao.RolePermDao;
 import domain.model.system.Perm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import utility.StringUtility;
+import common.utility.StringUtility;
 
 import java.util.ArrayList;
 import java.util.List;

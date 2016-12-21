@@ -1,6 +1,5 @@
 package controller;
 
-import ch.qos.logback.core.util.StringCollectionUtil;
 import common.AuthUser;
 import common.Constants;
 import domain.model.system.Member;
@@ -15,13 +14,12 @@ import org.springframework.web.servlet.view.RedirectView;
 import spi.system.MemberSPI;
 import spi.system.PermissionSPI;
 import thread.TestThread;
-import utility.MD5Utility;
+import common.utility.MD5Utility;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.List;
 import java.util.Set;
 
 /**

@@ -1,4 +1,4 @@
-package lock;
+package common.lock;
 
 import org.apache.zookeeper.*;
 import org.apache.zookeeper.data.Stat;

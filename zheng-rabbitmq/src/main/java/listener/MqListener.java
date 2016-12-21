@@ -3,11 +3,11 @@ package listener;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.rabbitmq.client.Channel;
-import mongodb.MongodbManager;
+import common.mongodb.MongodbManager;
 import org.bson.Document;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageListener;
-import rabbitmq.RabbitManager;
+import common.rabbitmq.RabbitManager;
 
 import java.io.IOException;
 import java.util.Date;

@@ -1,4 +1,4 @@
-package utility;
+package common.utility;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;

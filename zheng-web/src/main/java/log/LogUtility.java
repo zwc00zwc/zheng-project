@@ -1,9 +1,8 @@
 package log;
 
-import com.mongodb.DBCollection;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import mongodb.MongodbManager;
+import common.mongodb.MongodbManager;
 import org.bson.Document;
 
 import java.util.Date;

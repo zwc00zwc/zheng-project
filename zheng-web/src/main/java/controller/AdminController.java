@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import spi.system.MemberSPI;
 import spi.system.RoleSPI;
-import utility.MD5Utility;
+import common.utility.MD5Utility;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
