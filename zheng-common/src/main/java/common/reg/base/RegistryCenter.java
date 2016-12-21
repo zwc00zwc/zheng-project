@@ -8,64 +8,67 @@ import java.util.List;
  */
 public interface RegistryCenter {
     /**
-     * 直接从注册中心而非本地缓存获取数据.
+     * 初始化注册中心.
+     */
+    void init();
+
+    /**
+     * 关闭注册中心.
+     */
+    void close();
+
+    /**
+     * 获取注册数据.
      *
      * @param key 键
      * @return 值
      */
-    String getDirectly(String key);
+    String get(String key);
 
     /**
-     * 获取子节点名称集合.
+     * 获取数据是否存在.
      *
      * @param key 键
-     * @return 子节点名称集合
+     * @return 数据是否存在
      */
-    List<String> getChildrenKeys(String key);
+    boolean isExisted(String key);
 
     /**
-     * 获取子节点数量.
-     *
-     * @param key 键
-     * @return 子节点数量
-     */
-    int getNumChildren(String key);
-
-    /**
-     * 持久化临时注册数据.
+     * 持久化注册数据.
      *
      * @param key 键
      * @param value 值
      */
-    void persistEphemeral(String key, String value);
+    void persist(String key, String value);
 
     /**
-     * 持久化顺序注册数据.
+     * 更新注册数据.
      *
      * @param key 键
-     * @return 包含10位顺序数字的znode名称
+     * @param value 值
      */
-    String persistSequential(String key, String value);
+    void update(String key, String value);
 
     /**
-     * 持久化临时顺序注册数据.
+     * 删除注册数据.
      *
      * @param key 键
      */
-    void persistEphemeralSequential(String key);
+    void remove(String key);
 
     /**
-     * 添加本地缓存.
+     * 获取注册中心当前时间.
      *
-     * @param cachePath 需加入缓存的路径
+     * @param key 用于获取时间的键
+     * @return 注册中心当前时间
      */
-    void addCacheData(String cachePath);
+    long getRegistryCenterTime(String key);
 
     /**
-     * 获取注册中心数据缓存对象.
+     * 直接获取操作注册中心的原生客户端.
+     * 如：Zookeeper或Redis等原生客户端.
      *
-     * @param cachePath 缓存的节点路径
-     * @return 注册中心数据缓存对象
+     * @return 注册中心的原生客户端
      */
-    Object getRawCache(String cachePath);
+    Object getRawClient();
 }

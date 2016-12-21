@@ -1,20 +1,23 @@
 package common.reg.zookeeper;
 
 import com.google.common.base.Charsets;
+import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import common.reg.base.RegistryCenter;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.framework.api.ACLProvider;
+import org.apache.curator.framework.recipes.cache.ChildData;
 import org.apache.curator.framework.recipes.cache.TreeCache;
 import org.apache.curator.retry.ExponentialBackoffRetry;
+import org.apache.curator.utils.CloseableUtils;
+import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.ZooDefs;
 import org.apache.zookeeper.data.ACL;
+import org.apache.zookeeper.data.Stat;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -77,35 +80,195 @@ public class ZookeeperRegistryCenter implements RegistryCenter {
         }
     }
 
-    public String getDirectly(String key) {
+    public void close() {
+        for (Map.Entry<String, TreeCache> each : caches.entrySet()) {
+            each.getValue().close();
+        }
+        waitForCacheClose();
+        CloseableUtils.closeQuietly(client);
+    }
+
+    /*  等待500ms, cache先关闭再关闭client, 否则会抛异常
+     * 因为异步处理, 可能会导致client先关闭而cache还未关闭结束.
+     * 等待Curator新版本解决这个bug.
+     * BUG地址：https://issues.apache.org/jira/browse/CURATOR-157
+     */
+    private void waitForCacheClose() {
+        try {
+            Thread.sleep(500L);
+        } catch (final InterruptedException ex) {
+            Thread.currentThread().interrupt();
+        }
+    }
+
+    public String get(final String key) {
+        TreeCache cache = findTreeCache(key);
+        if (null == cache) {
+            return getDirectly(key);
+        }
+        ChildData resultInCache = cache.getCurrentData(key);
+        if (null != resultInCache) {
+            return null == resultInCache.getData() ? null : new String(resultInCache.getData(), Charsets.UTF_8);
+        }
+        return getDirectly(key);
+    }
+
+    private TreeCache findTreeCache(final String key) {
+        for (Map.Entry<String, TreeCache> entry : caches.entrySet()) {
+            if (key.startsWith(entry.getKey())) {
+                return entry.getValue();
+            }
+        }
         return null;
     }
 
-    public List<String> getChildrenKeys(String key) {
-        return null;
+    public String getDirectly(final String key) {
+        try {
+            return new String(client.getData().forPath(key), Charsets.UTF_8);
+            //CHECKSTYLE:OFF
+        } catch (final Exception ex) {
+            //CHECKSTYLE:ON
+            return null;
+        }
     }
 
-    public int getNumChildren(String key) {
+    public List<String> getChildrenKeys(final String key) {
+        try {
+            List<String> result = client.getChildren().forPath(key);
+            Collections.sort(result, new Comparator<String>() {
+
+                public int compare(final String o1, final String o2) {
+                    return o2.compareTo(o1);
+                }
+            });
+            return result;
+            //CHECKSTYLE:OFF
+        } catch (final Exception ex) {
+            //CHECKSTYLE:ON
+            return Collections.emptyList();
+        }
+    }
+
+    public int getNumChildren(final String key) {
+        try {
+            Stat stat = client.getZookeeperClient().getZooKeeper().exists(getNameSpace() + key, false);
+            if (null != stat) {
+                return stat.getNumChildren();
+            }
+            //CHECKSTYLE:OFF
+        } catch (final Exception ex) {
+            //CHECKSTYLE:ON
+        }
         return 0;
     }
 
-    public void persistEphemeral(String key, String value) {
-
+    private String getNameSpace() {
+        String result = this.zkConfig.getNamespace();
+        return Strings.isNullOrEmpty(result) ? "" : "/" + result;
     }
 
-    public String persistSequential(String key, String value) {
+    public boolean isExisted(final String key) {
+        try {
+            return null != client.checkExists().forPath(key);
+            //CHECKSTYLE:OFF
+        } catch (final Exception ex) {
+            //CHECKSTYLE:ON
+            return false;
+        }
+    }
+
+    public void persist(final String key, final String value) {
+        try {
+            if (!isExisted(key)) {
+                client.create().creatingParentsIfNeeded().withMode(CreateMode.PERSISTENT).forPath(key, value.getBytes(Charsets.UTF_8));
+            } else {
+                update(key, value);
+            }
+            //CHECKSTYLE:OFF
+        } catch (final Exception ex) {
+            //CHECKSTYLE:ON
+        }
+    }
+
+    public void update(final String key, final String value) {
+        try {
+            client.inTransaction().check().forPath(key).and().setData().forPath(key, value.getBytes(Charsets.UTF_8)).and().commit();
+            //CHECKSTYLE:OFF
+        } catch (final Exception ex) {
+            //CHECKSTYLE:ON
+        }
+    }
+
+    public void persistEphemeral(final String key, final String value) {
+        try {
+            if (isExisted(key)) {
+                client.delete().deletingChildrenIfNeeded().forPath(key);
+            }
+            client.create().creatingParentsIfNeeded().withMode(CreateMode.EPHEMERAL).forPath(key, value.getBytes(Charsets.UTF_8));
+            //CHECKSTYLE:OFF
+        } catch (final Exception ex) {
+            //CHECKSTYLE:ON
+        }
+    }
+
+    public String persistSequential(final String key, final String value) {
+        try {
+            return client.create().creatingParentsIfNeeded().withMode(CreateMode.PERSISTENT_SEQUENTIAL).forPath(key, value.getBytes(Charsets.UTF_8));
+            //CHECKSTYLE:OFF
+        } catch (final Exception ex) {
+            //CHECKSTYLE:ON
+        }
         return null;
     }
 
-    public void persistEphemeralSequential(String key) {
-
+    public void persistEphemeralSequential(final String key) {
+        try {
+            client.create().creatingParentsIfNeeded().withMode(CreateMode.EPHEMERAL_SEQUENTIAL).forPath(key);
+            //CHECKSTYLE:OFF
+        } catch (final Exception ex) {
+            //CHECKSTYLE:ON
+        }
     }
 
-    public void addCacheData(String cachePath) {
-
+    public void remove(final String key) {
+        try {
+            client.delete().deletingChildrenIfNeeded().forPath(key);
+            //CHECKSTYLE:OFF
+        } catch (final Exception ex) {
+            //CHECKSTYLE:ON
+        }
     }
 
-    public Object getRawCache(String cachePath) {
-        return null;
+    public long getRegistryCenterTime(final String key) {
+        long result = 0L;
+        try {
+            String path = client.create().creatingParentsIfNeeded().withMode(CreateMode.EPHEMERAL_SEQUENTIAL).forPath(key);
+            result = client.checkExists().forPath(path).getCtime();
+            //CHECKSTYLE:OFF
+        } catch (final Exception ex) {
+            //CHECKSTYLE:ON
+        }
+        Preconditions.checkState(0L != result, "Cannot get registry center time.");
+        return result;
+    }
+
+    public Object getRawClient() {
+        return client;
+    }
+
+    public void addCacheData(final String cachePath) {
+        TreeCache cache = new TreeCache(client, cachePath);
+        try {
+            cache.start();
+            //CHECKSTYLE:OFF
+        } catch (final Exception ex) {
+            //CHECKSTYLE:ON
+
+        }
+        caches.put(cachePath + "/", cache);
+    }
+
+    public Object getRawCache(final String cachePath) {
+        return caches.get(cachePath + "/");
     }
 }
