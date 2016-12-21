@@ -4,6 +4,7 @@ import com.google.common.base.Charsets;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import common.reg.base.RegistryCenter;
+import org.apache.curator.RetryPolicy;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.framework.api.ACLProvider;
@@ -15,6 +16,7 @@ import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.ZooDefs;
 import org.apache.zookeeper.data.ACL;
+import org.apache.zookeeper.data.Id;
 import org.apache.zookeeper.data.Stat;
 
 import java.util.*;
@@ -56,13 +58,20 @@ public class ZookeeperRegistryCenter implements RegistryCenter {
         if (!Strings.isNullOrEmpty(zkConfig.getAuth())) {
             builder.authorization("auth", zkConfig.getAuth().getBytes(Charsets.UTF_8))
                     .aclProvider(new ACLProvider() {
+                        private List<ACL> acl ;
 
                         public List<ACL> getDefaultAcl() {
-                            return ZooDefs.Ids.CREATOR_ALL_ACL;
+                            if(acl ==null){
+                                ArrayList<ACL> acl = ZooDefs.Ids.CREATOR_ALL_ACL;
+                                acl.clear();
+                                acl.add(new ACL(ZooDefs.Perms.ALL, new Id("auth", zkConfig.getAuth()) ));
+                                this.acl = acl;
+                            }
+                            return acl;
                         }
 
                         public List<ACL> getAclForPath(final String path) {
-                            return ZooDefs.Ids.CREATOR_ALL_ACL;
+                            return acl;
                         }
                     });
         }
@@ -78,6 +87,12 @@ public class ZookeeperRegistryCenter implements RegistryCenter {
         } catch (KeeperException.OperationTimeoutException e) {
             e.printStackTrace();
         }
+//        String connectString = zkConfig.getServerLists();
+//        // 连接时间 和重试次数
+//        RetryPolicy retryPolicy = new ExponentialBackoffRetry(1000, 3);
+//        client = CuratorFrameworkFactory.newClient(connectString, retryPolicy);
+//
+//        client.start();
     }
 
     public void close() {
