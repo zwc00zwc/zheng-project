@@ -21,16 +21,16 @@ public class Test {
             e.printStackTrace();
         }
         zookeeperRegistryCenter.init();
-        CuratorFramework curatorFramework=(CuratorFramework) zookeeperRegistryCenter.getRawClient();
-        TreeCache treeCache=new TreeCache(curatorFramework,"/aaa");
-
-        treeCache.getListenable().addListener(new AbstractListener() {
-        });
-        try {
-            treeCache.start();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        CuratorFramework curatorFramework=(CuratorFramework) zookeeperRegistryCenter.getRawClient();
+//        TreeCache treeCache=new TreeCache(curatorFramework,"/aaa");
+//
+//        treeCache.getListenable().addListener(new AbstractListener() {
+//        });
+//        try {
+//            treeCache.start();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
         zookeeperRegistryCenter.create("/aaa","aaa");
         zookeeperRegistryCenter.update("/aaa","111");
         zookeeperRegistryCenter.update("/aaa","222");
