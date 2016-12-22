@@ -56,7 +56,7 @@ public class ZookeeperRegistryCenter implements RegistryCenter {
             builder.connectionTimeoutMs(zkConfig.getConnectionTimeoutMilliseconds());
         }
         if (!Strings.isNullOrEmpty(zkConfig.getAuth())) {
-            builder.authorization("auth", zkConfig.getAuth().getBytes(Charsets.UTF_8))
+            builder.authorization("digest", zkConfig.getAuth().getBytes(Charsets.UTF_8))
                     .aclProvider(new ACLProvider() {
                         private List<ACL> acl ;
 
@@ -192,7 +192,7 @@ public class ZookeeperRegistryCenter implements RegistryCenter {
         }
     }
 
-    public void persist(final String key, final String value) {
+    public void create(final String key, final String value) {
         try {
             if (!isExisted(key)) {
                 client.create().creatingParentsIfNeeded().withMode(CreateMode.PERSISTENT).forPath(key, value.getBytes(Charsets.UTF_8));
@@ -214,7 +214,7 @@ public class ZookeeperRegistryCenter implements RegistryCenter {
         }
     }
 
-    public void persistEphemeral(final String key, final String value) {
+    public void createEphemeral(final String key, final String value) {
         try {
             if (isExisted(key)) {
                 client.delete().deletingChildrenIfNeeded().forPath(key);
@@ -226,7 +226,7 @@ public class ZookeeperRegistryCenter implements RegistryCenter {
         }
     }
 
-    public String persistSequential(final String key, final String value) {
+    public String createSequential(final String key, final String value) {
         try {
             return client.create().creatingParentsIfNeeded().withMode(CreateMode.PERSISTENT_SEQUENTIAL).forPath(key, value.getBytes(Charsets.UTF_8));
             //CHECKSTYLE:OFF
@@ -236,7 +236,7 @@ public class ZookeeperRegistryCenter implements RegistryCenter {
         return null;
     }
 
-    public void persistEphemeralSequential(final String key) {
+    public void createEphemeralSequential(final String key) {
         try {
             client.create().creatingParentsIfNeeded().withMode(CreateMode.EPHEMERAL_SEQUENTIAL).forPath(key);
             //CHECKSTYLE:OFF

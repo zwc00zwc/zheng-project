@@ -12,6 +12,6 @@ import java.util.Date;
  */
 public abstract class AbstractListener implements TreeCacheListener {
     public final void childEvent(final CuratorFramework curatorFramework, final TreeCacheEvent treeCacheEvent) throws Exception {
-        System.out.print(new Date().toString());
+        System.out.print("监听："+new Date().toString());
     }
 }

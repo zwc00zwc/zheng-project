@@ -39,7 +39,7 @@ public interface RegistryCenter {
      * @param key 键
      * @param value 值
      */
-    void persist(String key, String value);
+    void create(String key, String value);
 
     /**
      * 更新注册数据.
@@ -102,7 +102,7 @@ public interface RegistryCenter {
      * @param key 键
      * @param value 值
      */
-    void persistEphemeral(String key, String value);
+    void createEphemeral(String key, String value);
 
     /**
      * 持久化顺序注册数据.
@@ -110,14 +110,14 @@ public interface RegistryCenter {
      * @param key 键
      * @return 包含10位顺序数字的znode名称
      */
-    String persistSequential(String key, String value);
+    String createSequential(String key, String value);
 
     /**
      * 持久化临时顺序注册数据.
      *
      * @param key 键
      */
-    void persistEphemeralSequential(String key);
+    void createEphemeralSequential(String key);
 
     /**
      * 添加本地缓存.
