@@ -1,4 +1,4 @@
-package common.reg.zookeeper;
+package common.reg.base;
 
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.recipes.cache.TreeCacheEvent;
@@ -12,6 +12,8 @@ import java.util.Date;
  */
 public abstract class AbstractListener implements TreeCacheListener {
     public final void childEvent(final CuratorFramework curatorFramework, final TreeCacheEvent treeCacheEvent) throws Exception {
-        System.out.print("监听："+new Date().toString());
+        changed(curatorFramework,treeCacheEvent);
     }
+
+    public abstract void changed(final CuratorFramework curatorFramework, final TreeCacheEvent treeCacheEvent);
 }

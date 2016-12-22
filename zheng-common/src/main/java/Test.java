@@ -1,9 +1,11 @@
-import common.lock.DistributedLock;
-import common.reg.zookeeper.AbstractListener;
+import common.reg.base.AbstractListener;
 import common.reg.zookeeper.ZookeeperConfig;
 import common.reg.zookeeper.ZookeeperRegistryCenter;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.recipes.cache.TreeCache;
+import org.apache.curator.framework.recipes.cache.TreeCacheEvent;
+
+import java.util.Date;
 
 /**
  * Created by XR on 2016/12/16.
@@ -21,16 +23,20 @@ public class Test {
             e.printStackTrace();
         }
         zookeeperRegistryCenter.init();
-//        CuratorFramework curatorFramework=(CuratorFramework) zookeeperRegistryCenter.getRawClient();
-//        TreeCache treeCache=new TreeCache(curatorFramework,"/aaa");
-//
-//        treeCache.getListenable().addListener(new AbstractListener() {
-//        });
-//        try {
-//            treeCache.start();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        CuratorFramework curatorFramework=(CuratorFramework) zookeeperRegistryCenter.getRawClient();
+        TreeCache treeCache=new TreeCache(curatorFramework,"/aaa");
+
+        treeCache.getListenable().addListener(new AbstractListener() {
+            @Override
+            public void changed(CuratorFramework curatorFramework, TreeCacheEvent treeCacheEvent) {
+                System.out.print("发生了监听:"+new Date().toString());
+            }
+        });
+        try {
+            treeCache.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         zookeeperRegistryCenter.create("/aaa","aaa");
         zookeeperRegistryCenter.update("/aaa","111");
         zookeeperRegistryCenter.update("/aaa","222");

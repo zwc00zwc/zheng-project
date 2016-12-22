@@ -1,8 +1,11 @@
-import common.reg.zookeeper.AbstractListener;
+import common.reg.base.AbstractListener;
 import common.reg.zookeeper.ZookeeperConfig;
 import common.reg.zookeeper.ZookeeperRegistryCenter;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.recipes.cache.TreeCache;
+import org.apache.curator.framework.recipes.cache.TreeCacheEvent;
+
+import java.util.Date;
 
 /**
  * Created by XR on 2016/12/22.
@@ -24,6 +27,10 @@ public class Test3 {
         TreeCache treeCache=new TreeCache(curatorFramework,"/aaa");
 
         treeCache.getListenable().addListener(new AbstractListener() {
+            @Override
+            public void changed(CuratorFramework curatorFramework, TreeCacheEvent treeCacheEvent) {
+                System.out.print("发生监听："+new Date().toString());
+            }
         });
         try {
             treeCache.start();
@@ -31,7 +38,7 @@ public class Test3 {
             e.printStackTrace();
         }
         while (true){
-            
+
         }
     }
 }
