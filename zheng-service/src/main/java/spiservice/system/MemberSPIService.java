@@ -1,10 +1,5 @@
 package spiservice.system;
 
-import domain.dao.MemberDao;
-import domain.dao.MemberRoleDao;
-import domain.dao.PermDao;
-import domain.dao.RoleDao;
-import domain.dto.AuthMemberDto;
 import domain.dto.AuthPerm;
 import domain.dto.MemberDto;
 import domain.dto.MemberRoleDto;
@@ -12,7 +7,6 @@ import domain.manager.MemberManager;
 import domain.manager.PermManager;
 import domain.manager.RoleManager;
 import domain.model.system.Member;
-import domain.model.system.MemberRole;
 import domain.model.system.Perm;
 import domain.model.system.Role;
 import org.apache.commons.beanutils.PropertyUtils;

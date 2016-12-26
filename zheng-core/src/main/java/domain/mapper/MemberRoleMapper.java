@@ -1,13 +1,11 @@
-package domain.dao;
+package domain.mapper;
 
 import domain.model.system.MemberRole;
-
-import java.util.List;
 
 /**
  * Created by XR on 2016/8/23.
  */
-public interface MemberRoleDao {
+public interface MemberRoleMapper {
 
     String queryRolesByMemberId(Long memberid);
 

@@ -1,15 +1,14 @@
-package domain.dao;
+package domain.mapper;
 
 import domain.model.system.Perm;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by XR on 2016/8/22.
  */
-public interface PermDao {
+public interface PermMapper {
     List<Perm> queryList();
 
     Perm queryById(Long id);

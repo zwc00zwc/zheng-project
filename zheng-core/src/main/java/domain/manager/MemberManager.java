@@ -1,7 +1,7 @@
 package domain.manager;
 
-import domain.dao.MemberDao;
-import domain.dao.MemberRoleDao;
+import domain.mapper.MemberMapper;
+import domain.mapper.MemberRoleMapper;
 import domain.model.system.Member;
 import domain.model.system.MemberRole;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +16,9 @@ import java.util.List;
 @Component
 public class MemberManager {
     @Autowired
-    private MemberDao memberDao;
+    private MemberMapper memberDao;
     @Autowired
-    private MemberRoleDao memberRoleDao;
+    private MemberRoleMapper memberRoleDao;
 
     public List<Member> querylist(){
         return memberDao.querylist();

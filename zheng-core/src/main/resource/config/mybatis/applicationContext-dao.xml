@@ -52,7 +52,7 @@
     <!-- mapper扫描 -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <!-- 扫描多个包加, -->
-        <property name="basePackage" value="domain.dao"></property>
+        <property name="basePackage" value="domain.mapper"></property>
         <!--<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>-->
     </bean>
 

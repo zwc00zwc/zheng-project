@@ -1,9 +1,9 @@
 package domain.manager;
 
-import domain.dao.MemberRoleDao;
-import domain.dao.PermDao;
-import domain.dao.RoleDao;
-import domain.dao.RolePermDao;
+import domain.mapper.MemberRoleMapper;
+import domain.mapper.PermMapper;
+import domain.mapper.RoleMapper;
+import domain.mapper.RolePermMapper;
 import domain.model.system.Role;
 import domain.model.system.RolePerm;
 import org.apache.commons.lang3.StringUtils;
@@ -21,13 +21,13 @@ import java.util.List;
 @Component
 public class RoleManager {
     @Autowired
-    private MemberRoleDao memberRoleDao;
+    private MemberRoleMapper memberRoleDao;
     @Autowired
-    private RoleDao roleDao;
+    private RoleMapper roleDao;
     @Autowired
-    private PermDao permDao;
+    private PermMapper permDao;
     @Autowired
-    private RolePermDao rolePermDao;
+    private RolePermMapper rolePermDao;
 
     public List<Role> queryList(){
         return roleDao.queryList();

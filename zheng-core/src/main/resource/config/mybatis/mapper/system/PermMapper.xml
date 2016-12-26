@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 
-<mapper namespace="domain.dao.PermDao">
+<mapper namespace="domain.mapper.PermMapper">
     <resultMap id="result" type="perm">
         <id column="id" property="id" jdbcType="BIGINT"></id>
         <result column="parentid" property="parentId" jdbcType="BIGINT"></result>

@@ -1,4 +1,4 @@
-package domain.dao;
+package domain.mapper;
 
 import domain.model.system.Role;
 
@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by XR on 2016/8/22.
  */
-public interface RoleDao {
+public interface RoleMapper {
     List<Role> queryByIds(List<Long> ids);
 
     Role queryById(Long id);

@@ -1,14 +1,13 @@
-package domain.dao;
+package domain.mapper;
 
 import domain.model.system.RolePerm;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by XR on 2016/8/22.
  */
-public interface RolePermDao {
+public interface RolePermMapper {
 
     List<String> queryPermIdByRoleIds(List<Long> roleids);
 

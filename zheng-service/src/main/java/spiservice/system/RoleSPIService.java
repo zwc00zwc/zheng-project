@@ -1,14 +1,10 @@
 package spiservice.system;
 
-import domain.dao.PermDao;
-import domain.dao.RoleDao;
-import domain.dao.RolePermDao;
 import domain.dto.RolePermDto;
 import domain.manager.PermManager;
 import domain.manager.RoleManager;
 import domain.model.system.Perm;
 import domain.model.system.Role;
-import domain.model.system.RolePerm;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +13,6 @@ import spi.system.RoleSPI;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**

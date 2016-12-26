@@ -1,8 +1,8 @@
 package domain.manager;
 
-import domain.dao.MemberRoleDao;
-import domain.dao.PermDao;
-import domain.dao.RolePermDao;
+import domain.mapper.MemberRoleMapper;
+import domain.mapper.PermMapper;
+import domain.mapper.RolePermMapper;
 import domain.model.system.Perm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -17,11 +17,11 @@ import java.util.List;
 @Component
 public class PermManager {
     @Autowired
-    private PermDao permDao;
+    private PermMapper permDao;
     @Autowired
-    private MemberRoleDao memberRoleDao;
+    private MemberRoleMapper memberRoleDao;
     @Autowired
-    private RolePermDao rolePermDao;
+    private RolePermMapper rolePermDao;
     public List<Perm> queryByMemberIdAndParentId(Long memberid,Long parentid){
         List<Perm> list=new ArrayList<Perm>();
         List<Long> roleids=new ArrayList<Long>();
