@@ -15,7 +15,6 @@
         <module>zheng-common</module>
         <module>zheng-elasticjob</module>
         <module>zheng-boot</module>
-        <module>zheng-rabbitmq</module>
     </modules>
 
     <properties>
