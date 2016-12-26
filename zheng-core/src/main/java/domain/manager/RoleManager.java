@@ -10,6 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import common.utility.StringUtility;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -50,6 +51,7 @@ public class RoleManager {
         return roleDao.queryById(id);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public boolean insertRole(Role role,String permids){
         if (roleDao.insertRoleAndReturnId(role)>0){
             RolePerm roleperm=new RolePerm();
