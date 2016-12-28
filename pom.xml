@@ -25,6 +25,8 @@
         <elastic.version>1.1.1</elastic.version>
         <curator.version>2.10.0</curator.version>
         <zookeeper.version>3.4.6</zookeeper.version>
+        <sharding.version>1.4.0</sharding.version>
+        <disconf.version>2.6.36</disconf.version>
     </properties>
 
     <dependencyManagement>
@@ -344,6 +346,21 @@
                 <artifactId>elastic-job-spring</artifactId>
                 <version>${elastic.version}</version>
             </dependency>
+
+            <!-- https://mvnrepository.com/artifact/com.dangdang/sharding-jdbc-core -->
+            <dependency>
+                <groupId>com.dangdang</groupId>
+                <artifactId>sharding-jdbc-core</artifactId>
+                <version>${sharding.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/com.baidu.disconf/disconf-client -->
+            <dependency>
+                <groupId>com.baidu.disconf</groupId>
+                <artifactId>disconf-client</artifactId>
+                <version>${disconf.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
