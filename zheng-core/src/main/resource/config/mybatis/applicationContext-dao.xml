@@ -26,25 +26,25 @@
         <property name="password" value="${jdbc.password}"/>
     </bean>
 
-    <!--<bean id="ds2" class="org.springframework.jdbc.datasource.DriverManagerDataSource">-->
-        <!--<property name="driverClassName" value="${jdbc.driver}"/>-->
-        <!--<property name="url" value="${jdbc.url2}"/>-->
-        <!--<property name="username" value="${jdbc.username}"/>-->
-        <!--<property name="password" value="${jdbc.password}"/>-->
-    <!--</bean>-->
+    <bean id="ds2" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="${jdbc.driver}"/>
+        <property name="url" value="${jdbc.url2}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+    </bean>
 
-    <!--<bean id="datasource" class="priv.zwc.DataSource.DynamicDataSource">-->
-        <!--<property name="targetDataSources">-->
-            <!--<map key-type="java.lang.String">-->
-                <!--<entry value-ref="ds1" key="d1"></entry>-->
-                <!--<entry value-ref="ds2" key="d2"></entry>-->
-            <!--</map>-->
-        <!--</property>-->
-        <!--<property name="defaultTargetDataSource" ref="ds1"></property>-->
-    <!--</bean>-->
+    <bean id="datasource" class="domain.db.DynamicDataSource">
+        <property name="targetDataSources">
+            <map key-type="java.lang.String">
+                <entry value-ref="ds1" key="ds1"></entry>
+                <entry value-ref="ds2" key="ds2"></entry>
+            </map>
+        </property>
+        <property name="defaultTargetDataSource" ref="ds2"></property>
+    </bean>
 
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-        <property name="dataSource" ref="ds1"></property>
+        <property name="dataSource" ref="datasource"></property>
         <property name="configLocation" value="classpath:config/mybatis/SqlMapperConfig.xml"></property>
         <property name="mapperLocations" value="classpath:config/mybatis/mapper/**/*.xml"></property>
     </bean>
