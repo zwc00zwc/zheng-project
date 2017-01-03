@@ -1,5 +1,6 @@
 package spiservice.system;
 
+import domain.db.DynamicData;
 import domain.dto.AuthPerm;
 import domain.dto.MemberDto;
 import domain.dto.MemberRoleDto;
@@ -21,7 +22,7 @@ import java.util.*;
 /**
  * Created by XR on 2016/8/24.
  */
-@Transactional
+//@Transactional
 @Service("memberSPIService")
 public class MemberSPIService implements MemberSPI {
     @Autowired
@@ -30,10 +31,13 @@ public class MemberSPIService implements MemberSPI {
     private MemberManager memberManager;
     @Autowired
     private PermManager permManager;
+
+    @DynamicData(source = "ds2")
     public List<Member> querylist() {
         return memberManager.querylist();
     }
 
+    @DynamicData(source = "ds2")
     public List<MemberDto> querylistPage() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         List<MemberDto> listDto=new ArrayList<MemberDto>();
         List<Member> list= memberManager.querylist();

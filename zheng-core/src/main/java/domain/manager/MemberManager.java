@@ -6,6 +6,7 @@ import domain.model.system.Member;
 import domain.model.system.MemberRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
 /**
  * Created by XR on 2016/8/31.
  */
+@Transactional
 @Component
 public class MemberManager {
     @Autowired

@@ -16,7 +16,7 @@ import java.util.Set;
 /**
  * Created by XR on 2016/8/25.
  */
-@Transactional
+//@Transactional
 @Service("permissionSPIService")
 public class PermissionSPIService implements PermissionSPI {
     @Autowired

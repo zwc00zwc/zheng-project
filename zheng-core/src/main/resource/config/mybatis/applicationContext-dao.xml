@@ -40,7 +40,7 @@
                 <entry value-ref="ds2" key="ds2"></entry>
             </map>
         </property>
-        <property name="defaultTargetDataSource" ref="ds2"></property>
+        <property name="defaultTargetDataSource" ref="ds1"></property>
     </bean>
 
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">

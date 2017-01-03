@@ -11,7 +11,10 @@
 		   http://www.springframework.org/schema/aop/spring-aop-4.2.xsd">
 
     <context:annotation-config/>
-    <context:component-scan base-package="spiservice"/>
+    <context:component-scan base-package="spiservice,domain.db"/>
+
+    <!--支持aspectj-->
+    <aop:aspectj-autoproxy/>
 
     <!-- 强制SPRING使用CGLIB动态代理，不使用JDK代理。 -->
     <aop:config proxy-target-class="true"/>

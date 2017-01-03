@@ -19,6 +19,7 @@ import java.util.List;
 /**
  * Created by XR on 2016/8/31.
  */
+@Transactional
 @Component
 public class RoleManager {
     @Autowired

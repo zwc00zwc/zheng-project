@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * Created by XR on 2016/8/25.
  */
-@Transactional
+//@Transactional
 @Service("roleSPIService")
 public class RoleSPIService implements RoleSPI {
     @Autowired

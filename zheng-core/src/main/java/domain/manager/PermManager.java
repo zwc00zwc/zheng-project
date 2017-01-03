@@ -7,6 +7,7 @@ import domain.model.system.Perm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import common.utility.StringUtility;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.List;
 /**
  * Created by XR on 2016/8/31.
  */
+@Transactional
 @Component
 public class PermManager {
     @Autowired
