@@ -11,6 +11,7 @@ import java.util.Date;
 public class JobTest {
     public static void main(String[] args){
         JobDetail jobDetail = JobBuilder.newJob(Job1.class).withIdentity("Job1").build();
+        jobDetail.getJobDataMap().put("jobconfig","看看情况");
         Scheduler scheduler=null;
         try {
             StdSchedulerFactory factory = new StdSchedulerFactory();
