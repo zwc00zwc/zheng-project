@@ -11,21 +11,18 @@ import org.quartz.impl.StdSchedulerFactory;
  */
 public class JobScheduler {
     private final String jobName;
-    public JobScheduler(final JobConfig jobConfig ){
+    private final String javaClass;
+    private final String corn;
+    public JobScheduler(final JobConfig jobConfig){
         jobName=jobConfig.getJobName();
+        javaClass=jobConfig.getJavaClass();
+        corn=jobConfig.getCorn();
     }
     /**
      * 初始化作业.
      */
     public void init() {
-//        jobExecutor.init();
-//        JobTypeConfiguration jobTypeConfig = jobExecutor.getSchedulerFacade().loadJobConfiguration().getTypeConfig();
-//        JobScheduleController jobScheduleController = new JobScheduleController(
-//                createScheduler(jobTypeConfig.getCoreConfig().isMisfire()), createJobDetail(jobTypeConfig.getJobClass()), jobExecutor.getSchedulerFacade(), jobName);
-//        jobScheduleController.scheduleJob(jobTypeConfig.getCoreConfig().getCron());
-//        jobRegistry.addJobScheduleController(jobName, jobScheduleController);
-
-        JobDetail jobDetail = JobBuilder.newJob(AbstractJob.class).withIdentity(jobName).build();
+        JobDetail jobDetail = createJobDetail(javaClass);
         Scheduler scheduler=null;
         try {
             StdSchedulerFactory factory = new StdSchedulerFactory();
@@ -35,7 +32,21 @@ public class JobScheduler {
             e.printStackTrace();
         }
         JobScheduleController jobScheduleController=new JobScheduleController(scheduler,jobDetail,"t1");
-        jobScheduleController.scheduleJob("0/1 * * * * ?");
+        jobScheduleController.scheduleJob(corn);
+    }
+
+    private JobDetail createJobDetail(final String javaClass){
+        JobDetail jobDetail = JobBuilder.newJob(AbstractJob.class).withIdentity(jobName).build();
+        try {
+            jobDetail.getJobDataMap().put("elasticJob",Class.forName(javaClass).newInstance());
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return jobDetail;
     }
 
     /**
