@@ -10,6 +10,10 @@ import org.quartz.impl.StdSchedulerFactory;
  * Created by alan.zheng on 2017/1/16.
  */
 public class JobScheduler {
+    private final String jobName;
+    public JobScheduler(final JobConfig jobConfig ){
+        jobName=jobConfig.getJobName();
+    }
     /**
      * 初始化作业.
      */
@@ -21,7 +25,7 @@ public class JobScheduler {
 //        jobScheduleController.scheduleJob(jobTypeConfig.getCoreConfig().getCron());
 //        jobRegistry.addJobScheduleController(jobName, jobScheduleController);
 
-        JobDetail jobDetail = JobBuilder.newJob(AbstractJob.class).withIdentity("Job1").build();
+        JobDetail jobDetail = JobBuilder.newJob(AbstractJob.class).withIdentity(jobName).build();
         Scheduler scheduler=null;
         try {
             StdSchedulerFactory factory = new StdSchedulerFactory();
@@ -38,10 +42,15 @@ public class JobScheduler {
      * 调度作业
      */
     public static final class AbstractJob implements Job{
+        private ElasticJob elasticJob;
         public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-            /**
-             * 转换成任务具体业务类
-             */
+           if (elasticJob instanceof SimpleJob){
+               new SimpleJobExecutor((SimpleJob) elasticJob).process();
+           }
+        }
+
+        public void setElasticJob(ElasticJob elasticJob) {
+            this.elasticJob = elasticJob;
         }
     }
 }
