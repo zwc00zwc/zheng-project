@@ -3,6 +3,7 @@ package controller;
 import annotation.Auth;
 import common.JsonResult;
 import domain.model.Job.Job;
+import domain.model.Job.JobLog;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,7 +39,7 @@ public class JobController extends BaseController {
         return "/job/add";
     }
 
-    @Auth(rule ="/admin/add")
+    @Auth(rule ="/job/add")
     @ResponseBody
     @RequestMapping(value = "/job/adding")
     public JsonResult adding(Job job){
@@ -49,5 +50,14 @@ public class JobController extends BaseController {
             return jsonResult(-1,"新增失败");
         }
         return jsonResult(1,"新增成功");
+    }
+
+    @Auth(rule ="/job/log")
+    @RequestMapping(value = "/job/log")
+    public String log(Model model,HttpSession httpSession){
+        List<JobLog> logs=jobSPIService.queryJobLogList();
+        model.addAttribute("logs",logs);
+        model.addAttribute("user",getAuthUser(httpSession));
+        return "/job/log";
     }
 }

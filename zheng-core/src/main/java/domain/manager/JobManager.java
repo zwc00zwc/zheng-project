@@ -1,7 +1,9 @@
 package domain.manager;
 
+import common.page.PageModel;
 import domain.mapper.JobMapper;
 import domain.model.Job.Job;
+import domain.model.Job.JobLog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,5 +27,10 @@ public class JobManager {
             return true;
         }
         return false;
+    }
+
+    public PageModel<JobLog> queryJobLogList(){
+
+        return null;
     }
 }

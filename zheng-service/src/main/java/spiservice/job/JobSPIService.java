@@ -4,11 +4,13 @@ import common.reg.zookeeper.ZookeeperConfig;
 import common.reg.zookeeper.ZookeeperRegistryCenter;
 import domain.manager.JobManager;
 import domain.model.Job.Job;
+import domain.model.Job.JobLog;
 import org.apache.curator.framework.CuratorFramework;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import spi.job.JobSPI;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -46,5 +48,10 @@ public class JobSPIService implements JobSPI {
 
     public boolean insertJob(Job job) {
         return jobManager.insertJob(job);
+    }
+
+    public List<JobLog> queryJobLogList() {
+        List<JobLog> logs=new ArrayList<JobLog>();
+        return logs;
     }
 }

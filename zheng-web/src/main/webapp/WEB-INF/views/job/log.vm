@@ -1,0 +1,35 @@
+#set($layout =  "share/hi-layout.vm" )
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 任务管理 <span class="c-gray en">&gt;</span> 任务日志列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="page-container">
+    <div class="cl pd-5 bg-1 bk-gray">
+        <span class="l">
+        </span>
+    </div>
+    <table class="table table-border table-bordered table-hover table-bg">
+        <thead>
+        <tr>
+            <th scope="col" colspan="6">任务日志列表</th>
+        </tr>
+        <tr class="text-c">
+            <th width="200">作业名</th>
+            <th width="300">日志</th>
+            <th width="300">创建时间</th>
+        </tr>
+        </thead>
+        <tbody>
+            #foreach($item in $logs)
+            <tr class="text-c">
+                <td>$!{item.jogName}</td>
+                <td>$!{item.log}</td>
+                <td>$!date.format('yyyy-MM-dd HH:mm:ss',$item.createTime)</td>
+            </tr>
+            #end
+        </tbody>
+    </table>
+</div>
+
+<script type="text/javascript" src="$!{request.getContextPath()}/resource/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="$!{request.getContextPath()}/resource/lib/layer/2.1/layer.js"></script>
+<script type="text/javascript" src="$!{request.getContextPath()}/resource/lib/My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="$!{request.getContextPath()}/resource/js/h-ui/H-ui.js"></script>
+<script type="text/javascript" src="$!{request.getContextPath()}/resource/js/h-ui/H-ui.admin.js"></script>
