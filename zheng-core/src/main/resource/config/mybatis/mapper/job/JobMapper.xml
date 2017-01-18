@@ -22,6 +22,6 @@
     </select>
 
     <insert id="insertJob">
-        INSERT INTO tb_job(`jobName`,`createTime`) VALUES (#{job.jobName},#{job.createTime})
+        INSERT INTO tb_job(`jobName`,`createTime`,`remark`) VALUES (#{job.jobName},#{job.createTime},#{job.remark})
     </insert>
 </mapper>

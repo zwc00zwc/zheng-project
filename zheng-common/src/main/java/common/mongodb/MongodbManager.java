@@ -1,13 +1,13 @@
 package common.mongodb;
 
 import com.mongodb.*;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
+import org.bson.Document;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 
 /**
  * Created by Administrator on 2016/8/21.
@@ -112,4 +112,90 @@ public class MongodbManager {
         }
         return list;
     }
+
+    public static void log(){
+        try {
+            String collectionname="collectionname";
+            MongoCollection collection= MongodbManager.getAuthDatabase().getCollection(collectionname);
+            Document document=new Document();
+            document.append("openId","openId");
+            Date date=new Date();//取时间
+            Calendar calendar   =   new GregorianCalendar();
+            calendar.setTime(date);
+            calendar.add(Calendar.HOUR,8);//时区关系加8小时
+            document.append("createTime",calendar.getTime());
+            collection.insertOne(document);
+        } catch (Exception e) {
+        }
+    }
+
+//    public static Object queryLog(){
+//        String collectionname="collectionname";
+//        MongoCollection collection= MongodbManager.getAuthDatabase().getCollection(collectionname);
+//        List<OpenDownLoadDto> list=new ArrayList<>();
+//        BasicDBObject basicDBObject=new BasicDBObject();
+//        if (query.getOpenId()!=null&&query.getOpenId()>0){
+//            basicDBObject.put("openId",query.getOpenId());
+//        }
+//        BasicDBObject timebasesic=new BasicDBObject();
+//        Calendar calendar  =  new GregorianCalendar();
+//        if (query.getStartTime()!=null){
+//            calendar.setTime(query.getStartTime());
+//            calendar.add(Calendar.HOUR,8);//时区关系加8小时
+//            timebasesic.append("$gte",calendar.getTime());
+//        }
+//        if (query.getEndTime()!=null){
+//            calendar.setTime(query.getEndTime());
+//            calendar.add(Calendar.HOUR,8);//时区关系加8小时
+//            timebasesic.append("$lte",calendar.getTime());
+//        }
+//        if (timebasesic.size()>0){
+//            basicDBObject.put("createTime",timebasesic);
+//        }
+//        MongoCursor mongoCursor = collection.find(basicDBObject).sort(new BasicDBObject("createTime", -1)).skip(query.getStartRow()).limit(query.getPageSize()).iterator();
+//        while (mongoCursor.hasNext()){
+//            Document document=(Document) mongoCursor.next();
+//            OpenDownLoadDto openDownLoadDto= new OpenDownLoadDto();
+//            openDownLoadDto.setOpenId(Long.parseLong(document.get("openId").toString()));
+//            openDownLoadDto.setMsg(document.get("msg").toString());
+//            openDownLoadDto.setLoadUrl((String) document.get("loadUrl"));
+//            calendar.setTime((Date) document.get("createTime"));
+//            calendar.add(Calendar.HOUR,-8);//时区关系加8小时
+//            openDownLoadDto.setCreateTime(calendar.getTime());
+//            list.add(openDownLoadDto);
+//        }
+//        return list;
+//    }
+
+//    public static int queryLogCount(OpenDownLoadQuery query){
+//        String collectionname="openload"+DateUtils.getStrFromDate(query.getCreateTime(),"yyyyMMdd");
+//        MongoCollection collection= MongodbManager.getAuthDatabase().getCollection(collectionname);
+//        int i=0;
+//        BasicDBObject basicDBObject=new BasicDBObject();
+//        if (query.getOpenId()!=null&&query.getOpenId()>0){
+//            basicDBObject.put("openId",query.getOpenId());
+//        }
+//        BasicDBObject timebasesic=new BasicDBObject();
+//        Calendar calendar   =   new GregorianCalendar();
+//        if (query.getStartTime()!=null){
+//            calendar.setTime(query.getStartTime());
+//            calendar.add(Calendar.HOUR,8);//时区关系加8小时
+//            timebasesic.append("$gte",calendar.getTime());
+//        }
+//        if (query.getEndTime()!=null){
+//            calendar.setTime(query.getEndTime());
+//            calendar.add(Calendar.HOUR,8);//时区关系加8小时
+//            timebasesic.append("$lte",calendar.getTime());
+//        }
+//        if (timebasesic.size()>0){
+//            basicDBObject.put("createTime",timebasesic);
+//        }
+//
+//        MongoCursor mongoCursor = collection.find(basicDBObject).sort(new BasicDBObject("createTime", -1)).iterator();
+//        while (mongoCursor.hasNext()){
+//            i++;
+//            mongoCursor.next();
+//        }
+//        return i;
+//    }
 }

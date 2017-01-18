@@ -24,6 +24,10 @@ public class Job extends BaseModel {
      * 创建时间
      */
     private Date createTime;
+    /**
+     * 备注
+     */
+    private String remark;
 
     public Long getId() {
         return id;
@@ -55,5 +59,13 @@ public class Job extends BaseModel {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 }
