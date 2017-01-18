@@ -6,7 +6,8 @@ package common.job;
 public class SimpleJobExecutor extends JobExecutor {
     private final SimpleJob simpleJob;
 
-    public SimpleJobExecutor(final SimpleJob _simpleJob){
+    public SimpleJobExecutor(JobConfig jobConfig,final SimpleJob _simpleJob){
+        super(jobConfig);
         simpleJob=_simpleJob;
     }
 

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="domain.mapper.JobMapper">
+
+    <resultMap id="result" type="job">
+        <id column="id" property="id" jdbcType="BIGINT" ></id>
+        <result column="jobName" property="jobName" jdbcType="VARCHAR"></result>
+        <result column="createTime" property="createTime"></result>
+    </resultMap>
+
+    <sql id="select_sql">
+        SELECT id,jobName,createTime
+    </sql>
+
+    <select id="queryList" resultMap="result">
+        <include refid="select_sql"/>
+        FROM tb_job
+    </select>
+
+    <insert id="insertJob">
+        INSERT INTO tb_job(`jobName`,`createTime`) VALUES (#{job.jobName},#{job.createTime})
+    </insert>
+</mapper>
