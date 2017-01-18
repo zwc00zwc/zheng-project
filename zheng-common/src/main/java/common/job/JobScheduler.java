@@ -1,5 +1,6 @@
 package common.job;
 
+import com.google.common.base.Optional;
 import common.Job1;
 import org.omg.CORBA.PUBLIC_MEMBER;
 import org.quartz.*;
@@ -37,16 +38,25 @@ public class JobScheduler {
 
     private JobDetail createJobDetail(final String javaClass){
         JobDetail jobDetail = JobBuilder.newJob(AbstractJob.class).withIdentity(jobName).build();
-        try {
-            jobDetail.getJobDataMap().put("elasticJob",Class.forName(javaClass).newInstance());
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+        Optional<ElasticJob> elasticJobInstance = createElasticJobInstance();
+        if (elasticJobInstance.isPresent()) {
+            jobDetail.getJobDataMap().put("elasticJob", elasticJobInstance.get());
+        }else {
+            try {
+                jobDetail.getJobDataMap().put("elasticJob",Class.forName(javaClass).newInstance());
+            } catch (InstantiationException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
         }
         return jobDetail;
+    }
+
+    protected Optional<ElasticJob> createElasticJobInstance() {
+        return Optional.absent();
     }
 
     /**
