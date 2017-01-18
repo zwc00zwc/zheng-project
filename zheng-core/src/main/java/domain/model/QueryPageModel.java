@@ -1,9 +1,9 @@
-package common.page;
+package domain.model;
 
 /**
  * Created by Administrator on 2017/1/18.
  */
-public class QueryPageModel {
+public class QueryPageModel extends BaseModel {
     /**
      * 查询起始条数
      */
@@ -15,14 +15,14 @@ public class QueryPageModel {
     /**
      * 当前页
      */
-    private Integer currpage;
+    private Integer currPage;
     /**
      * 页大小
      */
-    private Integer pagesize=10;
+    private Integer pageSize=10;
 
     public Integer getStartRow() {
-        return (currpage-1)*pagesize;
+        return (currPage-1)*pageSize;
     }
 
     public void setStartRow(Integer startRow) {
@@ -30,26 +30,26 @@ public class QueryPageModel {
     }
 
     public Integer getEndRow() {
-        return currpage*pagesize;
+        return currPage*pageSize;
     }
 
     public void setEndRow(Integer endRow) {
         this.endRow = endRow;
     }
 
-    public Integer getCurrpage() {
-        return currpage;
+    public Integer getCurrPage() {
+        return currPage;
     }
 
-    public void setCurrpage(Integer currpage) {
-        this.currpage = currpage;
+    public void setCurrPage(Integer currPage) {
+        this.currPage = currPage;
     }
 
-    public Integer getPagesize() {
-        return pagesize;
+    public Integer getPageSize() {
+        return pageSize;
     }
 
-    public void setPagesize(Integer pagesize) {
-        this.pagesize = pagesize;
+    public void setPageSize(Integer pageSize) {
+        this.pageSize = pageSize;
     }
 }

@@ -1,11 +1,11 @@
-package common.page;
+package domain.model;
 
 import java.util.List;
 
 /**
  * Created by Administrator on 2016/8/21.
  */
-public class PageModel<T> {
+public class PageModel<T> extends BaseModel {
     private List<T> model;
     private int currpage;
     private int pagecount;

@@ -2,6 +2,8 @@ package spi.job;
 
 import domain.model.Job.Job;
 import domain.model.Job.JobLog;
+import domain.model.Job.query.JobLogQuery;
+import domain.model.PageModel;
 
 import java.util.List;
 
@@ -13,5 +15,5 @@ public interface JobSPI {
 
     public boolean insertJob(Job job);
 
-    public List<JobLog> queryJobLogList();
+    public PageModel<JobLog> queryPageJobLog(JobLogQuery query);
 }

@@ -4,6 +4,8 @@ import annotation.Auth;
 import common.JsonResult;
 import domain.model.Job.Job;
 import domain.model.Job.JobLog;
+import domain.model.Job.query.JobLogQuery;
+import domain.model.PageModel;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +15,7 @@ import spi.job.JobSPI;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -54,8 +57,10 @@ public class JobController extends BaseController {
 
     @Auth(rule ="/job/log")
     @RequestMapping(value = "/job/log")
-    public String log(Model model,HttpSession httpSession){
-        List<JobLog> logs=jobSPIService.queryJobLogList();
+    public String log(Model model,JobLogQuery query,HttpSession httpSession){
+        List<JobLog> list=new ArrayList<JobLog>();
+//        PageModel<JobLog> logs=jobSPIService.queryPageJobLog(query);
+        PageModel<JobLog> logs=new PageModel<JobLog>(list,1,1,1);
         model.addAttribute("logs",logs);
         model.addAttribute("user",getAuthUser(httpSession));
         return "/job/log";

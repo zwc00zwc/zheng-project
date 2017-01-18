@@ -5,6 +5,8 @@ import common.reg.zookeeper.ZookeeperRegistryCenter;
 import domain.manager.JobManager;
 import domain.model.Job.Job;
 import domain.model.Job.JobLog;
+import domain.model.Job.query.JobLogQuery;
+import domain.model.PageModel;
 import org.apache.curator.framework.CuratorFramework;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,8 +52,8 @@ public class JobSPIService implements JobSPI {
         return jobManager.insertJob(job);
     }
 
-    public List<JobLog> queryJobLogList() {
-        List<JobLog> logs=new ArrayList<JobLog>();
-        return logs;
+    public PageModel<JobLog> queryPageJobLog(JobLogQuery query) {
+        PageModel<JobLog> jobLogPageModel= jobManager.queryJobLogList(query);
+        return jobLogPageModel;
     }
 }
