@@ -58,9 +58,7 @@ public class JobController extends BaseController {
     @Auth(rule ="/job/log")
     @RequestMapping(value = "/job/log")
     public String log(Model model,JobLogQuery query,HttpSession httpSession){
-        List<JobLog> list=new ArrayList<JobLog>();
-//        PageModel<JobLog> logs=jobSPIService.queryPageJobLog(query);
-        PageModel<JobLog> logs=new PageModel<JobLog>(list,1,1,1);
+        PageModel<JobLog> logs=jobSPIService.queryPageJobLog(query);
         model.addAttribute("logs",logs);
         model.addAttribute("user",getAuthUser(httpSession));
         return "/job/log";

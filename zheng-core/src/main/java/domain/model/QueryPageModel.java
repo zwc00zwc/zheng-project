@@ -15,7 +15,7 @@ public class QueryPageModel extends BaseModel {
     /**
      * 当前页
      */
-    private Integer currPage;
+    private Integer currPage=1;
     /**
      * 页大小
      */
