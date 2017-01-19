@@ -2,13 +2,15 @@
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 任务管理 <span class="c-gray en">&gt;</span> 任务日志列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="page-container">
     <div class="text-c">
-        日志日期：
-        <input type="text" onfocus="WdatePicker({maxDate:'#F{\'%y-%M-%d\'}',dateFmt:'yy-MM-dd'})" id="datemin" name="queryDate" name="queryDate" class="input-text Wdate" style="width:120px;">
-        时间范围：
-        <input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'datemax\')||\'%y-%M-%d\'}',dateFmt:'HH:mm:ss'})" id="datemin" name="startTime" class="input-text Wdate" style="width:120px;">
-        -
-        <input type="text" onfocus="WdatePicker({minDate:'#F{$dp.$D(\'datemin\')}',maxDate:'%y-%M-%d',dateFmt:'HH:mm:ss'})" id="datemax" name="endTime" class="input-text Wdate" style="width:120px;">
-        <button type="submit" class="btn btn-success" id="" name=""><i class="Hui-iconfont">&#xe665;</i> 搜用户</button>
+        <form>
+            日志日期：
+            <input type="text" onfocus="WdatePicker({maxDate:'#F{\'%y-%M-%d\'}',dateFmt:'yyyy-MM-dd'})" id="datemin" name="queryDate" value="$!queryDate" class="input-text Wdate" style="width:120px;">
+            时间范围：
+            <input type="text" onfocus="WdatePicker({dateFmt:'HH:mm:ss'})" id="datemin" name="startTime" value="$!startTime" class="input-text Wdate" style="width:120px;">
+            -
+            <input type="text" onfocus="WdatePicker({maxDate:'%y-%M-%d',dateFmt:'HH:mm:ss'})" id="datemax" name="endTime" value="$!endTime" class="input-text Wdate" style="width:120px;">
+            <button type="submit" class="btn btn-success" id="" name=""><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
+        </form>
     </div>
     <div class="cl pd-5 bg-1 bk-gray">
         <span class="l">

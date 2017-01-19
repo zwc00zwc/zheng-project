@@ -2,10 +2,12 @@ package controller;
 
 import annotation.Auth;
 import common.JsonResult;
+import common.utility.DateUtility;
 import domain.model.Job.Job;
 import domain.model.Job.JobLog;
 import domain.model.Job.query.JobLogQuery;
 import domain.model.PageModel;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -57,8 +59,19 @@ public class JobController extends BaseController {
 
     @Auth(rule ="/job/log")
     @RequestMapping(value = "/job/log")
-    public String log(Model model,JobLogQuery query,HttpSession httpSession){
+    public String log(Model model,String queryDate,String startTime,String endTime,HttpSession httpSession){
+        JobLogQuery query =new JobLogQuery();
+        query.setQueryDate(DateUtility.getDateFromStr(queryDate,"yyyy-MM-dd"));
+        if (StringUtils.isNotEmpty(startTime)){
+            query.setStartTime(DateUtility.getDateFromStr(queryDate +" "+ startTime,"yyyy-MM-dd hh:mm:ss"));
+        }
+        if (StringUtils.isNotEmpty(endTime)){
+            query.setEndTime(DateUtility.getDateFromStr(queryDate +" "+ endTime,"yyyy-MM-dd hh:mm:ss"));
+        }
         PageModel<JobLog> logs=jobSPIService.queryPageJobLog(query);
+        model.addAttribute("queryDate",queryDate);
+        model.addAttribute("startTime",startTime);
+        model.addAttribute("endTime",endTime);
         model.addAttribute("logs",logs);
         model.addAttribute("user",getAuthUser(httpSession));
         return "/job/log";
