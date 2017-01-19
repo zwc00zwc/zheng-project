@@ -1,9 +1,12 @@
 package job;
 
 import com.google.common.base.Optional;
+import job.log.JobLogManager;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
 import reg.zookeeper.ZookeeperRegistryCenter;
+
+import java.util.Date;
 
 /**
  * 作业任务调度器
@@ -44,11 +47,11 @@ public class JobScheduler {
             try {
                 jobDetail.getJobDataMap().put("elasticJob",Class.forName(javaClass).newInstance());
             } catch (InstantiationException e) {
-                e.printStackTrace();
+                JobLogManager.log(jobConfig.getJobName(),e.toString(),new Date());
             } catch (IllegalAccessException e) {
-                e.printStackTrace();
+                JobLogManager.log(jobConfig.getJobName(),e.toString(),new Date());
             } catch (ClassNotFoundException e) {
-                e.printStackTrace();
+                JobLogManager.log(jobConfig.getJobName(),e.toString(),new Date());
             }
         }
         return jobDetail;

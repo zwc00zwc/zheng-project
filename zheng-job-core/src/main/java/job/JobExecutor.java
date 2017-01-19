@@ -1,5 +1,6 @@
 package job;
 
+import job.log.JobLogManager;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.recipes.cache.TreeCache;
 import org.apache.curator.framework.recipes.cache.TreeCacheEvent;
@@ -40,7 +41,7 @@ public abstract class JobExecutor {
             try {
                 treeCache.start();
             } catch (Exception e) {
-                e.printStackTrace();
+                JobLogManager.log(jobConfig.getJobName(),e.toString(),new Date());
             }
             zookeeperRegistryCenter.createEphemeral("/"+jobConfig.getJobName()+"",jobConfig.getJobName());
         }
