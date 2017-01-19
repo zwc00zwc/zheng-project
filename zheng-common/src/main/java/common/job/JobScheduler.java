@@ -2,6 +2,7 @@ package common.job;
 
 import com.google.common.base.Optional;
 import common.Job1;
+import common.reg.zookeeper.ZookeeperRegistryCenter;
 import org.omg.CORBA.PUBLIC_MEMBER;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
@@ -12,8 +13,10 @@ import org.quartz.impl.StdSchedulerFactory;
  */
 public class JobScheduler {
     private final JobConfig jobConfig;
-    public JobScheduler(final JobConfig _jobConfig){
+    private final ZookeeperRegistryCenter zookeeperRegistryCenter;
+    public JobScheduler(final JobConfig _jobConfig,ZookeeperRegistryCenter _zookeeperRegistryCenter){
         jobConfig=_jobConfig;
+        zookeeperRegistryCenter=_zookeeperRegistryCenter;
     }
     /**
      * 初始化作业.
@@ -35,6 +38,7 @@ public class JobScheduler {
     private JobDetail createJobDetail(final String javaClass){
         JobDetail jobDetail = JobBuilder.newJob(AbstractJob.class).withIdentity(jobConfig.getJobName()).build();
         jobDetail.getJobDataMap().put("jobConfig", jobConfig);
+        jobDetail.getJobDataMap().put("zookeeperRegistryCenter", zookeeperRegistryCenter);
         Optional<ElasticJob> elasticJobInstance = createElasticJobInstance();
         if (elasticJobInstance.isPresent()) {
             jobDetail.getJobDataMap().put("elasticJob", elasticJobInstance.get());
@@ -62,9 +66,10 @@ public class JobScheduler {
     public static final class AbstractJob implements Job{
         private JobConfig jobConfig;
         private ElasticJob elasticJob;
+        private ZookeeperRegistryCenter zookeeperRegistryCenter;
         public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
            if (elasticJob instanceof SimpleJob){
-               new SimpleJobExecutor(jobConfig,(SimpleJob) elasticJob).excute();
+               new SimpleJobExecutor(jobConfig,(SimpleJob) elasticJob,zookeeperRegistryCenter).excute();
            }
         }
 
@@ -74,6 +79,10 @@ public class JobScheduler {
 
         public void setJobConfig(JobConfig jobConfig) {
             this.jobConfig = jobConfig;
+        }
+
+        public void setZookeeperRegistryCenter(ZookeeperRegistryCenter zookeeperRegistryCenter) {
+            this.zookeeperRegistryCenter = zookeeperRegistryCenter;
         }
     }
 }
