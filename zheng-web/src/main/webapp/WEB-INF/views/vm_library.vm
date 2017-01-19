@@ -6,9 +6,9 @@
     ##页大小
         #set($pagesize=$pageModel.pagesize)
     ##上一页
-        #set($prvpage=$pageModel.currpage-1)
+        #set($prvpage=$pageModel.currpage - 1)
     ##下一页
-        #set($nextpage=$pageModel.currpage+1)
+        #set($nextpage=$pageModel.currpage + 1)
     <div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
         #if($currpage>1)
             <a class="paginate_button previous disabled" href="$search&currPage=$prvpage" aria-controls="DataTables_Table_0" data-dt-idx="0" tabindex="0" id="DataTables_Table_0_previous">上一页</a>
