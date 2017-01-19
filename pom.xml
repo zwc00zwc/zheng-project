@@ -14,6 +14,7 @@
         <module>zheng-core</module>
         <module>zheng-common</module>
         <module>zheng-elasticjob</module>
+        <module>zheng-job-core</module>
     </modules>
 
     <properties>

@@ -1,7 +1,7 @@
-package common.job;
+package job;
 
 import com.google.common.base.Optional;
-import common.reg.zookeeper.ZookeeperRegistryCenter;
+import reg.zookeeper.ZookeeperRegistryCenter;
 
 /**
  * Created by alan.zheng on 2017/1/18.

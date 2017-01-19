@@ -1,6 +1,6 @@
 package jobtest;
 
-import common.job.SimpleJob;
+import job.SimpleJob;
 
 import java.util.Date;
 

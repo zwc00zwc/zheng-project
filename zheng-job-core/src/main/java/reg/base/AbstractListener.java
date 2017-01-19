@@ -1,10 +1,8 @@
-package common.reg.base;
+package reg.base;
 
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.recipes.cache.TreeCacheEvent;
 import org.apache.curator.framework.recipes.cache.TreeCacheListener;
-
-import java.util.Date;
 
 /**
  * zk监听抽象类

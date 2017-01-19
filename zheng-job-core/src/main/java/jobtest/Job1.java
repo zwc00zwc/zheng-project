@@ -1,4 +1,4 @@
-package common;
+package jobtest;
 
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;

@@ -1,4 +1,4 @@
-package common.job;
+package job;
 
 import org.quartz.*;
 

@@ -1,9 +1,11 @@
-import common.Job1;
-import common.job.JobScheduleController;
-import org.quartz.*;
-import org.quartz.impl.StdSchedulerFactory;
+package jobtest;
 
-import java.util.Date;
+import job.JobScheduleController;
+import org.quartz.JobBuilder;
+import org.quartz.JobDetail;
+import org.quartz.Scheduler;
+import org.quartz.SchedulerException;
+import org.quartz.impl.StdSchedulerFactory;
 
 /**
  * Created by XR on 2016/12/22.

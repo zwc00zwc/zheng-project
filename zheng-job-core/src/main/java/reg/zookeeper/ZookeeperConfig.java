@@ -1,4 +1,4 @@
-package common.reg.zookeeper;
+package reg.zookeeper;
 
 /**
  * zk连接配置类

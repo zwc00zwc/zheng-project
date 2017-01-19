@@ -1,11 +1,9 @@
-package common.job;
+package job;
 
 import com.google.common.base.Optional;
-import common.Job1;
-import common.reg.zookeeper.ZookeeperRegistryCenter;
-import org.omg.CORBA.PUBLIC_MEMBER;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
+import reg.zookeeper.ZookeeperRegistryCenter;
 
 /**
  * 作业任务调度器

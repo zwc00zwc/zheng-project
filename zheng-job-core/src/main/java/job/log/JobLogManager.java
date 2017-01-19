@@ -1,4 +1,4 @@
-package common.job.log;
+package job.log;
 
 import com.mongodb.client.MongoCollection;
 import common.mongodb.MongodbManager;

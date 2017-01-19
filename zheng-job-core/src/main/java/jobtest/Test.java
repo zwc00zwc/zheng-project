@@ -1,9 +1,11 @@
-import common.reg.base.AbstractListener;
-import common.reg.zookeeper.ZookeeperConfig;
-import common.reg.zookeeper.ZookeeperRegistryCenter;
+package jobtest;
+
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.recipes.cache.TreeCache;
 import org.apache.curator.framework.recipes.cache.TreeCacheEvent;
+import reg.base.AbstractListener;
+import reg.zookeeper.ZookeeperConfig;
+import reg.zookeeper.ZookeeperRegistryCenter;
 
 import java.util.Date;
 

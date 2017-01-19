@@ -1,12 +1,10 @@
-package common.job;
+package job;
 
-import common.reg.base.AbstractListener;
-import common.reg.base.RegistryCenter;
-import common.reg.zookeeper.ZookeeperConfig;
-import common.reg.zookeeper.ZookeeperRegistryCenter;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.recipes.cache.TreeCache;
 import org.apache.curator.framework.recipes.cache.TreeCacheEvent;
+import reg.base.AbstractListener;
+import reg.zookeeper.ZookeeperRegistryCenter;
 
 import java.util.Date;
 
@@ -17,7 +15,7 @@ import java.util.Date;
 public abstract class JobExecutor {
     private final JobConfig jobConfig;
     private final ZookeeperRegistryCenter zookeeperRegistryCenter;
-    public JobExecutor(JobConfig _jobConfig,ZookeeperRegistryCenter _zookeeperRegistryCenter){
+    public JobExecutor(JobConfig _jobConfig, ZookeeperRegistryCenter _zookeeperRegistryCenter){
         jobConfig=_jobConfig;
         zookeeperRegistryCenter=_zookeeperRegistryCenter;
     }

@@ -1,10 +1,8 @@
-package common.reg.zookeeper;
+package reg.zookeeper;
 
 import com.google.common.base.Charsets;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
-import common.reg.base.RegistryCenter;
-import org.apache.curator.RetryPolicy;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.framework.api.ACLProvider;
@@ -18,6 +16,7 @@ import org.apache.zookeeper.ZooDefs;
 import org.apache.zookeeper.data.ACL;
 import org.apache.zookeeper.data.Id;
 import org.apache.zookeeper.data.Stat;
+import reg.base.RegistryCenter;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;

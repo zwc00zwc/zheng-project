@@ -1,4 +1,4 @@
-package common.reg.base;
+package reg.base;
 
 import java.util.List;
 
