@@ -17,9 +17,9 @@ public class Job extends BaseModel {
      */
     private String jobName;
     /**
-     * 任务运行状态
+     * 任务运行状态 (1：正在运行 -1：已停止)
      */
-    private String status;
+    private Integer status;
     /**
      * 创建时间
      */
@@ -45,11 +45,11 @@ public class Job extends BaseModel {
         this.jobName = jobName;
     }
 
-    public String getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 

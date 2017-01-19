@@ -21,6 +21,16 @@
         FROM tb_job
     </select>
 
+    <select id="queryPageList" resultMap="result">
+        <include refid="select_sql"/>
+        FROM tb_job
+        limit #{query.startRow},#{query.pageSize}
+    </select>
+
+    <select id="queryCountPage" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM tb_job
+    </select>
+
     <insert id="insertJob">
         INSERT INTO tb_job(`jobName`,`createTime`,`remark`) VALUES (#{job.jobName},#{job.createTime},#{job.remark})
     </insert>

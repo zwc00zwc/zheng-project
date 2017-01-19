@@ -9,6 +9,7 @@ import domain.mapper.JobMapper;
 import domain.model.Job.Job;
 import domain.model.Job.JobLog;
 import domain.model.Job.query.JobLogQuery;
+import domain.model.Job.query.JobQuery;
 import domain.model.PageModel;
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,13 @@ public class JobManager {
     private JobMapper jobMapper;
     public List<Job> queryList(){
         return jobMapper.queryList();
+    }
+
+    public PageModel<Job> queryPageList(JobQuery query){
+        List<Job> list= jobMapper.queryPageList(query);
+        int count=jobMapper.queryCountPage(query);
+        PageModel<Job> pageModel=new PageModel<Job>(list,query.getCurrPage(),count,query.getPageSize());
+        return pageModel;
     }
 
     public boolean insertJob(Job job){

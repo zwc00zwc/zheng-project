@@ -13,36 +13,49 @@
         </span>
         <span class="r">共有数据：<strong>54</strong> 条</span>
     </div>
-    <table class="table table-border table-bordered table-hover table-bg">
-        <thead>
-        <tr>
-            <th scope="col" colspan="6">任务列表</th>
-        </tr>
-        <tr class="text-c">
-            <th width="200">作业名</th>
-            <th width="300">状态</th>
-            <th width="70">操作</th>
-        </tr>
-        </thead>
-        <tbody>
-            #foreach($item in $jobs)
-            <tr class="text-c">
-                <td>$!{item.jobName}</td>
-                <td>$!{item.status}</td>
-                <td class="f-14">
-##                    #if($item.roleName!="admin")
-##                        #if($auth.isPermission("/role/edit"))
-##                            <a title="编辑" href="javascript:;" onclick="admin_role_edit('角色编辑','$!{request.getContextPath()}/role/edit?roleid=$!{item.id}','1')" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
-##                        #end
-##                        #if($auth.isPermission("/role/delete"))
-##                            <a title="删除" href="javascript:;" onclick="admin_role_del(this,$!{item.id})" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
-##                        #end
-##                    #end
-                </td>
-            </tr>
-            #end
-        </tbody>
-    </table>
+    <div class="mt-20">
+        <div class="dataTables_wrapper no-footer">
+            <table class="table table-border table-bordered table-hover table-bg">
+                <thead>
+                <tr>
+                    <th scope="col" colspan="6">任务列表</th>
+                </tr>
+                <tr class="text-c">
+                    <th width="200">作业名</th>
+                    <th width="300">描述</th>
+                    <th width="100">状态</th>
+                    <th width="70">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                    #foreach($item in $jobs.model)
+                    <tr class="text-c">
+                        <td>$!{item.jobName}</td>
+                        <td>$!{item.remark}</td>
+                        <td>
+                            #if($item.status==1)
+                                <span class="label label-success radius">正在运行</span>
+                            #else
+                                <span class="label radius">已停止</span>
+                            #end
+                        </td>
+                        <td class="f-14">
+        ##                    #if($item.roleName!="admin")
+        ##                        #if($auth.isPermission("/role/edit"))
+        ##                            <a title="编辑" href="javascript:;" onclick="admin_role_edit('角色编辑','$!{request.getContextPath()}/role/edit?roleid=$!{item.id}','1')" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
+        ##                        #end
+        ##                        #if($auth.isPermission("/role/delete"))
+        ##                            <a title="删除" href="javascript:;" onclick="admin_role_del(this,$!{item.id})" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
+        ##                        #end
+        ##                    #end
+                        </td>
+                    </tr>
+                    #end
+                </tbody>
+            </table>
+            #pagination($jobs,"/job/index?1=1")
+        </div>
+    </div>
 </div>
 
 <script type="text/javascript" src="$!{request.getContextPath()}/resource/lib/jquery/1.9.1/jquery.min.js"></script>

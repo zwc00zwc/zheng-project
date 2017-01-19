@@ -4,6 +4,7 @@ import domain.manager.JobManager;
 import domain.model.Job.Job;
 import domain.model.Job.JobLog;
 import domain.model.Job.query.JobLogQuery;
+import domain.model.Job.query.JobQuery;
 import domain.model.PageModel;
 import org.apache.curator.framework.CuratorFramework;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import reg.zookeeper.ZookeeperRegistryCenter;
 import spi.job.JobSPI;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -39,13 +41,39 @@ public class JobSPIService implements JobSPI {
         if (jobs!=null&&jobs.size()>0){
             for (Job job:jobs) {
                 if (zookeeperRegistryCenter.isExisted("/"+job.getJobName()+"")){
-                    job.setStatus("正在运行");
+                    job.setStatus(1);
                 }else {
-                    job.setStatus("已停止");
+                    job.setStatus(-1);
                 }
             }
         }
         return jobs;
+    }
+
+    public PageModel<Job> queryPageList(JobQuery query) {
+        PageModel pageModel=jobManager.queryPageList(query);
+        if (pageModel!=null&&pageModel.getModel()!=null&&pageModel.getModel().size()>0){
+            ZookeeperConfig zookeeperConfig=new ZookeeperConfig();
+            zookeeperConfig.setServerLists("127.0.0.1:2181");
+            zookeeperConfig.setNamespace("root");
+            zookeeperConfig.setAuth("auth");
+            ZookeeperRegistryCenter zookeeperRegistryCenter= null;
+            try {
+                zookeeperRegistryCenter = new ZookeeperRegistryCenter(zookeeperConfig);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            zookeeperRegistryCenter.init();
+            for (int i=0;i<pageModel.getModel().size();i++){
+                Job job=(Job) pageModel.getModel().get(i);
+                if (zookeeperRegistryCenter.isExisted("/"+job.getJobName()+"")){
+                    job.setStatus(1);
+                }else {
+                    job.setStatus(-1);
+                }
+            }
+        }
+        return pageModel;
     }
 
     public boolean insertJob(Job job) {

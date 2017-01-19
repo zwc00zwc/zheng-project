@@ -6,6 +6,7 @@ import common.utility.DateUtility;
 import domain.model.Job.Job;
 import domain.model.Job.JobLog;
 import domain.model.Job.query.JobLogQuery;
+import domain.model.Job.query.JobQuery;
 import domain.model.PageModel;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
@@ -32,7 +33,8 @@ public class JobController extends BaseController {
     @Auth(rule = "/job/index")
     @RequestMapping(value = "/job/index")
     public String index(Model model,HttpSession httpSession){
-        List<Job> jobs= jobSPIService.queryList();
+        JobQuery query=new JobQuery();
+        PageModel<Job> jobs= jobSPIService.queryPageList(query);
         model.addAttribute("jobs",jobs);
         model.addAttribute("user",getAuthUser(httpSession));
         return "/job/index";
