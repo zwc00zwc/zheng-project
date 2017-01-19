@@ -59,7 +59,7 @@ public class JobController extends BaseController {
 
     @Auth(rule ="/job/log")
     @RequestMapping(value = "/job/log")
-    public String log(Model model,String queryDate,String startTime,String endTime,HttpSession httpSession){
+    public String log(Model model,String queryDate,String startTime,String endTime,Integer currPage,HttpSession httpSession){
         JobLogQuery query =new JobLogQuery();
         query.setQueryDate(DateUtility.getDateFromStr(queryDate,"yyyy-MM-dd"));
         if (StringUtils.isNotEmpty(startTime)){

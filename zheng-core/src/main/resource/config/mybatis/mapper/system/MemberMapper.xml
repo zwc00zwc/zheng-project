@@ -25,6 +25,16 @@
         SELECT id,phone,username,displayname,sex,img_url,password,address,create_time,update_time,status
     </sql>
 
+    <select id="queryPageList" resultMap="result">
+        <include refid="select_sql" />
+        FROM tb_member
+        limit #{query.startRow},#{query.pageSize}
+    </select>
+
+    <select id="queryCountPage" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM tb_member
+    </select>
+
     <select id="queryById" parameterType="long" resultMap="result">
         <include refid="select_sql"/>
         FROM tb_member WHERE id=#{id}

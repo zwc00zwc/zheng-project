@@ -4,8 +4,10 @@ import domain.mapper.MemberRoleMapper;
 import domain.mapper.PermMapper;
 import domain.mapper.RoleMapper;
 import domain.mapper.RolePermMapper;
+import domain.model.PageModel;
 import domain.model.system.Role;
 import domain.model.system.RolePerm;
+import domain.model.system.query.RoleQuery;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -23,17 +25,25 @@ import java.util.List;
 @Component
 public class RoleManager {
     @Autowired
-    private MemberRoleMapper memberRoleDao;
+    private MemberRoleMapper memberRoleMapper;
     @Autowired
-    private RoleMapper roleDao;
+    private RoleMapper roleMapper;
     @Autowired
-    private PermMapper permDao;
+    private PermMapper permMapper;
     @Autowired
-    private RolePermMapper rolePermDao;
+    private RolePermMapper rolePermMapper;
 
     public List<Role> queryList(){
-        return roleDao.queryList();
+        return roleMapper.queryList();
     }
+
+    public PageModel<Role> queryPageList(RoleQuery query){
+        List<Role> list=roleMapper.queryPageList(query);
+        int count=roleMapper.queryCountPage(query);
+        PageModel<Role> pageModel=new PageModel<Role>(list,query.getCurrPage(),count,query.getPageSize());
+        return pageModel;
+    }
+
     /**
      * 查询用户的所有角色
      * @param memberid
@@ -42,38 +52,38 @@ public class RoleManager {
     public List<Role> queryByMemberId(Long memberid){
         List<Role> list=new ArrayList<Role>();
         List<Long> ids=new ArrayList<Long>();
-        String rolestr= memberRoleDao.queryRolesByMemberId(memberid);
+        String rolestr= memberRoleMapper.queryRolesByMemberId(memberid);
         ids= StringUtility.StringToListLong(rolestr);
-        list=roleDao.queryByIds(ids);
+        list=roleMapper.queryByIds(ids);
         return list;
     }
 
     public Role queryById(Long id){
-        return roleDao.queryById(id);
+        return roleMapper.queryById(id);
     }
 
     @Transactional(rollbackFor = Exception.class)
     public boolean insertRole(Role role,String permids){
-        if (roleDao.insertRoleAndReturnId(role)>0){
+        if (roleMapper.insertRoleAndReturnId(role)>0){
             RolePerm roleperm=new RolePerm();
             roleperm.setPermIds(permids);
             roleperm.setCreateTime(new Date());
             roleperm.setRoleId(role.getId());
-            rolePermDao.insertRolePerm(roleperm);
+            rolePermMapper.insertRolePerm(roleperm);
             return true;
         }
         return false;
     }
 
     public boolean resetadmin(){
-        Role role= roleDao.queryByName("admin");
+        Role role= roleMapper.queryByName("admin");
         if (role!=null){
-            List<String> perms= permDao.queryIds();
+            List<String> perms= permMapper.queryIds();
             String permids= StringUtils.join(perms,",");
-            RolePerm rolePerm= rolePermDao.queryByRoleId(role.getId());
+            RolePerm rolePerm= rolePermMapper.queryByRoleId(role.getId());
             rolePerm.setPermIds(permids);
             rolePerm.setUpdateTime(new Date());
-            if (rolePermDao.updateById(rolePerm)>0){
+            if (rolePermMapper.updateById(rolePerm)>0){
                 return true;
             }
         }
@@ -81,7 +91,7 @@ public class RoleManager {
     }
 
     public int deleteRole(Long id){
-        return roleDao.deleteRole(id);
+        return roleMapper.deleteRole(id);
     }
 
     public Role queryByName(String rolename){

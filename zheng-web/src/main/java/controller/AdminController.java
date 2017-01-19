@@ -3,7 +3,9 @@ package controller;
 import annotation.Auth;
 import common.JsonResult;
 import domain.dto.MemberDto;
+import domain.model.PageModel;
 import domain.model.system.Member;
+import domain.model.system.query.MemberQuery;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,7 +35,8 @@ public class AdminController extends BaseController {
     @Auth(rule = "/admin/index")
     @RequestMapping(value = "/admin/index")
     public String index(Model model, HttpSession httpSession) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
-        List<MemberDto> list= memberSPIService.querylistPage();
+        MemberQuery query=new MemberQuery();
+        PageModel<MemberDto> list= memberSPIService.queryPageList(query);
         model.addAttribute("memberlist",list);
         model.addAttribute("user",getAuthUser(httpSession));
         return "/admin/index";

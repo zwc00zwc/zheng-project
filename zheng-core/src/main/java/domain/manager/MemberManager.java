@@ -4,6 +4,7 @@ import domain.mapper.MemberMapper;
 import domain.mapper.MemberRoleMapper;
 import domain.model.system.Member;
 import domain.model.system.MemberRole;
+import domain.model.system.query.MemberQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +25,14 @@ public class MemberManager {
 
     public List<Member> querylist(){
         return memberDao.querylist();
+    }
+
+    public List<Member> queryPagelist(MemberQuery query){
+        return memberDao.queryPageList(query);
+    }
+
+    public int queryCountPage(MemberQuery query){
+        return memberDao.queryCountPage(query);
     }
 
     public Member queryByUsername(String username){

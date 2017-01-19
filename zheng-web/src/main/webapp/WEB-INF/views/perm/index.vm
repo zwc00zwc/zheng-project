@@ -15,38 +15,43 @@
             #end
         </span>
         <span class="r">共有数据：<strong>54</strong> 条</span> </div>
-    <table class="table table-border table-bordered table-bg">
-        <thead>
-        <tr>
-            <th scope="col" colspan="7">权限节点</th>
-        </tr>
-        <tr class="text-c">
-            <th width="25"><input type="checkbox" name="" value=""></th>
-            <th width="40">ID</th>
-            <th width="200">权限名称</th>
-            <th>权限url</th>
-            <th width="100">操作</th>
-        </tr>
-        </thead>
-        <tbody>
-        #foreach($item in $permlist)
-        <tr class="text-c">
-            <td><input type="checkbox" value="$!{item.id}" name=""></td>
-            <td>$!{item.id}</td>
-            <td>$!{item.displayName}</td>
-            <td>$!{item.url}</td>
-            <td>
-                #if($auth.isPermission("/perm/edit"))
-                    <a title="编辑" href="javascript:;" onclick="admin_permission_edit('角色编辑','$!{request.getContextPath()}/perm/edit?permid=$!{item.id}','1','','800')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
+    <div class="mt-20">
+        <div class="dataTables_wrapper no-footer">
+            <table class="table table-border table-bordered table-bg">
+                <thead>
+                <tr>
+                    <th scope="col" colspan="7">权限节点</th>
+                </tr>
+                <tr class="text-c">
+                    <th width="25"><input type="checkbox" name="" value=""></th>
+                    <th width="40">ID</th>
+                    <th width="200">权限名称</th>
+                    <th>权限url</th>
+                    <th width="100">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                #foreach($item in $permlist.model)
+                <tr class="text-c">
+                    <td><input type="checkbox" value="$!{item.id}" name=""></td>
+                    <td>$!{item.id}</td>
+                    <td>$!{item.displayName}</td>
+                    <td>$!{item.url}</td>
+                    <td>
+                        #if($auth.isPermission("/perm/edit"))
+                            <a title="编辑" href="javascript:;" onclick="admin_permission_edit('角色编辑','$!{request.getContextPath()}/perm/edit?permid=$!{item.id}','1','','800')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
+                        #end
+                        #if($auth.isPermission("/perm/delete"))
+                            <a title="删除" href="javascript:;" onclick="admin_permission_del(this,$!{item.id})" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
+                        #end
+                    </td>
+                </tr>
                 #end
-                #if($auth.isPermission("/perm/delete"))
-                    <a title="删除" href="javascript:;" onclick="admin_permission_del(this,$!{item.id})" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a>
-                #end
-            </td>
-        </tr>
-        #end
-        </tbody>
-    </table>
+                </tbody>
+            </table>
+            #pagination($permlist,"/perm/index?1=1")
+        </div>
+    </div>
 </div>
 
 <script type="text/javascript" src="$!{request.getContextPath()}/resource/lib/jquery/1.9.1/jquery.min.js"></script>

@@ -2,7 +2,9 @@ package spiservice.system;
 
 import domain.dto.PermLevelDto;
 import domain.manager.PermManager;
+import domain.model.PageModel;
 import domain.model.system.Perm;
+import domain.model.system.query.PermQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,8 +23,8 @@ import java.util.Set;
 public class PermissionSPIService implements PermissionSPI {
     @Autowired
     private PermManager permManager;
-    public List<Perm> queryList() {
-        return permManager.queryList();
+    public PageModel<Perm> queryPageList(PermQuery query) {
+        return permManager.queryPageList(query);
     }
 
     public int insertPerm(Perm perm) {

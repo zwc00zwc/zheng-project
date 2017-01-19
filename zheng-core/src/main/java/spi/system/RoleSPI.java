@@ -1,7 +1,9 @@
 package spi.system;
 
 import domain.dto.RolePermDto;
+import domain.model.PageModel;
 import domain.model.system.Role;
+import domain.model.system.query.RoleQuery;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
@@ -13,6 +15,8 @@ public interface RoleSPI {
     List<Role> queryByMemberId(Long memberid);
 
     List<Role> queryList();
+
+    PageModel<Role> queryPageList(RoleQuery query);
 
     boolean insertRole(Role role,String ids);
 

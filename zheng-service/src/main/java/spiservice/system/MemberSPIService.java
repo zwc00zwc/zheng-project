@@ -7,9 +7,11 @@ import domain.dto.MemberRoleDto;
 import domain.manager.MemberManager;
 import domain.manager.PermManager;
 import domain.manager.RoleManager;
+import domain.model.PageModel;
 import domain.model.system.Member;
 import domain.model.system.Perm;
 import domain.model.system.Role;
+import domain.model.system.query.MemberQuery;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,12 +40,21 @@ public class MemberSPIService implements MemberSPI {
     }
 
     @DynamicData(source = "ds2")
-    public List<MemberDto> querylistPage() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+    public PageModel<MemberDto> queryPageList(MemberQuery query) {
         List<MemberDto> listDto=new ArrayList<MemberDto>();
-        List<Member> list= memberManager.querylist();
+        List<Member> list= memberManager.queryPagelist(query);
+        int count=memberManager.queryCountPage(query);
         for (Member member:list) {
             MemberDto memberDto=new  MemberDto();
-            PropertyUtils.copyProperties(memberDto,member);
+            try {
+                PropertyUtils.copyProperties(memberDto,member);
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace();
+            }
             List<MemberRoleDto> liststr=new ArrayList<MemberRoleDto>();
             List<Role> rolelist= roleManager.queryByMemberId(member.getId());
             for (Role role:rolelist) {
@@ -55,7 +66,8 @@ public class MemberSPIService implements MemberSPI {
             memberDto.setRoles(liststr);
             listDto.add(memberDto);
         }
-        return listDto;
+        PageModel<MemberDto> pageModel=new PageModel<MemberDto>(listDto,query.getCurrPage(),count,query.getPageSize());
+        return pageModel;
     }
 
     public MemberDto queryById(Long id) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {

@@ -1,6 +1,8 @@
 package domain.mapper;
 
 import domain.model.system.Role;
+import domain.model.system.query.RoleQuery;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -13,6 +15,10 @@ public interface RoleMapper {
     Role queryById(Long id);
 
     List<Role> queryList();
+
+    List<Role> queryPageList(@Param("query") RoleQuery query);
+
+    int queryCountPage(@Param("query")RoleQuery query);
 
     int insertRoleAndReturnId(Role role);
 

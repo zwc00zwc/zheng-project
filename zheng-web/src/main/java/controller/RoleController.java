@@ -3,7 +3,9 @@ package controller;
 import annotation.Auth;
 import common.JsonResult;
 import domain.dto.RolePermDto;
+import domain.model.PageModel;
 import domain.model.system.Role;
+import domain.model.system.query.RoleQuery;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,8 +32,9 @@ public class RoleController extends BaseController {
     private RoleSPI roleSPIService;
     @Auth(rule = "/role/index")
     @RequestMapping(value = "/role/index")
-    public String index(Model model){
-        List list=roleSPIService.queryList();
+    public String index(Model model,Integer currPage){
+        RoleQuery query=new RoleQuery();
+        PageModel<Role> list=roleSPIService.queryPageList(query);
         model.addAttribute("rolelist",list);
         return "/role/index";
     }

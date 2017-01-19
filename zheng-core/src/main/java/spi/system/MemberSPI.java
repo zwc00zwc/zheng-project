@@ -3,7 +3,9 @@ package spi.system;
 import domain.dto.AuthMemberDto;
 import domain.dto.AuthPerm;
 import domain.dto.MemberDto;
+import domain.model.PageModel;
 import domain.model.system.Member;
+import domain.model.system.query.MemberQuery;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
@@ -14,7 +16,7 @@ import java.util.List;
 public interface MemberSPI {
     List<Member> querylist();
 
-    List<MemberDto> querylistPage() throws IllegalAccessException, NoSuchMethodException, InvocationTargetException;
+    PageModel<MemberDto> queryPageList(MemberQuery query);
 
     MemberDto queryById(Long id) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException;
 

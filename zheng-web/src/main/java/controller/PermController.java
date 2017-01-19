@@ -2,7 +2,9 @@ package controller;
 
 import annotation.Auth;
 import common.JsonResult;
+import domain.model.PageModel;
 import domain.model.system.Perm;
+import domain.model.system.query.PermQuery;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,8 +27,12 @@ public class PermController extends BaseController {
     private PermissionSPI permissionSPIService;
     @Auth(rule = "/perm/index")
     @RequestMapping(value = "/perm/index")
-    public String permission(Model model){
-        List list= permissionSPIService.queryList();
+    public String permission(Model model,Integer currPage){
+        PermQuery query=new PermQuery();
+        if (currPage!=null){
+            query.setCurrPage(currPage);
+        }
+        PageModel<Perm> list= permissionSPIService.queryPageList(query);
         model.addAttribute("permlist",list);
         return "/perm/index";
     }

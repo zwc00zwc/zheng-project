@@ -3,8 +3,10 @@ package spiservice.system;
 import domain.dto.RolePermDto;
 import domain.manager.PermManager;
 import domain.manager.RoleManager;
+import domain.model.PageModel;
 import domain.model.system.Perm;
 import domain.model.system.Role;
+import domain.model.system.query.RoleQuery;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,7 +35,12 @@ public class RoleSPIService implements RoleSPI {
         return roleManager.queryList();
     }
 
-    public boolean insertRole(Role role,String ids) {
+    public PageModel<Role> queryPageList(RoleQuery query) {
+        PageModel<Role> pageModel= roleManager.queryPageList(query);
+        return pageModel;
+    }
+
+    public boolean insertRole(Role role, String ids) {
         return roleManager.insertRole(role,ids);
     }
 

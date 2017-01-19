@@ -1,6 +1,7 @@
 package domain.mapper;
 
 import domain.model.system.Perm;
+import domain.model.system.query.PermQuery;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -10,6 +11,10 @@ import java.util.List;
  */
 public interface PermMapper {
     List<Perm> queryList();
+
+    List<Perm> queryPageList(@Param("query") PermQuery query);
+
+    int queryCountPage(@Param("query") PermQuery query);
 
     Perm queryById(Long id);
 

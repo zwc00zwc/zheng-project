@@ -9,55 +9,60 @@
         <button type="submit" class="btn btn-success" id="" name=""><i class="Hui-iconfont">&#xe665;</i> 搜用户</button>
     </div>
     <div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> <a href="javascript:;" onclick="admin_add('添加管理员','$!{request.getContextPath()}/admin/add','800','500')" class="btn btn-primary radius"><i class="Hui-iconfont">&#xe600;</i> 添加管理员</a></span> <span class="r">共有数据：<strong>54</strong> 条</span> </div>
-    <table class="table table-border table-bordered table-bg">
-        <thead>
-        <tr>
-            <th scope="col" colspan="9">员工列表</th>
-        </tr>
-        <tr class="text-c">
-            <th width="25"><input type="checkbox" name="" value=""></th>
-            <th width="40">ID</th>
-            <th width="150">登录名</th>
-            <th width="90">手机</th>
-            <th>角色</th>
-            <th width="130">加入时间</th>
-            <th width="100">是否已启用</th>
-            <th width="100">操作</th>
-        </tr>
-        </thead>
-        <tbody>
-        #foreach($item in $memberlist)
-        <tr class="text-c">
-            <td><input type="checkbox" value="1" name=""></td>
-            <td>$!{item.id}</td>
-            <td>$!{item.userName}</td>
-            <td>$!{item.phone}</td>
-            <td>#foreach($role in $item.roles)
-                    $!{role.name},
-                #end</td>
-            <td>$!date.format('yyyy-MM-dd HH:mm:ss',$item.createTime)</td>
-            <td class="td-status">
-                #if($item.status==1)
-                    <span class="label label-success radius">已启用</span>
-                    #else
-                        <span class="label radius">已禁用</span>
+    <div class="mt-20">
+        <div class="dataTables_wrapper no-footer">
+            <table class="table table-border table-bordered table-bg">
+                <thead>
+                <tr>
+                    <th scope="col" colspan="9">员工列表</th>
+                </tr>
+                <tr class="text-c">
+                    <th width="25"><input type="checkbox" name="" value=""></th>
+                    <th width="40">ID</th>
+                    <th width="150">登录名</th>
+                    <th width="90">手机</th>
+                    <th>角色</th>
+                    <th width="130">加入时间</th>
+                    <th width="100">是否已启用</th>
+                    <th width="100">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                #foreach($item in $memberlist.model)
+                <tr class="text-c">
+                    <td><input type="checkbox" value="1" name=""></td>
+                    <td>$!{item.id}</td>
+                    <td>$!{item.userName}</td>
+                    <td>$!{item.phone}</td>
+                    <td>#foreach($role in $item.roles)
+                            $!{role.name},
+                        #end</td>
+                    <td>$!date.format('yyyy-MM-dd HH:mm:ss',$item.createTime)</td>
+                    <td class="td-status">
+                        #if($item.status==1)
+                            <span class="label label-success radius">已启用</span>
+                            #else
+                                <span class="label radius">已禁用</span>
+                        #end
+                    </td>
+                    <td class="td-manage">
+                        #if($item.id!=$user.id)
+                            #if($item.status==1)
+                                <a style="text-decoration:none" onClick="admin_stop(this,$!{item.id})" href="javascript:;" title="停用"><i class="Hui-iconfont">&#xe631;</i></a>
+                            #end
+                            #if($item.status==-1)
+                                <a style="text-decoration:none" onClick="admin_start(this,$!{item.id})" href="javascript:;" title="启用"><i class="Hui-iconfont">&#xe615;</i></a>
+                            #end
+                            <a title="编辑" href="javascript:;" onclick="admin_edit('管理员编辑','$!{request.getContextPath()}/admin/edit?memberid=$item.id','1','800','500')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
+                            <a title="删除" href="javascript:;" onclick="admin_del(this,$!{item.id})" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
+                        #end
+                </tr>
                 #end
-            </td>
-            <td class="td-manage">
-                #if($item.id!=$user.id)
-                    #if($item.status==1)
-                        <a style="text-decoration:none" onClick="admin_stop(this,$!{item.id})" href="javascript:;" title="停用"><i class="Hui-iconfont">&#xe631;</i></a>
-                    #end
-                    #if($item.status==-1)
-                        <a style="text-decoration:none" onClick="admin_start(this,$!{item.id})" href="javascript:;" title="启用"><i class="Hui-iconfont">&#xe615;</i></a>
-                    #end
-                    <a title="编辑" href="javascript:;" onclick="admin_edit('管理员编辑','$!{request.getContextPath()}/admin/edit?memberid=$item.id','1','800','500')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
-                    <a title="删除" href="javascript:;" onclick="admin_del(this,$!{item.id})" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>
-                #end
-        </tr>
-        #end
-        </tbody>
-    </table>
+                </tbody>
+            </table>
+            #pagination($memberlist,"/admin/index?1=1")
+        </div>
+    </div>
 </div>
 <script type="text/javascript" src="$!{request.getContextPath()}/resource/lib/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript" src="$!{request.getContextPath()}/resource/lib/layer/2.1/layer.js"></script>

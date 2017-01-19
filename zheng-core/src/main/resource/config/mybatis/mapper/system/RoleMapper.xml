@@ -40,6 +40,16 @@
         FROM tb_role
     </select>
 
+    <select id="queryPageList" resultMap="result">
+        <include refid="select_sql"/>
+        FROM tb_role
+        limit #{query.startRow},#{query.pageSize}
+    </select>
+
+    <select id="queryCountPage" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM tb_role
+    </select>
+
     <insert id="insertRoleAndReturnId" parameterType="role" useGeneratedKeys="true" keyProperty="id">
         INSERT tb_role(rolename,displayname,create_time,update_time) VALUES (#{roleName},#{displayName},#{createTime},#{updateTime})
     </insert>

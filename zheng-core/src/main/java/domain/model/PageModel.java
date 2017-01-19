@@ -9,11 +9,12 @@ public class PageModel<T> extends BaseModel {
     private List<T> model;
     private int currpage;
     private int pagecount;
+    private int totalcount;
     private int pagesize;
 
-    public PageModel(List<T> _model,int _currpage,int _pagecount,int _pagesize){
+    public PageModel(List<T> _model,int _currpage,int _totalcount,int _pagesize){
         setModel(_model);
-        setPagecount(_pagecount);
+        setTotalcount(_totalcount);
         setCurrpage(_currpage);
         setPagesize(_pagesize);
     }
@@ -35,11 +36,23 @@ public class PageModel<T> extends BaseModel {
     }
 
     public int getPagecount() {
-        return pagecount;
+        int tp=totalcount%pagesize;
+        if (tp==0){
+            return totalcount/pagesize;
+        }
+        return totalcount/pagesize+1;
     }
 
     public void setPagecount(int pagecount) {
         this.pagecount = pagecount;
+    }
+
+    public int getTotalcount() {
+        return totalcount;
+    }
+
+    public void setTotalcount(int totalcount) {
+        this.totalcount = totalcount;
     }
 
     public int getPagesize() {

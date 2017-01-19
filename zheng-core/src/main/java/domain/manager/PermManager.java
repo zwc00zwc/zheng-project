@@ -3,7 +3,9 @@ package domain.manager;
 import domain.mapper.MemberRoleMapper;
 import domain.mapper.PermMapper;
 import domain.mapper.RolePermMapper;
+import domain.model.PageModel;
 import domain.model.system.Perm;
+import domain.model.system.query.PermQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import common.utility.StringUtility;
@@ -19,7 +21,7 @@ import java.util.List;
 @Component
 public class PermManager {
     @Autowired
-    private PermMapper permDao;
+    private PermMapper permMapper;
     @Autowired
     private MemberRoleMapper memberRoleDao;
     @Autowired
@@ -34,14 +36,14 @@ public class PermManager {
         for (String perm:permstr) {
             ids.addAll(StringUtility.StringToListLong(perm));
         }
-        list=permDao.queryByIdsAndParentId(ids,parentid);
+        list=permMapper.queryByIdsAndParentId(ids,parentid);
         return list;
     }
 
     public List<Perm> queryByRoleIdAndType(Long roleid,Integer type){
         String perms= rolePermDao.queryPermsByRoleId(roleid);
         List<Long> ids=StringUtility.StringToListLong(perms);
-        return permDao.queryByIdsAndType(ids,type);
+        return permMapper.queryByIdsAndType(ids,type);
     }
 
     public List<String> queryUrlByMemberId(Long memberid){
@@ -55,42 +57,45 @@ public class PermManager {
         for (String perm:permstr) {
             ids.addAll(StringUtility.StringToListLong(perm));
         }
-        return permDao.queryUrlByListId(ids);
+        return permMapper.queryUrlByListId(ids);
     }
 
     public List<String> queryIds(){
         List<String> list=new ArrayList<String>();
-        list= permDao.queryIds();
+        list= permMapper.queryIds();
         return list;
     }
 
-    public List<Perm> queryList(){
-        return permDao.queryList();
+    public PageModel<Perm> queryPageList(PermQuery query){
+        List<Perm> list= permMapper.queryPageList(query);
+        int count= permMapper.queryCountPage(query);
+        PageModel<Perm> permPageModel=new PageModel<Perm>(list,query.getCurrPage(),count,query.getPageSize());
+        return permPageModel;
     }
 
     public Perm queryById(Long id){
-        return permDao.queryById(id);
+        return permMapper.queryById(id);
     }
 
     public List<Perm> queryByType(List<Integer> types){
         List<Perm> list=new ArrayList<Perm>();
-        list= permDao.queryByType(types);
+        list= permMapper.queryByType(types);
         return list;
     }
 
     public List<Perm> queryByParentId(Long id){
-        return permDao.queryByParentId(id);
+        return permMapper.queryByParentId(id);
     }
 
     public int insertPerm(Perm perm){
-        return permDao.insertPerm(perm);
+        return permMapper.insertPerm(perm);
     }
 
     public int updateById(Perm perm){
-        return permDao.updateById(perm);
+        return permMapper.updateById(perm);
     }
 
     public int deleteById(Long id){
-        return permDao.deleteById(id);
+        return permMapper.deleteById(id);
     }
 }
