@@ -40,6 +40,11 @@
                             #end
                         </td>
                         <td class="f-14">
+                            <a class="btn btn-success radius" href="javascript:;">启动</a>
+                            <a class="btn btn-warning radius" href="javascript:;">暂停</a>
+                            <a class="btn btn-danger radius" href="javascript:;">停止</a>
+                            <a class="btn btn-primary radius" href="javascript:;">恢复</a>
+                            <a class="btn btn-danger radius" href="javascript:;">删除</a>
         ##                    #if($item.roleName!="admin")
         ##                        #if($auth.isPermission("/role/edit"))
         ##                            <a title="编辑" href="javascript:;" onclick="admin_role_edit('角色编辑','$!{request.getContextPath()}/role/edit?roleid=$!{item.id}','1')" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>

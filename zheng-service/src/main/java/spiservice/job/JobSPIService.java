@@ -67,6 +67,8 @@ public class JobSPIService implements JobSPI {
             for (int i=0;i<pageModel.getModel().size();i++){
                 Job job=(Job) pageModel.getModel().get(i);
                 if (zookeeperRegistryCenter.isExisted("/"+job.getJobName()+"")){
+                    String zkvalue= zookeeperRegistryCenter.get("/"+job.getJobName()+"");
+                    job.setRemark(zkvalue);
                     job.setStatus(1);
                 }else {
                     job.setStatus(-1);

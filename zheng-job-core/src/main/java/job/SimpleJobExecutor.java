@@ -1,6 +1,7 @@
 package job;
 
 
+import job.config.JobConfig;
 import reg.zookeeper.ZookeeperRegistryCenter;
 
 /**

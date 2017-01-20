@@ -1,4 +1,4 @@
-package job;
+package job.config;
 
 /**
  * Created by alan.zheng on 2017/1/17.

@@ -1,10 +1,10 @@
 package job;
 
+import job.config.JobConfig;
 import job.log.JobLogManager;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.recipes.cache.TreeCache;
-import org.apache.curator.framework.recipes.cache.TreeCacheEvent;
-import reg.base.AbstractListener;
+import reg.listener.JobListener;
 import reg.zookeeper.ZookeeperRegistryCenter;
 
 import java.util.Date;
@@ -32,12 +32,7 @@ public abstract class JobExecutor {
             CuratorFramework curatorFramework=(CuratorFramework) zookeeperRegistryCenter.getRawClient();
             TreeCache treeCache=new TreeCache(curatorFramework,"/"+jobConfig.getJobName()+"");
 
-            treeCache.getListenable().addListener(new AbstractListener() {
-                @Override
-                public void changed(CuratorFramework curatorFramework, TreeCacheEvent treeCacheEvent) {
-                    System.out.print("发生了监听:"+new Date().toString());
-                }
-            });
+            treeCache.getListenable().addListener(new JobListener(jobConfig.getJobName()));
             try {
                 treeCache.start();
             } catch (Exception e) {

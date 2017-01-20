@@ -1,6 +1,7 @@
 package job;
 
 import com.google.common.base.Optional;
+import job.config.JobConfig;
 import job.log.JobLogManager;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
@@ -32,8 +33,9 @@ public class JobScheduler {
         } catch (SchedulerException e) {
             e.printStackTrace();
         }
-        JobScheduleController jobScheduleController=new JobScheduleController(scheduler,jobDetail,"t1");
+        JobScheduleController jobScheduleController=new JobScheduleController(scheduler,jobDetail,jobConfig.getJobName());
         jobScheduleController.scheduleJob(jobConfig.getCorn());
+        JobRegisterManager.instance().addJobScheduleController(jobConfig.getJobName(),jobScheduleController);
     }
 
     private JobDetail createJobDetail(final String javaClass){

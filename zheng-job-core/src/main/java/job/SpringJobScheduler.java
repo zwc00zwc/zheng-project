@@ -1,6 +1,7 @@
 package job;
 
 import com.google.common.base.Optional;
+import job.config.JobConfig;
 import reg.zookeeper.ZookeeperRegistryCenter;
 
 /**

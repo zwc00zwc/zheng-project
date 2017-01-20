@@ -32,6 +32,8 @@ public class Test {
             @Override
             public void changed(CuratorFramework curatorFramework, TreeCacheEvent treeCacheEvent) {
                 System.out.print("发生了监听:"+new Date().toString());
+                String str=new String(treeCacheEvent.getData().getData());
+                System.out.print("改变的数据"+str);
             }
         });
         try {

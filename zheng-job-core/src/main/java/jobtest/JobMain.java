@@ -1,9 +1,6 @@
 package jobtest;
 
 
-import job.JobConfig;
-import job.JobScheduler;
-
 /**
  * Created by alan.zheng on 2017/1/17.
  */
