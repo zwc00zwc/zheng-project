@@ -5,6 +5,7 @@ import domain.model.Job.JobLog;
 import domain.model.Job.query.JobLogQuery;
 import domain.model.Job.query.JobQuery;
 import domain.model.PageModel;
+import job.config.JobCommand;
 
 import java.util.List;
 
@@ -19,4 +20,6 @@ public interface JobSPI {
     public boolean insertJob(Job job);
 
     public PageModel<JobLog> queryPageJobLog(JobLogQuery query);
+
+    public void jobCommand(Long jobId,JobCommand command);
 }

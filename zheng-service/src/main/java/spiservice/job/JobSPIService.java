@@ -6,6 +6,7 @@ import domain.model.Job.JobLog;
 import domain.model.Job.query.JobLogQuery;
 import domain.model.Job.query.JobQuery;
 import domain.model.PageModel;
+import job.config.JobCommand;
 import org.apache.curator.framework.CuratorFramework;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -74,6 +75,7 @@ public class JobSPIService implements JobSPI {
                     job.setStatus(-1);
                 }
             }
+            zookeeperRegistryCenter.close();
         }
         return pageModel;
     }
@@ -85,5 +87,26 @@ public class JobSPIService implements JobSPI {
     public PageModel<JobLog> queryPageJobLog(JobLogQuery query) {
         PageModel<JobLog> jobLogPageModel= jobManager.queryJobLogList(query);
         return jobLogPageModel;
+    }
+
+    public void jobCommand(Long jobId, JobCommand command) {
+        Job job= jobManager.queryById(jobId);
+        if (job!=null){
+            ZookeeperConfig zookeeperConfig=new ZookeeperConfig();
+            zookeeperConfig.setServerLists("127.0.0.1:2181");
+            zookeeperConfig.setNamespace("root");
+            zookeeperConfig.setAuth("auth");
+            ZookeeperRegistryCenter zookeeperRegistryCenter= null;
+            try {
+                zookeeperRegistryCenter = new ZookeeperRegistryCenter(zookeeperConfig);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            zookeeperRegistryCenter.init();
+            if (zookeeperRegistryCenter.isExisted("/"+job.getJobName()+"")){
+                zookeeperRegistryCenter.update("/"+job.getJobName()+"",command.getCommand());
+            }
+            zookeeperRegistryCenter.close();
+        }
     }
 }

@@ -41,9 +41,9 @@
                         </td>
                         <td class="f-14">
                             <a class="btn btn-success radius" href="javascript:;">启动</a>
-                            <a class="btn btn-warning radius" href="javascript:;">暂停</a>
+                            <a class="btn btn-warning radius" onclick="job_command(this,$!{item.id},'PAUSE')" href="javascript:;">暂停</a>
                             <a class="btn btn-danger radius" href="javascript:;">停止</a>
-                            <a class="btn btn-primary radius" href="javascript:;">恢复</a>
+                            <a class="btn btn-primary radius" onclick="job_command(this,$!{item.id},'PAUSE')" href="javascript:;">恢复</a>
                             <a class="btn btn-danger radius" href="javascript:;">删除</a>
         ##                    #if($item.roleName!="admin")
         ##                        #if($auth.isPermission("/role/edit"))
@@ -72,5 +72,26 @@
     /*任务-增加*/
     function job_add(title,url,w,h){
         layer_show(title,url,w,h);
+    }
+
+    /*任务-命令*/
+    function job_command(obj,id,command){
+        //此处请求后台程序，下方是成功后的前台处理……
+        jQuery.ajax({
+            url: '$!{request.getContextPath()}/job/command',
+            data: {jobid:id,command:command},
+            type: "post",
+            success: function (data) {
+                if (data.code > 0) {
+                    $(obj).parents("tr").find(".td-manage").prepend('<a onClick="admin_stop(this,'+id+')" href="javascript:;" title="停用" style="text-decoration:none"><i class="Hui-iconfont">&#xe631;</i></a>');
+                    $(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已启用</span>');
+                    $(obj).remove();
+                    layer.msg('已启用!', {icon: 6,time:1000});
+                }
+                else {
+                    alert(data.msg);
+                }
+            }
+        });
     }
 </script>

@@ -26,6 +26,11 @@ import java.util.*;
 public class JobManager {
     @Autowired
     private JobMapper jobMapper;
+
+    public Job queryById(Long jobId){
+        return jobMapper.queryById(jobId);
+    }
+
     public List<Job> queryList(){
         return jobMapper.queryList();
     }

@@ -9,12 +9,18 @@
     <resultMap id="result" type="job">
         <id column="id" property="id" jdbcType="BIGINT" ></id>
         <result column="jobName" property="jobName" jdbcType="VARCHAR"></result>
+        <result column="remark" property="remark" jdbcType="VARCHAR"></result>
         <result column="createTime" property="createTime"></result>
     </resultMap>
 
     <sql id="select_sql">
-        SELECT id,jobName,createTime
+        SELECT id,jobName,remark,createTime
     </sql>
+
+    <select id="queryById" parameterType="java.lang.Long" resultMap="result">
+        <include refid="select_sql"/>
+        FROM tb_job WHERE id=#{jobId}
+    </select>
 
     <select id="queryList" resultMap="result">
         <include refid="select_sql"/>

@@ -8,6 +8,7 @@ import domain.model.Job.JobLog;
 import domain.model.Job.query.JobLogQuery;
 import domain.model.Job.query.JobQuery;
 import domain.model.PageModel;
+import job.config.JobCommand;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -77,5 +78,21 @@ public class JobController extends BaseController {
         model.addAttribute("logs",logs);
         model.addAttribute("user",getAuthUser(httpSession));
         return "/job/log";
+    }
+
+    @Auth(rule = "/job/command" )
+    @ResponseBody
+    @RequestMapping(value = "/job/command")
+    public JsonResult command(@RequestParam(value = "jobid") Long jobid,@RequestParam(value = "command")String command){
+        if (JobCommand.START.getCommand().equals(command)){
+            jobSPIService.jobCommand(jobid,JobCommand.START);
+        }
+        if (JobCommand.PAUSE.getCommand().equals(command)){
+            jobSPIService.jobCommand(jobid,JobCommand.PAUSE);
+        }
+        if (JobCommand.RESUME.getCommand().equals(command)){
+            jobSPIService.jobCommand(jobid,JobCommand.RESUME);
+        }
+        return jsonResult(1,"命令执行成功");
     }
 }
