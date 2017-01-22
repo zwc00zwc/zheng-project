@@ -84,15 +84,18 @@ public class JobController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "/job/command")
     public JsonResult command(@RequestParam(value = "jobid") Long jobid,@RequestParam(value = "command")String command){
-        if (JobCommand.START.getCommand().equals(command)){
-            jobSPIService.jobCommand(jobid,JobCommand.START);
-        }
+//        if (JobCommand.START.getCommand().equals(command)){
+//            jobSPIService.jobCommand(jobid,JobCommand.START);
+//            return jsonResult(1,"已启动");
+//        }
         if (JobCommand.PAUSE.getCommand().equals(command)){
             jobSPIService.jobCommand(jobid,JobCommand.PAUSE);
+            return jsonResult(1,"已执行暂停");
         }
         if (JobCommand.RESUME.getCommand().equals(command)){
             jobSPIService.jobCommand(jobid,JobCommand.RESUME);
+            return jsonResult(1,"已执行启动");
         }
-        return jsonResult(1,"命令执行成功");
+        return jsonResult(-1,"未知命令");
     }
 }

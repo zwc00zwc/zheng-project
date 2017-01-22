@@ -17,7 +17,7 @@ public class Job extends BaseModel {
      */
     private String jobName;
     /**
-     * 任务运行状态 (1：正在运行 -1：已停止)
+     * 任务运行状态 (1：正在运行 -1：未运行 -2：已暂停 )
      */
     private Integer status;
     /**
