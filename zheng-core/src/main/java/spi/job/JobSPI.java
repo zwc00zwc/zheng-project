@@ -22,4 +22,6 @@ public interface JobSPI {
     public PageModel<JobLog> queryPageJobLog(JobLogQuery query);
 
     public void jobCommand(Long jobId,JobCommand command);
+
+    public boolean deleteJob(Long jobId);
 }

@@ -40,4 +40,8 @@
     <insert id="insertJob">
         INSERT INTO tb_job(`jobName`,`createTime`,`remark`) VALUES (#{job.jobName},#{job.createTime},#{job.remark})
     </insert>
+
+    <delete id="deleteJob" parameterType="java.lang.Long">
+        DELETE FROM tb_job WHERE id=#{jobId}
+    </delete>
 </mapper>

@@ -19,4 +19,6 @@ public interface JobMapper {
     int queryCountPage(@Param("query") JobQuery query);
 
     int insertJob(@Param("job") Job job);
+
+    int deleteJob(Long jobId);
 }

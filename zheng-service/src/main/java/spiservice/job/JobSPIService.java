@@ -112,4 +112,8 @@ public class JobSPIService implements JobSPI {
             zookeeperRegistryCenter.close();
         }
     }
+
+    public boolean deleteJob(Long jobId) {
+        return jobManager.deleteJob(jobId);
+    }
 }

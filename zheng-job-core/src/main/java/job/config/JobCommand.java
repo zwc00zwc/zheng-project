@@ -15,7 +15,11 @@ public enum JobCommand {
     /**
      * 恢复
      */
-    RESUME("RESUME")
+    RESUME("RESUME"),
+    /**
+     * 删除
+     */
+    DELETE("DELETE")
     ;
 
     private String command;

@@ -94,4 +94,11 @@ public class JobManager {
         PageModel<JobLog> pageModel=new PageModel<JobLog>(list,query.getCurrPage(),i,query.getPageSize());
         return pageModel;
     }
+
+    public boolean deleteJob(Long jobId){
+        if (jobMapper.deleteJob(jobId)>0){
+            return true;
+        }
+        return false;
+    }
 }

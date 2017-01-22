@@ -45,7 +45,7 @@
                             #if($item.status==1)
                                 <a class="btn btn-warning radius" onclick="job_command(this,$!{item.id},'PAUSE')" href="javascript:;">暂停</a>
                                 #elseif($item.status==-1)
-                                    <a class="btn btn-danger radius" href="javascript:;">删除</a>
+                                    <a class="btn btn-danger radius" onclick="job_delete(this,$!{item.id})" href="javascript:;">删除</a>
                                 #elseif($item.status==-2)
                                     <a class="btn btn-success radius" onclick="job_command(this,$!{item.id},'RESUME')" href="javascript:;">启动</a>
                             #end
@@ -86,6 +86,27 @@
                     alert(data.msg);
                 }
             }
+        });
+    }
+
+    /*任务-删除*/
+    function job_delete(obj,id){
+        layer.confirm('确认要删除吗？',function(index){
+            //此处请求后台程序，下方是成功后的前台处理……
+            jQuery.ajax({
+                url: '$!{request.getContextPath()}/job/delete',
+                data: {jobid:id},
+                type: "post",
+                success: function (data) {
+                    if (data.code > 0) {
+                        $(obj).parents("tr").remove();
+                        layer.msg('已删除!',{icon:1,time:1000});
+                    }
+                    else {
+                        alert(data.msg);
+                    }
+                }
+            });
         });
     }
 </script>
