@@ -35,6 +35,9 @@ public class JobListener extends AbstractListener {
             if (JobCommand.RESUME.getCommand().equals(eventstr)){
                 jobScheduleController.resumeJob();
             }
+            if (JobCommand.EXECUTE.getCommand().equals(eventstr)){
+                jobScheduleController.triggerJob();
+            }
         }
     }
 }

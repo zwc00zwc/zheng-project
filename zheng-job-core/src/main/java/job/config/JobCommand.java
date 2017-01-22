@@ -9,6 +9,10 @@ public enum JobCommand {
      */
     START("START"),
     /**
+     * 执行(应用于下次执行时间还未到时手动执行一次)
+     */
+    EXECUTE("EXECUTE"),
+    /**
      * 暂停
      */
     PAUSE("PAUSE"),

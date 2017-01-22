@@ -107,7 +107,11 @@ public class JobSPIService implements JobSPI {
             }
             zookeeperRegistryCenter.init();
             if (zookeeperRegistryCenter.isExisted("/"+job.getJobName()+"")){
+                String zkvalue = zookeeperRegistryCenter.get("/"+job.getJobName()+"");
                 zookeeperRegistryCenter.update("/"+job.getJobName()+"",command.getCommand());
+                if (JobCommand.EXECUTE.equals(command)){
+                    zookeeperRegistryCenter.update("/"+job.getJobName()+"",zkvalue);
+                }
             }
             zookeeperRegistryCenter.close();
         }
