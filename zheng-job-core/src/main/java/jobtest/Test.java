@@ -3,6 +3,8 @@ package jobtest;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.recipes.cache.TreeCache;
 import org.apache.curator.framework.recipes.cache.TreeCacheEvent;
+import org.apache.curator.framework.state.ConnectionState;
+import reg.base.AbstractConnectListener;
 import reg.base.AbstractListener;
 import reg.zookeeper.ZookeeperConfig;
 import reg.zookeeper.ZookeeperRegistryCenter;
@@ -26,6 +28,15 @@ public class Test {
         }
         zookeeperRegistryCenter.init();
         CuratorFramework curatorFramework=(CuratorFramework) zookeeperRegistryCenter.getRawClient();
+        curatorFramework.getConnectionStateListenable().addListener(new AbstractConnectListener(){
+            @Override
+            public void changed(CuratorFramework curatorFramework, ConnectionState connectionState) {
+                System.out.print("连接状态已改变");
+                if (ConnectionState.LOST.equals(connectionState)){
+                    System.out.print("断开连接");
+                }
+            }
+        });
         TreeCache treeCache=new TreeCache(curatorFramework,"/aaa");
 
         treeCache.getListenable().addListener(new AbstractListener() {

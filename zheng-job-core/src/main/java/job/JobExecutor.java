@@ -4,6 +4,7 @@ import job.config.JobConfig;
 import job.log.JobLogManager;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.recipes.cache.TreeCache;
+import reg.listener.ConnectListener;
 import reg.listener.JobListener;
 import reg.zookeeper.ZookeeperRegistryCenter;
 
@@ -30,8 +31,10 @@ public abstract class JobExecutor {
         //启动任务时候插入zk临时任务数据
         if (!zookeeperRegistryCenter.isExisted("/"+jobConfig.getJobName()+"")){
             CuratorFramework curatorFramework=(CuratorFramework) zookeeperRegistryCenter.getRawClient();
-            TreeCache treeCache=new TreeCache(curatorFramework,"/"+jobConfig.getJobName()+"");
 
+            curatorFramework.getConnectionStateListenable().addListener(new ConnectListener());
+
+            TreeCache treeCache=new TreeCache(curatorFramework,"/"+jobConfig.getJobName()+"");
             treeCache.getListenable().addListener(new JobListener(jobConfig.getJobName()));
             try {
                 treeCache.start();
