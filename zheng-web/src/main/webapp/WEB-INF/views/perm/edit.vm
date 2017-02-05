@@ -88,11 +88,11 @@
                     type: "post",
                     success: function (data) {
                         if (data.code > 0) {
-                            alert("成功！");
+                            layer.msg('成功',{icon:1,time:1000});
                             window.parent.location.reload();
                         }
                         else {
-                            alert(data.msg);
+                            layer.msg(data.msg,{icon:1,time:1000});
                         }
                     }
                 });
