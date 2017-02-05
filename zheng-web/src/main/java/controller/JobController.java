@@ -103,8 +103,15 @@ public class JobController extends BaseController {
     @ResponseBody
     @RequestMapping(value = "/job/delete")
     public JsonResult delete(@RequestParam(value = "jobid") Long jobid){
+        Job job= jobSPIService.queryById(jobid);
+        if (job==null){
+            return jsonResult(-1,"任务不存在");
+        }
+        if (job.getStatus()==1){
+            return jsonResult(-1,"任务正在运行中");
+        }
         if (jobSPIService.deleteJob(jobid)){
-            return jsonResult(1,"未知命令");
+            return jsonResult(1,"删除成功");
         }
         return jsonResult(-1,"删除失败");
     }

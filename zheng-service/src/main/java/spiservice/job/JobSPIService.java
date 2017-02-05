@@ -25,6 +25,32 @@ import java.util.List;
 public class JobSPIService implements JobSPI {
     @Autowired
     private JobManager jobManager;
+
+    public Job queryById(Long jobId) {
+        Job job=jobManager.queryById(jobId);
+        if (job==null){
+            return null;
+        }
+        ZookeeperConfig zookeeperConfig=new ZookeeperConfig();
+        zookeeperConfig.setServerLists("127.0.0.1:2181");
+        zookeeperConfig.setNamespace("root");
+        zookeeperConfig.setAuth("auth");
+        ZookeeperRegistryCenter zookeeperRegistryCenter= null;
+        try {
+            zookeeperRegistryCenter = new ZookeeperRegistryCenter(zookeeperConfig);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        zookeeperRegistryCenter.init();
+        if (zookeeperRegistryCenter.isExisted("/"+job.getJobName()+"")){
+            job.setStatus(1);
+        }else {
+            job.setStatus(-1);
+        }
+        zookeeperRegistryCenter.close();
+        return job;
+    }
+
     public List<Job> queryList() {
         List<Job> jobs= jobManager.queryList();
         ZookeeperConfig zookeeperConfig=new ZookeeperConfig();
@@ -38,7 +64,6 @@ public class JobSPIService implements JobSPI {
             e.printStackTrace();
         }
         zookeeperRegistryCenter.init();
-        CuratorFramework curatorFramework=(CuratorFramework) zookeeperRegistryCenter.getRawClient();
         if (jobs!=null&&jobs.size()>0){
             for (Job job:jobs) {
                 if (zookeeperRegistryCenter.isExisted("/"+job.getJobName()+"")){
@@ -48,6 +73,7 @@ public class JobSPIService implements JobSPI {
                 }
             }
         }
+        zookeeperRegistryCenter.close();
         return jobs;
     }
 

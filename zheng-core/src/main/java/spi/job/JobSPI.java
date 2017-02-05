@@ -13,6 +13,8 @@ import java.util.List;
  * Created by alan.zheng on 2017/1/18.
  */
 public interface JobSPI {
+    Job queryById(Long jobId);
+
     public List<Job> queryList();
 
     public PageModel<Job> queryPageList(JobQuery query);
