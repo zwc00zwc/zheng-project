@@ -5,6 +5,20 @@
          version="3.1">
 
   <display-name>zheng-serivce</display-name>
+
+  <servlet>
+    <servlet-name>zheng-serivce</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>classpath:config/spring-mvc.xml</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>zheng-serivce</servlet-name>
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>
+
   <context-param>
     <param-name>contextConfigLocation</param-name>
     <param-value>classpath*:applicationContext.xml,classpath*:config/mybatis/applicationContext-*.xml</param-value>
