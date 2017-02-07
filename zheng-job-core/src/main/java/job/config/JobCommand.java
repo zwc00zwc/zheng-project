@@ -21,6 +21,10 @@ public enum JobCommand {
      */
     RESUME("RESUME"),
     /**
+     * 停止
+     */
+    SHUTDOWN("SHUTDOWN"),
+    /**
      * 删除
      */
     DELETE("DELETE")
