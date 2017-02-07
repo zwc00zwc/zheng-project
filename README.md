@@ -17,7 +17,10 @@ maven pom.xml加入任务所需jar
 public class ZhengJob implements SimpleJob {
     
     public void execute() {
+
         System.out.print("我在测试ZhengJob"+DateUtility.getStrFromDate(new Date(),""));
+    
     }
+
 }
 
