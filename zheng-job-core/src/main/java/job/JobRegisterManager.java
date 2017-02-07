@@ -37,4 +37,12 @@ public class JobRegisterManager {
     public JobScheduleController getJobScheduleController(final String jobName) {
         return jobMap.get(jobName);
     }
+
+    /**
+     * 移除作业调度控制器
+     * @param jobName
+     */
+    public void removeJobScheduleController(final String jobName) {
+        jobMap.remove(jobName);
+    }
 }

@@ -138,6 +138,9 @@ public class JobSPIService implements JobSPI {
                 if (JobCommand.EXECUTE.equals(command)){
                     zookeeperRegistryCenter.update("/"+job.getJobName()+"",zkvalue);
                 }
+                if (JobCommand.SHUTDOWN.equals(command)){
+                    zookeeperRegistryCenter.remove("/"+job.getJobName());
+                }
             }
             zookeeperRegistryCenter.close();
         }

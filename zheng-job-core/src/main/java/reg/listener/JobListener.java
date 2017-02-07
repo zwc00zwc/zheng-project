@@ -38,6 +38,10 @@ public class JobListener extends AbstractListener {
             if (JobCommand.EXECUTE.getCommand().equals(eventstr)){
                 jobScheduleController.triggerJob();
             }
+            if (JobCommand.SHUTDOWN.getCommand().equals(eventstr)){
+                jobScheduleController.shutdown();
+                JobRegisterManager.instance().removeJobScheduleController(jobName);
+            }
         }
     }
 }

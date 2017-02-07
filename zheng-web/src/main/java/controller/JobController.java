@@ -96,6 +96,10 @@ public class JobController extends BaseController {
             jobSPIService.jobCommand(jobid,JobCommand.RESUME);
             return jsonResult(1,"已执行启动");
         }
+        if (JobCommand.SHUTDOWN.getCommand().equals(command)){
+            jobSPIService.jobCommand(jobid,JobCommand.SHUTDOWN);
+            return jsonResult(1,"已执行启动");
+        }
         return jsonResult(-1,"未知命令");
     }
 
