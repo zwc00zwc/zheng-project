@@ -3,6 +3,7 @@ package businessmq.config;
 import businessmq.base.ExchangeType;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -26,13 +27,17 @@ public class MqConfig {
      */
     private String password;
     /**
-     * 队列
+     * 队列路由
      */
-    private String queue;
+    private Map<String,Set<String>> queueRoutingKey;
     /**
-     * 消息队列的
+     * 交换机名
      */
-    private Set<ExchangeType> exchangeTypes;
+    private String exchangeName;
+    /**
+     * 交换机类型
+     */
+    private ExchangeType exchangeType;
 
     public String getHost() {
         return host;
@@ -66,19 +71,27 @@ public class MqConfig {
         this.password = password;
     }
 
-    public String getQueue() {
-        return queue;
+    public Map<String, Set<String>> getQueueRoutingKey() {
+        return queueRoutingKey;
     }
 
-    public void setQueue(String queue) {
-        this.queue = queue;
+    public void setQueueRoutingKey(Map<String, Set<String>> queueRoutingKey) {
+        this.queueRoutingKey = queueRoutingKey;
     }
 
-    public Set<ExchangeType> getExchangeTypes() {
-        return exchangeTypes;
+    public String getExchangeName() {
+        return exchangeName;
     }
 
-    public void setExchangeTypes(Set<ExchangeType> exchangeTypes) {
-        this.exchangeTypes = exchangeTypes;
+    public void setExchangeName(String exchangeName) {
+        this.exchangeName = exchangeName;
+    }
+
+    public ExchangeType getExchangeType() {
+        return exchangeType;
+    }
+
+    public void setExchangeType(ExchangeType exchangeType) {
+        this.exchangeType = exchangeType;
     }
 }

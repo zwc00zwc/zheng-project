@@ -11,6 +11,7 @@ import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 
 /**
+ * mq链接注册中心
  * Created by alan.zheng on 2017/2/8.
  */
 public class MqRegistryManeger {
@@ -27,7 +28,7 @@ public class MqRegistryManeger {
         return mqRegistryManeger;
     }
 
-    public static Channel getMqChannel(MqConfig config){
+    public static Channel getMqChannel(MqConfig config) throws IOException, TimeoutException {
         String key=config.getHost()+":"+config.getPort()+"/"+config.getUserName();
         Channel channel= channelMap.get(key);
         if (channel==null){
@@ -38,20 +39,10 @@ public class MqRegistryManeger {
                 factory.setPort(config.getPort());
                 factory.setUsername(config.getUserName());
                 factory.setPassword(config.getPassword());
-                try {
-                    connection = factory.newConnection();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (TimeoutException e) {
-                    e.printStackTrace();
-                }
+                connection = factory.newConnection();
                 connectionMap.put(key,connection);
             }
-            try {
-                channel=connection.createChannel();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            channel=connection.createChannel();
             channelMap.put(key,channel);
         }
         return channel;
