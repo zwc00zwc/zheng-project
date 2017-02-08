@@ -1,9 +1,11 @@
 package job;
 
 import com.google.common.base.Optional;
+import job.base.BaseJob;
 import job.config.JobConfig;
 import job.log.JobLogManager;
 import org.quartz.*;
+import org.quartz.Job;
 import org.quartz.impl.StdSchedulerFactory;
 import reg.zookeeper.ZookeeperRegistryCenter;
 
@@ -42,12 +44,12 @@ public class JobScheduler {
         JobDetail jobDetail = JobBuilder.newJob(AbstractJob.class).withIdentity(jobConfig.getJobName()).build();
         jobDetail.getJobDataMap().put("jobConfig", jobConfig);
         jobDetail.getJobDataMap().put("zookeeperRegistryCenter", zookeeperRegistryCenter);
-        Optional<ElasticJob> elasticJobInstance = createElasticJobInstance();
-        if (elasticJobInstance.isPresent()) {
-            jobDetail.getJobDataMap().put("elasticJob", elasticJobInstance.get());
+        Optional<BaseJob> baseJobInstance = createBaseJobInstance();
+        if (baseJobInstance.isPresent()) {
+            jobDetail.getJobDataMap().put("baseJob", baseJobInstance.get());
         }else {
             try {
-                jobDetail.getJobDataMap().put("elasticJob",Class.forName(javaClass).newInstance());
+                jobDetail.getJobDataMap().put("baseJob",Class.forName(javaClass).newInstance());
             } catch (InstantiationException e) {
                 JobLogManager.log(jobConfig.getJobName(),e.toString(),new Date());
             } catch (IllegalAccessException e) {
@@ -59,7 +61,7 @@ public class JobScheduler {
         return jobDetail;
     }
 
-    protected Optional<ElasticJob> createElasticJobInstance() {
+    protected Optional<BaseJob> createBaseJobInstance() {
         return Optional.absent();
     }
 
@@ -68,16 +70,16 @@ public class JobScheduler {
      */
     public static final class AbstractJob implements Job{
         private JobConfig jobConfig;
-        private ElasticJob elasticJob;
+        private BaseJob baseJob;
         private ZookeeperRegistryCenter zookeeperRegistryCenter;
         public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-           if (elasticJob instanceof SimpleJob){
-               new SimpleJobExecutor(jobConfig,(SimpleJob) elasticJob,zookeeperRegistryCenter).excute();
+           if (baseJob instanceof BaseJob){
+               new SimpleJobExecutor(jobConfig,(BaseJob) baseJob,zookeeperRegistryCenter).excute();
            }
         }
 
-        public void setElasticJob(ElasticJob elasticJob) {
-            this.elasticJob = elasticJob;
+        public void setBaseJob(BaseJob baseJob) {
+            this.baseJob = baseJob;
         }
 
         public void setJobConfig(JobConfig jobConfig) {
