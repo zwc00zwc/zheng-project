@@ -41,7 +41,24 @@ public class ConsumerProvider {
             }
             QueueingConsumer consumer = new QueueingConsumer(channel);
             // 指定消费队列
-            channel.basicConsume("queue_name", true, consumer);
+            if (StringUtils.isEmpty(mqConfig.getConsumerQueue())){
+                channel.basicConsume(channel.queueDeclare().getQueue(), true, consumer);
+            }else {
+                channel.basicConsume(mqConfig.getConsumerQueue(), true, consumer);
+            }
+
+            while (true)
+            {
+                try {
+                    QueueingConsumer.Delivery delivery = consumer.nextDelivery();
+                    String message = new String(delivery.getBody());
+
+                    //业务代码
+                    System.out.println("message:"+message);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
         } catch (IOException e) {
             e.printStackTrace();
         } catch (TimeoutException e) {
