@@ -1,5 +1,6 @@
 package spiservice.job;
 
+import common.utility.PropertiesUtility;
 import domain.manager.JobManager;
 import domain.model.Job.Job;
 import domain.model.Job.JobLog;
@@ -32,9 +33,10 @@ public class JobSPIService implements JobSPI {
             return null;
         }
         ZookeeperConfig zookeeperConfig=new ZookeeperConfig();
-        zookeeperConfig.setServerLists("127.0.0.1:2181");
-        zookeeperConfig.setNamespace("root");
-        zookeeperConfig.setAuth("auth");
+        PropertiesUtility propertiesUtility=new PropertiesUtility("zookeeper.properties");
+        zookeeperConfig.setServerLists(propertiesUtility.getProperty("zk.serverList"));
+        zookeeperConfig.setNamespace(propertiesUtility.getProperty("zk.namespace"));
+        zookeeperConfig.setAuth(propertiesUtility.getProperty("zk.auth"));
         ZookeeperRegistryCenter zookeeperRegistryCenter= null;
         try {
             zookeeperRegistryCenter = new ZookeeperRegistryCenter(zookeeperConfig);
@@ -54,9 +56,10 @@ public class JobSPIService implements JobSPI {
     public List<Job> queryList() {
         List<Job> jobs= jobManager.queryList();
         ZookeeperConfig zookeeperConfig=new ZookeeperConfig();
-        zookeeperConfig.setServerLists("127.0.0.1:2181");
-        zookeeperConfig.setNamespace("root");
-        zookeeperConfig.setAuth("auth");
+        PropertiesUtility propertiesUtility=new PropertiesUtility("zookeeper.properties");
+        zookeeperConfig.setServerLists(propertiesUtility.getProperty("zk.serverList"));
+        zookeeperConfig.setNamespace(propertiesUtility.getProperty("zk.namespace"));
+        zookeeperConfig.setAuth(propertiesUtility.getProperty("zk.auth"));
         ZookeeperRegistryCenter zookeeperRegistryCenter= null;
         try {
             zookeeperRegistryCenter = new ZookeeperRegistryCenter(zookeeperConfig);
@@ -81,9 +84,10 @@ public class JobSPIService implements JobSPI {
         PageModel pageModel=jobManager.queryPageList(query);
         if (pageModel!=null&&pageModel.getModel()!=null&&pageModel.getModel().size()>0){
             ZookeeperConfig zookeeperConfig=new ZookeeperConfig();
-            zookeeperConfig.setServerLists("127.0.0.1:2181");
-            zookeeperConfig.setNamespace("root");
-            zookeeperConfig.setAuth("auth");
+            PropertiesUtility propertiesUtility=new PropertiesUtility("zookeeper.properties");
+            zookeeperConfig.setServerLists(propertiesUtility.getProperty("zk.serverList"));
+            zookeeperConfig.setNamespace(propertiesUtility.getProperty("zk.namespace"));
+            zookeeperConfig.setAuth(propertiesUtility.getProperty("zk.auth"));
             ZookeeperRegistryCenter zookeeperRegistryCenter= null;
             try {
                 zookeeperRegistryCenter = new ZookeeperRegistryCenter(zookeeperConfig);
@@ -122,9 +126,10 @@ public class JobSPIService implements JobSPI {
         Job job= jobManager.queryById(jobId);
         if (job!=null){
             ZookeeperConfig zookeeperConfig=new ZookeeperConfig();
-            zookeeperConfig.setServerLists("127.0.0.1:2181");
-            zookeeperConfig.setNamespace("root");
-            zookeeperConfig.setAuth("auth");
+            PropertiesUtility propertiesUtility=new PropertiesUtility("zookeeper.properties");
+            zookeeperConfig.setServerLists(propertiesUtility.getProperty("zk.serverList"));
+            zookeeperConfig.setNamespace(propertiesUtility.getProperty("zk.namespace"));
+            zookeeperConfig.setAuth(propertiesUtility.getProperty("zk.auth"));
             ZookeeperRegistryCenter zookeeperRegistryCenter= null;
             try {
                 zookeeperRegistryCenter = new ZookeeperRegistryCenter(zookeeperConfig);
