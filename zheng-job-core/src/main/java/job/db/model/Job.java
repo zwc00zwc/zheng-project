@@ -1,13 +1,11 @@
-package domain.model.Job;
-
-import domain.model.BaseModel;
+package job.db.model;
 
 import java.util.Date;
 
 /**
- * Created by alan.zheng on 2017/1/18.
+ * Created by alan.zheng on 2017/2/9.
  */
-public class Job extends BaseModel {
+public class Job {
     /**
      * id
      */
@@ -17,7 +15,7 @@ public class Job extends BaseModel {
      */
     private String jobName;
     /**
-     * 任务执行表达式
+     * quartz表达式
      */
     private String corn;
     /**

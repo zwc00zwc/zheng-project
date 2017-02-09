@@ -3,6 +3,7 @@ package job;
 import com.google.common.base.Optional;
 import job.base.BaseJob;
 import job.config.JobConfig;
+import job.db.dal.JobDal;
 import job.log.JobLogManager;
 import org.quartz.*;
 import org.quartz.Job;
@@ -36,7 +37,11 @@ public class JobScheduler {
             e.printStackTrace();
         }
         JobScheduleController jobScheduleController=new JobScheduleController(scheduler,jobDetail,jobConfig.getJobName());
-        jobScheduleController.scheduleJob(jobConfig.getCorn());
+        job.db.model.Job job= JobDal.queryByJobName(jobConfig.getJobName());
+        if (job==null){
+            return;
+        }
+        jobScheduleController.scheduleJob(job.getCorn());
         JobRegisterManager.instance().addJobScheduleController(jobConfig.getJobName(),jobScheduleController);
     }
 

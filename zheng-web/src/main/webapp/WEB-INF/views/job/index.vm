@@ -23,6 +23,7 @@
                 <tr class="text-c">
                     <th width="200">作业名</th>
                     <th width="300">描述</th>
+                    <th width="300">任务执行表达式</th>
                     <th width="100">状态</th>
                     <th width="70">操作</th>
                 </tr>
@@ -32,6 +33,7 @@
                     <tr class="text-c">
                         <td>$!{item.jobName}</td>
                         <td>$!{item.remark}</td>
+                        <td>$!{item.corn}</td>
                         <td>
                             #if($item.status==1)
                                 <span class="label label-success radius">正在运行</span>
