@@ -40,10 +40,15 @@ public class ZhengJob implements BaseJob{
 spring配置任务
 
 @Configuration
+
 public class ZhengJobConfig {
+
     @Bean(name = "zhengJob")
+
     public ZhengJob zhengJob() {
+
         return new ZhengJob();
+
     }
 
     @Resource
@@ -55,3 +60,5 @@ public class ZhengJobConfig {
         return new SpringJobScheduler(jobConfig,registryCenter,zhengJob);
     }
 }
+
+任务平台效果可以参考doc文件夹下资料
