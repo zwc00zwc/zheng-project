@@ -61,9 +61,17 @@ public class ZhengJobConfig {
     }
 }
 
-任务平台效果可以参考doc文件夹下资料
+##任务平台效果截图##
 
-![image](https://github.com/zwc00zwc/zheng-project/blob/master/doc/4.png)
-![image](https://github.com/zwc00zwc/zheng-project/blob/master/doc/1.png)
-![image](https://github.com/zwc00zwc/zheng-project/blob/master/doc/2.png)
-![image](https://github.com/zwc00zwc/zheng-project/blob/master/doc/3.png)
+<p>
+    <img src="https://github.com/zwc00zwc/zheng-project/blob/master/doc/4.png" style="float:none;"/>
+</p>
+<p>
+    <img src="https://github.com/zwc00zwc/zheng-project/blob/master/doc/1.png" style="float:none;"/>
+</p>
+<p>
+    <img src="https://github.com/zwc00zwc/zheng-project/blob/master/doc/2.png" style="float:none;"/>
+</p>
+<p>
+    <img src="https://github.com/zwc00zwc/zheng-project/blob/master/doc/3.png" style="float:none;"/>
+</p>
