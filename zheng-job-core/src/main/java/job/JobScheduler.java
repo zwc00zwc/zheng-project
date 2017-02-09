@@ -28,20 +28,24 @@ public class JobScheduler {
      * 初始化作业.
      */
     public void init() {
-        JobDetail jobDetail = createJobDetail(jobConfig.getJavaClass());
-        Scheduler scheduler=null;
         try {
-            StdSchedulerFactory factory = new StdSchedulerFactory();
-            factory.initialize();
-            scheduler = factory.getScheduler();
-        } catch (SchedulerException e) {
-            e.printStackTrace();
-        }
-        JobScheduleController jobScheduleController=new JobScheduleController(scheduler,jobDetail,jobConfig.getJobName());
-        job.db.model.Job job= JobDal.queryByJobName(jobConfig.getJobName());
-        if (job!=null && !StringUtils.isEmpty(job.getCorn())){
-            jobScheduleController.scheduleJob(job.getCorn());
-            JobRegisterManager.instance().addJobScheduleController(jobConfig.getJobName(),jobScheduleController);
+            JobDetail jobDetail = createJobDetail(jobConfig.getJavaClass());
+            Scheduler scheduler=null;
+            try {
+                StdSchedulerFactory factory = new StdSchedulerFactory();
+                factory.initialize();
+                scheduler = factory.getScheduler();
+            } catch (SchedulerException e) {
+                e.printStackTrace();
+            }
+            JobScheduleController jobScheduleController=new JobScheduleController(scheduler,jobDetail,jobConfig.getJobName());
+            job.db.model.Job job= JobDal.queryByJobName(jobConfig.getJobName());
+            if (job!=null && !StringUtils.isEmpty(job.getCorn())){
+                jobScheduleController.scheduleJob(job.getCorn());
+                JobRegisterManager.instance().addJobScheduleController(jobConfig.getJobName(),jobScheduleController);
+            }
+        } catch (Exception e) {
+            JobLogManager.log(jobConfig.getJobName(),e.toString(),new Date());
         }
     }
 
@@ -78,9 +82,13 @@ public class JobScheduler {
         private BaseJob baseJob;
         private ZookeeperRegistryCenter zookeeperRegistryCenter;
         public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-           if (baseJob instanceof BaseJob){
-               new SimpleJobExecutor(jobConfig,(BaseJob) baseJob,zookeeperRegistryCenter).excute();
-           }
+            try {
+                if (baseJob instanceof BaseJob){
+                    new SimpleJobExecutor(jobConfig,(BaseJob) baseJob,zookeeperRegistryCenter).excute();
+                }
+            } catch (Exception e) {
+                JobLogManager.log(jobConfig.getJobName(),e.toString(),new Date());
+            }
         }
 
         public void setBaseJob(BaseJob baseJob) {

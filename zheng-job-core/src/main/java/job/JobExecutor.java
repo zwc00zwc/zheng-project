@@ -43,7 +43,11 @@ public abstract class JobExecutor {
             }
             zookeeperRegistryCenter.createEphemeral("/"+jobConfig.getJobName()+"",jobConfig.getJobName());
         }
-        process();
+        try {
+            process();
+        } catch (Exception e) {
+            JobLogManager.log(jobConfig.getJobName(),e.toString(),new Date());
+        }
     }
 
     /**
