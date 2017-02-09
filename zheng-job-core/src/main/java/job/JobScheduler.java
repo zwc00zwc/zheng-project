@@ -5,6 +5,7 @@ import job.base.BaseJob;
 import job.config.JobConfig;
 import job.db.dal.JobDal;
 import job.log.JobLogManager;
+import org.apache.commons.lang3.StringUtils;
 import org.quartz.*;
 import org.quartz.Job;
 import org.quartz.impl.StdSchedulerFactory;
@@ -38,11 +39,10 @@ public class JobScheduler {
         }
         JobScheduleController jobScheduleController=new JobScheduleController(scheduler,jobDetail,jobConfig.getJobName());
         job.db.model.Job job= JobDal.queryByJobName(jobConfig.getJobName());
-        if (job==null){
-            return;
+        if (job!=null && !StringUtils.isEmpty(job.getCorn())){
+            jobScheduleController.scheduleJob(job.getCorn());
+            JobRegisterManager.instance().addJobScheduleController(jobConfig.getJobName(),jobScheduleController);
         }
-        jobScheduleController.scheduleJob(job.getCorn());
-        JobRegisterManager.instance().addJobScheduleController(jobConfig.getJobName(),jobScheduleController);
     }
 
     private JobDetail createJobDetail(final String javaClass){

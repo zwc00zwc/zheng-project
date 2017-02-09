@@ -25,6 +25,10 @@ public enum JobCommand {
      */
     SHUTDOWN("SHUTDOWN"),
     /**
+     * 修改
+     */
+    EDIT("EDIT"),
+    /**
      * 删除
      */
     DELETE("DELETE")

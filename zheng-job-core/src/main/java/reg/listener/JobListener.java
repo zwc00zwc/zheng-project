@@ -3,6 +3,8 @@ package reg.listener;
 import job.JobRegisterManager;
 import job.JobScheduleController;
 import job.config.JobCommand;
+import job.db.dal.JobDal;
+import job.db.model.Job;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.recipes.cache.TreeCacheEvent;
@@ -37,6 +39,12 @@ public class JobListener extends AbstractListener {
             }
             if (JobCommand.EXECUTE.getCommand().equals(eventstr)){
                 jobScheduleController.triggerJob();
+            }
+            if (JobCommand.EDIT.getCommand().equals(eventstr)){
+                Job job= JobDal.queryByJobName(jobName);
+                if (job!=null && !StringUtils.isEmpty(job.getCorn())){
+                    jobScheduleController.rescheduleJob(job.getCorn());
+                }
             }
             if (JobCommand.SHUTDOWN.getCommand().equals(eventstr)){
                 jobScheduleController.shutdown();

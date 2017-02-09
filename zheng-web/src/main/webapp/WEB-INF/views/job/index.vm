@@ -47,6 +47,7 @@
                             #if($item.status==1)
                                 <a class="btn btn-warning radius" onclick="job_command(this,$!{item.id},'PAUSE')" href="javascript:;">暂停</a>
                                 <a class="btn btn-primary radius" onclick="job_command(this,$!{item.id},'EXECUTE')" href="javascript:;">执行</a>
+                                <a class="btn btn-warning radius" onclick="job_command(this,$!{item.id},'EDIT')" href="javascript:;">修改执行时间</a>
                                 <a class="btn btn-danger radius" onclick="job_command(this,$!{item.id},'SHUTDOWN')" href="javascript:;">停止</a>
                             #elseif($item.status==-1)
                                 <a class="btn btn-danger radius" onclick="job_delete(this,$!{item.id})" href="javascript:;">删除</a>
