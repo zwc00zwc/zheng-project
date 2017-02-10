@@ -65,6 +65,9 @@ public class JobController extends BaseController {
     public String log(Model model,String queryDate,String startTime,String endTime,Integer currPage,HttpSession httpSession){
         JobLogQuery query =new JobLogQuery();
         query.setQueryDate(DateUtility.getDateFromStr(queryDate,"yyyy-MM-dd"));
+        if (currPage!=null&&currPage>0){
+            query.setCurrPage(currPage);
+        }
         if (StringUtils.isNotEmpty(startTime)){
             query.setStartTime(DateUtility.getDateFromStr(queryDate +" "+ startTime,"yyyy-MM-dd hh:mm:ss"));
         }

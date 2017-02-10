@@ -87,9 +87,9 @@ public class JobManager {
         }
         int i=0;
         MongoCursor mongoCursor1 = collection.find(basicDBObject).sort(new BasicDBObject("createTime", -1)).iterator();
-        while (mongoCursor.hasNext()){
+        while (mongoCursor1.hasNext()){
             i++;
-            mongoCursor.next();
+            mongoCursor1.next();
         }
         PageModel<JobLog> pageModel=new PageModel<JobLog>(list,query.getCurrPage(),i,query.getPageSize());
         return pageModel;
