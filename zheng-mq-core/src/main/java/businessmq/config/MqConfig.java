@@ -26,22 +26,7 @@ public class MqConfig {
      * 密码
      */
     private String password;
-    /**
-     * 消费队列
-     */
-    private String consumerQueue;
-    /**
-     * 队列路由
-     */
-    private Map<String,Set<String>> queueRoutingKey;
-    /**
-     * 交换机名
-     */
-    private String exchangeName;
-    /**
-     * 交换机类型
-     */
-    private ExchangeType exchangeType;
+
 
     public String getHost() {
         return host;
@@ -73,37 +58,5 @@ public class MqConfig {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getConsumerQueue() {
-        return consumerQueue;
-    }
-
-    public void setConsumerQueue(String consumerQueue) {
-        this.consumerQueue = consumerQueue;
-    }
-
-    public Map<String, Set<String>> getQueueRoutingKey() {
-        return queueRoutingKey;
-    }
-
-    public void setQueueRoutingKey(Map<String, Set<String>> queueRoutingKey) {
-        this.queueRoutingKey = queueRoutingKey;
-    }
-
-    public String getExchangeName() {
-        return exchangeName;
-    }
-
-    public void setExchangeName(String exchangeName) {
-        this.exchangeName = exchangeName;
-    }
-
-    public ExchangeType getExchangeType() {
-        return exchangeType;
-    }
-
-    public void setExchangeType(ExchangeType exchangeType) {
-        this.exchangeType = exchangeType;
     }
 }

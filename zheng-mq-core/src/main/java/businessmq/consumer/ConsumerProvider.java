@@ -1,7 +1,9 @@
 package businessmq.consumer;
 
 import businessmq.base.MqRegistryManeger;
+import businessmq.config.ConsumerConfig;
 import businessmq.config.MqConfig;
+import com.google.common.base.Optional;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.QueueingConsumer;
 import org.apache.commons.lang3.StringUtils;
@@ -17,34 +19,30 @@ import java.util.concurrent.TimeoutException;
  */
 public class ConsumerProvider {
 
-    public void receiveMessage(MqConfig mqConfig){
+    public void receiveMessage(ConsumerConfig consumerConfig,AbstractConsumer abstractConsumer){
         try {
-            Channel channel= MqRegistryManeger.getMqChannel(mqConfig);
-            Map<String,Set<String>> map= mqConfig.getQueueRoutingKey();
-            if (!StringUtils.isEmpty(mqConfig.getExchangeName())&&mqConfig.getExchangeType()!=null){
-                channel.exchangeDeclare(mqConfig.getExchangeName(),mqConfig.getExchangeType().getType());
-                if (!map.isEmpty()){
-                    for (Map.Entry<String, Set<String>> entry: map.entrySet()){
-                        channel.queueDeclare(entry.getKey(), true, false, false, null);
-                        Set<String> set= entry.getValue();
-                        for (String routing:set){
-                            channel.queueBind(entry.getKey(),mqConfig.getExchangeName(),routing);
-                        }
+            Channel channel= MqRegistryManeger.getMqChannel(consumerConfig);
+            if (!StringUtils.isEmpty(consumerConfig.getExchangeName())&&consumerConfig.getExchangeType()!=null){
+                channel.exchangeDeclare(consumerConfig.getExchangeName(),consumerConfig.getExchangeType().getType());
+                if (!StringUtils.isEmpty(consumerConfig.getConsumerQueue())){
+                    channel.queueDeclare(consumerConfig.getConsumerQueue(), true, false, false, null);
+                }
+                if (consumerConfig.getRoutingKey()!=null&&consumerConfig.getRoutingKey().length>0){
+                    for (int i=0;i<consumerConfig.getRoutingKey().length;i++){
+                        channel.queueBind(consumerConfig.getConsumerQueue(),consumerConfig.getExchangeName(),consumerConfig.getRoutingKey()[i]);
                     }
                 }
             }else {
-                if (!map.isEmpty()){
-                    for (Map.Entry<String, Set<String>> entry: map.entrySet()){
-                        channel.queueDeclare(entry.getKey(), true, false, false, null);
-                    }
+                if (!StringUtils.isEmpty(consumerConfig.getConsumerQueue())){
+                    channel.queueDeclare(consumerConfig.getConsumerQueue(), true, false, false, null);
                 }
             }
             QueueingConsumer consumer = new QueueingConsumer(channel);
             // 指定消费队列
-            if (StringUtils.isEmpty(mqConfig.getConsumerQueue())){
+            if (StringUtils.isEmpty(consumerConfig.getConsumerQueue())){
                 channel.basicConsume(channel.queueDeclare().getQueue(), true, consumer);
             }else {
-                channel.basicConsume(mqConfig.getConsumerQueue(), true, consumer);
+                channel.basicConsume(consumerConfig.getConsumerQueue(), true, consumer);
             }
 
             while (true)
@@ -52,9 +50,7 @@ public class ConsumerProvider {
                 try {
                     QueueingConsumer.Delivery delivery = consumer.nextDelivery();
                     String message = new String(delivery.getBody());
-
-                    //业务代码
-                    System.out.println("message:"+message);
+                    abstractConsumer.work(message);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
