@@ -22,7 +22,6 @@ public class JobListener extends AbstractListener {
     }
     @Override
     public void changed(CuratorFramework curatorFramework, TreeCacheEvent treeCacheEvent) {
-        System.out.print("发生了监听:"+new Date().toString());
         String eventstr;
         try {
             eventstr=new String(treeCacheEvent.getData().getData());

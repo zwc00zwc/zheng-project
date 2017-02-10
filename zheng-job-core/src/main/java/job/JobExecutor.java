@@ -29,19 +29,19 @@ public abstract class JobExecutor {
          * 开始前置处理，(开始进行zk监听处理)
          */
         //启动任务时候插入zk临时任务数据
-        if (!zookeeperRegistryCenter.isExisted("/"+jobConfig.getJobName()+"")){
-            CuratorFramework curatorFramework=(CuratorFramework) zookeeperRegistryCenter.getRawClient();
+        try {
+            if (!zookeeperRegistryCenter.isExisted("/"+jobConfig.getJobName()+"")){
+                CuratorFramework curatorFramework=(CuratorFramework) zookeeperRegistryCenter.getRawClient();
 
-            curatorFramework.getConnectionStateListenable().addListener(new ConnectListener());
+                curatorFramework.getConnectionStateListenable().addListener(new ConnectListener());
 
-            TreeCache treeCache=new TreeCache(curatorFramework,"/"+jobConfig.getJobName()+"");
-            treeCache.getListenable().addListener(new JobListener(jobConfig.getJobName()));
-            try {
+                TreeCache treeCache=new TreeCache(curatorFramework,"/"+jobConfig.getJobName()+"");
+                treeCache.getListenable().addListener(new JobListener(jobConfig.getJobName()));
                 treeCache.start();
-            } catch (Exception e) {
-                JobLogManager.log(jobConfig.getJobName(),e.toString(),new Date());
+                zookeeperRegistryCenter.createEphemeral("/"+jobConfig.getJobName()+"",jobConfig.getJobName());
             }
-            zookeeperRegistryCenter.createEphemeral("/"+jobConfig.getJobName()+"",jobConfig.getJobName());
+        } catch (Exception e) {
+            JobLogManager.log(jobConfig.getJobName(),e.toString(),new Date());
         }
         try {
             process();

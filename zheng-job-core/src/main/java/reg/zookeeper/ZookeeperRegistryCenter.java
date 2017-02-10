@@ -3,6 +3,7 @@ package reg.zookeeper;
 import com.google.common.base.Charsets;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
+import job.log.JobLogManager;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.framework.api.ACLProvider;
@@ -82,9 +83,9 @@ public class ZookeeperRegistryCenter implements RegistryCenter {
                 throw new KeeperException.OperationTimeoutException();
             }
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            JobLogManager.log("System",e.toString(),new Date());
         } catch (KeeperException.OperationTimeoutException e) {
-            e.printStackTrace();
+            JobLogManager.log("System",e.toString(),new Date());
         }
 //        String connectString = zkConfig.getServerLists();
 //        // 连接时间 和重试次数
@@ -141,7 +142,7 @@ public class ZookeeperRegistryCenter implements RegistryCenter {
             return new String(client.getData().forPath(key), Charsets.UTF_8);
             //CHECKSTYLE:OFF
         } catch (final Exception ex) {
-            //CHECKSTYLE:ON
+            JobLogManager.log("System",ex.toString(),new Date());
             return null;
         }
     }
@@ -158,7 +159,7 @@ public class ZookeeperRegistryCenter implements RegistryCenter {
             return result;
             //CHECKSTYLE:OFF
         } catch (final Exception ex) {
-            //CHECKSTYLE:ON
+            JobLogManager.log("System",ex.toString(),new Date());
             return Collections.emptyList();
         }
     }
@@ -171,7 +172,7 @@ public class ZookeeperRegistryCenter implements RegistryCenter {
             }
             //CHECKSTYLE:OFF
         } catch (final Exception ex) {
-            //CHECKSTYLE:ON
+            JobLogManager.log("System",ex.toString(),new Date());
         }
         return 0;
     }
@@ -186,7 +187,7 @@ public class ZookeeperRegistryCenter implements RegistryCenter {
             return null != client.checkExists().forPath(key);
             //CHECKSTYLE:OFF
         } catch (final Exception ex) {
-            //CHECKSTYLE:ON
+            JobLogManager.log("System",ex.toString(),new Date());
             return false;
         }
     }
@@ -200,7 +201,7 @@ public class ZookeeperRegistryCenter implements RegistryCenter {
             }
             //CHECKSTYLE:OFF
         } catch (final Exception ex) {
-            //CHECKSTYLE:ON
+            JobLogManager.log("System",ex.toString(),new Date());
         }
     }
 
@@ -209,7 +210,7 @@ public class ZookeeperRegistryCenter implements RegistryCenter {
             client.inTransaction().check().forPath(key).and().setData().forPath(key, value.getBytes(Charsets.UTF_8)).and().commit();
             //CHECKSTYLE:OFF
         } catch (final Exception ex) {
-            //CHECKSTYLE:ON
+            JobLogManager.log("System",ex.toString(),new Date());
         }
     }
 
@@ -221,7 +222,7 @@ public class ZookeeperRegistryCenter implements RegistryCenter {
             client.create().creatingParentsIfNeeded().withMode(CreateMode.EPHEMERAL).forPath(key, value.getBytes(Charsets.UTF_8));
             //CHECKSTYLE:OFF
         } catch (final Exception ex) {
-            //CHECKSTYLE:ON
+            JobLogManager.log("System",ex.toString(),new Date());
         }
     }
 
@@ -230,7 +231,7 @@ public class ZookeeperRegistryCenter implements RegistryCenter {
             return client.create().creatingParentsIfNeeded().withMode(CreateMode.PERSISTENT_SEQUENTIAL).forPath(key, value.getBytes(Charsets.UTF_8));
             //CHECKSTYLE:OFF
         } catch (final Exception ex) {
-            //CHECKSTYLE:ON
+            JobLogManager.log("System",ex.toString(),new Date());
         }
         return null;
     }
@@ -240,7 +241,7 @@ public class ZookeeperRegistryCenter implements RegistryCenter {
             client.create().creatingParentsIfNeeded().withMode(CreateMode.EPHEMERAL_SEQUENTIAL).forPath(key);
             //CHECKSTYLE:OFF
         } catch (final Exception ex) {
-            //CHECKSTYLE:ON
+            JobLogManager.log("System",ex.toString(),new Date());
         }
     }
 
@@ -249,7 +250,7 @@ public class ZookeeperRegistryCenter implements RegistryCenter {
             client.delete().deletingChildrenIfNeeded().forPath(key);
             //CHECKSTYLE:OFF
         } catch (final Exception ex) {
-            //CHECKSTYLE:ON
+            JobLogManager.log("System",ex.toString(),new Date());
         }
     }
 
@@ -260,7 +261,7 @@ public class ZookeeperRegistryCenter implements RegistryCenter {
             result = client.checkExists().forPath(path).getCtime();
             //CHECKSTYLE:OFF
         } catch (final Exception ex) {
-            //CHECKSTYLE:ON
+            JobLogManager.log("System",ex.toString(),new Date());
         }
         Preconditions.checkState(0L != result, "Cannot get registry center time.");
         return result;
@@ -276,7 +277,7 @@ public class ZookeeperRegistryCenter implements RegistryCenter {
             cache.start();
             //CHECKSTYLE:OFF
         } catch (final Exception ex) {
-            //CHECKSTYLE:ON
+            JobLogManager.log("System",ex.toString(),new Date());
 
         }
         caches.put(cachePath + "/", cache);
