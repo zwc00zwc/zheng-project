@@ -15,7 +15,7 @@
         <module>zheng-common</module>
         <module>zheng-elasticjob</module>
         <module>zheng-job-core</module>
-        <module>zheng-mq-core</module>
+        <module>zheng-businessmq-core</module>
     </modules>
 
     <properties>

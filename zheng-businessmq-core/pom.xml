@@ -7,10 +7,10 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>zheng-mq-core</artifactId>
+    <artifactId>zheng-businessmq-core</artifactId>
     <packaging>jar</packaging>
 
-    <name>zheng-mq-core</name>
+    <name>zheng-businessmq-core</name>
     <url>http://maven.apache.org</url>
 
     <properties>
