@@ -62,8 +62,8 @@ public class ConsumerProvider {
                     CuratorFramework curatorFramework=(CuratorFramework) zookeeperRegistryCenter.getRawClient();
 
                     curatorFramework.getConnectionStateListenable().addListener(new ConnectListener());
-
-                    zookeeperRegistryCenter.createEphemeral("/mq/"+consumerConfig.getJavaClass()+"",consumerConfig.getJavaClass());
+                    String remark="监听"+"【"+consumerConfig.getExchangeName()+"】【"+consumerConfig.getRoutingKey()+"】【"+consumerConfig.getConsumerQueue();
+                    zookeeperRegistryCenter.createEphemeral("/mq/"+consumerConfig.getJavaClass()+"",remark);
                 }
             } catch (Exception e) {
                 MqLogManager.log(consumerConfig.getExchangeName()+consumerConfig.getRoutingKey()+consumerConfig.getConsumerQueue()+consumerConfig.getJavaClass(),

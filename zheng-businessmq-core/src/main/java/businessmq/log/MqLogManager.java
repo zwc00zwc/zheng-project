@@ -16,7 +16,7 @@ public class MqLogManager {
     public static void log(String listener,String log,Date logTime){
         try {
             String collectionname= DateUtility.getStrFromDate(new Date(),"yyyyMMdd")+"_log";
-            MongoCollection collection= MongodbManager.getDatabase("MqLog").getCollection(collectionname);
+            MongoCollection collection= MongodbManager.getDatabase("BusinessMqLog").getCollection(collectionname);
             Document document=new Document();
             document.append("listener",listener);
             document.append("log",log);
