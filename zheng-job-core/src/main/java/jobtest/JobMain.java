@@ -1,12 +1,16 @@
 package jobtest;
 
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 /**
  * Created by alan.zheng on 2017/1/17.
  */
 public class JobMain {
     public static void main(String[] args){
-//        JobConfig jobConfig=new JobConfig("testJob",TestJob.class.getCanonicalName(),"0/5 * * * * ?");
-//        new JobScheduler(jobConfig).init();
+        //注册心跳守护
+        Timer timer=new Timer();
+        timer.schedule(new TestTask(),0,5000);
     }
 }

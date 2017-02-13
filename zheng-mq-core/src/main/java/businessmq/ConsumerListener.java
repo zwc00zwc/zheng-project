@@ -1,8 +1,10 @@
 package businessmq;
 
+import businessmq.base.Context;
 import businessmq.config.ConsumerConfig;
 import businessmq.consumer.AbstractConsumer;
 import businessmq.consumer.ConsumerProvider;
+import businessmq.reg.zookeeper.ZookeeperRegistryCenter;
 import com.google.common.base.Optional;
 import org.springframework.beans.factory.BeanNameAware;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -16,16 +18,19 @@ import java.util.concurrent.Executors;
 public class ConsumerListener {
     private final ConsumerConfig consumerConfig;
     private final ThreadPoolTaskExecutor threadPoolTaskExecutor;
-    public ConsumerListener(final ConsumerConfig _config,final ThreadPoolTaskExecutor threadPoolTaskExecutor){
+    private final ZookeeperRegistryCenter zookeeperRegistryCenter;
+    public ConsumerListener(final ConsumerConfig _config,final ThreadPoolTaskExecutor threadPoolTaskExecutor,final ZookeeperRegistryCenter zookeeperRegistryCenter){
         this.consumerConfig=_config;
         this.threadPoolTaskExecutor=threadPoolTaskExecutor;
+        this.zookeeperRegistryCenter=zookeeperRegistryCenter;
     }
 
     /**
      * 初始化消息监听
      */
     public void init(){
-        ConsumerProvider consumerProvider=new ConsumerProvider();
+        Context context=new Context();
+        ConsumerProvider consumerProvider=new ConsumerProvider(zookeeperRegistryCenter,context);
         Optional<AbstractConsumer> abstractConsumerOptional= createBaseJobInstance();
         if (abstractConsumerOptional.isPresent()){
             execute(consumerProvider,consumerConfig,abstractConsumerOptional.get());

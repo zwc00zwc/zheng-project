@@ -17,5 +17,6 @@
     <dubbo:reference id="permissionSPIService" interface="spi.system.PermissionSPI" timeout="60000" retries="0"/>
     <dubbo:reference id="roleSPIService" interface="spi.system.RoleSPI" timeout="60000" retries="0"/>
     <dubbo:reference id="jobSPIService" interface="spi.job.JobSPI" timeout="60000" retries="0"/>
+    <dubbo:reference id="businessMqSPIService" interface="spi.businessmq.BusinessMqSPI" timeout="60000" retries="0"/>
 
 </beans>

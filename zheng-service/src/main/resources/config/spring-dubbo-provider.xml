@@ -23,6 +23,7 @@
     <dubbo:service interface="spi.system.PermissionSPI" ref="permissionSPIService" protocol="dubbo"/>
     <dubbo:service interface="spi.system.RoleSPI" ref="roleSPIService" protocol="dubbo"/>
     <dubbo:service interface="spi.job.JobSPI" ref="jobSPIService" protocol="dubbo"/>
+    <dubbo:service interface="spi.businessmq.BusinessMqSPI" ref="businessMqSPIService" protocol="dubbo"/>
     <!-- AOP -->
     <!--<aop:config>-->
         <!--<aop:pointcut id="service" expression="target(hg.framework.common.base.BaseServiceProviderInterface)-->
