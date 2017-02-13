@@ -50,6 +50,6 @@ public class MqController extends BaseController {
         model.addAttribute("endTime",endTime);
         model.addAttribute("mqlogs",logPageModel);
         model.addAttribute("user",getAuthUser(httpSession));
-        return "/mq/index";
+        return "/mq/log";
     }
 }

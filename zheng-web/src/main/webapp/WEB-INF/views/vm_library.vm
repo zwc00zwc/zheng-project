@@ -14,7 +14,7 @@
         #if($currpage>1)
             <a class="paginate_button previous disabled" href="$search&currPage=$prvpage" aria-controls="DataTables_Table_0" data-dt-idx="0" tabindex="0" id="DataTables_Table_0_previous">上一页</a>
         #end
-        <span><a class="paginate_button current" aria-controls="DataTables_Table_0" data-dt-idx="1" tabindex="0">$currpage</a></span>
+        <span><a class="paginate_button current" aria-controls="DataTables_Table_0" data-dt-idx="1" tabindex="0">$!{currpage}</a></span>
         #if($currpage<$pagecount)
             <a class="paginate_button previous disabled" href="$search&currPage=$nextpage" aria-controls="DataTables_Table_0" data-dt-idx="0" tabindex="0" id="DataTables_Table_0_previous">下一页</a>
         #end
