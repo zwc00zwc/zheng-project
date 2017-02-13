@@ -100,35 +100,59 @@ public class TestConsumer implements AbstractConsumer{
 
 任务平台业务代码建议以spring boot进行开发
 spring配置任务
-
+```
 @Configuration
+```
 public class TestMqConfig {
+    ```
     @Bean
+    ```
     public ThreadPoolTaskExecutor threadPoolTaskExecutor(){
+        ```
         ThreadPoolTaskExecutor threadPoolExecutor=new ThreadPoolTaskExecutor();
+        ```
         threadPoolExecutor.setCorePoolSize(5);
+        ```
         threadPoolExecutor.setMaxPoolSize(10);
+        ```
         threadPoolExecutor.setQueueCapacity(25);
+        ```
         return new ThreadPoolTaskExecutor();
+    ```
     }
-
+    ```
     @Resource
+    ```
     private ZookeeperRegistryCenter mqzookeeperRegistryCenter;
-
+    ```
     @Bean(name = "testConsumer")
+    ```
     public TestConsumer zhengJob() {
+        ```
         return new TestConsumer();
+    ```
     }
-
+    ```
     @Bean(initMethod = "init",name = "TestListen")
+    ```
     public ConsumerListener dataflowJobScheduler(final TestConsumer testConsumer,ThreadPoolTaskExecutor threadPoolTaskExecutor) {
+        ```
         ConsumerConfig consumerConfig=new ConsumerConfig();
+        ```
         consumerConfig.setHost("127.0.0.1");
+        ```
         consumerConfig.setPort(5672);
+        ```
         consumerConfig.setUserName("guest");
+        ```
         consumerConfig.setPassword("guest");
+        ```
         consumerConfig.setConsumerQueue("command");
+        ```
         consumerConfig.setJavaClass(testConsumer.getClass().getCanonicalName());
+        ```
         return new SpringConsumerListener(consumerConfig,mqzookeeperRegistryCenter,testConsumer,threadPoolTaskExecutor);
+    ```
     }
+```    
 }
