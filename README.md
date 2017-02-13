@@ -40,7 +40,7 @@ public class ZhengJob implements BaseJob{
 
 任务平台业务代码建议以spring boot进行开发
 spring配置任务
-
+```
 @Configuration
 
 public class ZhengJobConfig {
@@ -62,7 +62,7 @@ public class ZhengJobConfig {
         return new SpringJobScheduler(jobConfig,registryCenter,zhengJob);
     }
 }
-
+```
 ##任务平台效果截图##
 
 <p>
