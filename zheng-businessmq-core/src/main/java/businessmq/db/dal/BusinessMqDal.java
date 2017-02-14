@@ -19,13 +19,13 @@ public class BusinessMqDal {
      * @param msg
      * @return
      */
-    public Integer insertMq(DbConfig config,String msg){
+    public static Integer insertMq(DbConfig config,String msg){
         Connection connection=null;
         PreparedStatement preparedStatement=null;
         ResultSet resultSet=null;
         connection=BaseDB.getConnection(config);
         try {
-            preparedStatement=connection.prepareStatement("INSERT INTO tb_message(message,status,createtime) VALUES (?,?,?)");
+            preparedStatement=connection.prepareStatement("INSERT INTO tb_message(message,status,createtime) VALUES (?,?,?)",PreparedStatement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1,msg);
             preparedStatement.setInt(2,0);
             preparedStatement.setDate(3,new java.sql.Date(new Date().getTime()));
