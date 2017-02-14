@@ -33,6 +33,7 @@ public class ProducterProvider {
      */
     public void sendMessage(ProducterConfig producterConfig, String msg){
         Message message=new Message();
+        message.setDbId(producterConfig.getNode());
         message.setMsg(msg);
         message.setMsgType(MessageType.MYSQL.getType());
         try {
