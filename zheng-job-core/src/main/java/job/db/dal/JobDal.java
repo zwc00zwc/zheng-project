@@ -3,6 +3,8 @@ package job.db.dal;
 import job.db.BaseDB;
 import job.db.model.Job;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -13,8 +15,14 @@ public class JobDal {
     public static Job queryByJobName(String jobName){
         Job job=new Job();
         String[] args=new String[]{jobName};
+        Connection connection=null;
+        PreparedStatement preparedStatement=null;
+        ResultSet resultSet=null;
         try {
-            ResultSet resultSet= BaseDB.query("SELECT id,jobName,corn,remark,createTime FROM tb_job WHERE jobName=?",args);
+            connection= BaseDB.getConnection();
+            preparedStatement=connection.prepareStatement("SELECT id,jobName,corn,remark,createTime FROM tb_job WHERE jobName=?");
+            BaseDB.query(preparedStatement,args);
+            resultSet=preparedStatement.executeQuery();
             if (resultSet.next()){
                 job.setId(resultSet.getLong("id"));
                 job.setJobName(resultSet.getString("jobName"));
@@ -24,6 +32,9 @@ public class JobDal {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+        finally {
+            BaseDB.dispose(connection,preparedStatement,resultSet);
         }
         return job;
     }

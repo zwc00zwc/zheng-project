@@ -1,12 +1,15 @@
 package businessmq.consumer;
 
 import businessmq.base.Context;
+import businessmq.base.Message;
 import businessmq.base.MqRegistryManeger;
 import businessmq.config.ConsumerConfig;
+import businessmq.config.MessageType;
 import businessmq.config.MqConfig;
 import businessmq.log.MqLogManager;
 import businessmq.reg.listener.ConnectListener;
 import businessmq.reg.zookeeper.ZookeeperRegistryCenter;
+import com.alibaba.fastjson.JSON;
 import com.google.common.base.Optional;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.QueueingConsumer;
@@ -77,11 +80,17 @@ public class ConsumerProvider {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            while (context.isListener())
-            {
+            while (context.isListener()) {
                 try {
                     QueueingConsumer.Delivery delivery = consumer.nextDelivery();
                     String message = new String(delivery.getBody());
+                    Message msg= JSON.parseObject(message, Message.class);
+                    if (MessageType.MONGO.getType().equals(msg.getMsgType())){
+
+                    }
+                    if (MessageType.MYSQL.getType().equals(msg.getMsgType())){
+
+                    }
                     abstractConsumer.work(message);
                 } catch (InterruptedException e) {
                     MqLogManager.log(consumerConfig.getExchangeName()+consumerConfig.getRoutingKey()+consumerConfig.getConsumerQueue()+consumerConfig.getJavaClass(),
@@ -89,9 +98,11 @@ public class ConsumerProvider {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            MqLogManager.log(consumerConfig.getExchangeName()+consumerConfig.getRoutingKey()+consumerConfig.getConsumerQueue()+consumerConfig.getJavaClass(),
+                    e.toString(),new Date());
         } catch (TimeoutException e) {
-            e.printStackTrace();
+            MqLogManager.log(consumerConfig.getExchangeName()+consumerConfig.getRoutingKey()+consumerConfig.getConsumerQueue()+consumerConfig.getJavaClass(),
+                    e.toString(),new Date());
         }
     }
 

@@ -1,14 +1,30 @@
-package job.db;
+package businessmq.db;
 
 import common.utility.PropertiesUtility;
 
-import java.io.IOException;
 import java.sql.*;
 
 /**
  * Created by alan.zheng on 2017/2/9.
  */
 public class BaseDB {
+    public static Connection getConnection(DbConfig dbConfig){
+        String driver =dbConfig.getDriver();
+        String url = dbConfig.getUrl();
+        String username = dbConfig.getUsername();
+        String password = dbConfig.getPassword();
+        Connection conn = null;
+        try {
+            Class.forName(driver);
+            conn =  DriverManager.getConnection(url, username, password);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return conn;
+    }
+
     public static Connection getConnection(){
         PropertiesUtility propertiesUtility=new PropertiesUtility("job.properties");
         String driver =propertiesUtility.getProperty("jdbc.driver");
@@ -18,7 +34,7 @@ public class BaseDB {
         Connection conn = null;
         try {
             Class.forName(driver);
-            conn = DriverManager.getConnection(url, username, password);
+            conn =  DriverManager.getConnection(url, username, password);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {

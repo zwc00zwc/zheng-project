@@ -1,6 +1,7 @@
 package businessmq.config;
 
 import businessmq.base.ExchangeType;
+import businessmq.db.DbConfig;
 
 import java.util.Map;
 import java.util.Set;
@@ -21,6 +22,14 @@ public class ProducterConfig extends MqConfig {
      * 交换机类型
      */
     private ExchangeType exchangeType;
+    /**
+     * 负载均衡节点map
+     */
+    private Map<Integer,DbConfig> blanceNode;
+    /**
+     * 当前节点
+     */
+    private Integer node;
 
     public Map<String, Set<String>> getQueueRoutingKey() {
         return queueRoutingKey;
@@ -44,5 +53,21 @@ public class ProducterConfig extends MqConfig {
 
     public void setExchangeType(ExchangeType exchangeType) {
         this.exchangeType = exchangeType;
+    }
+
+    public Map<Integer, DbConfig> getBlanceNode() {
+        return blanceNode;
+    }
+
+    public void setBlanceNode(Map<Integer, DbConfig> blanceNode) {
+        this.blanceNode = blanceNode;
+    }
+
+    public Integer getNode() {
+        return node;
+    }
+
+    public void setNode(Integer node) {
+        this.node = node;
     }
 }
