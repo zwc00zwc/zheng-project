@@ -5,11 +5,15 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import common.mongodb.MongodbManager;
 import common.utility.DateUtility;
+import domain.mapper.BusinessMqNodeMapper;
 import domain.model.Job.JobLog;
 import domain.model.PageModel;
 import domain.model.mq.BusinessMqLog;
+import domain.model.mq.BusinessMqNode;
 import domain.model.mq.query.BusinessMqLogQuery;
+import domain.model.mq.query.BusinessMqNodeQuery;
 import org.bson.Document;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -19,6 +23,9 @@ import java.util.*;
  */
 @Component
 public class BusinessMqManager {
+    @Autowired
+    private BusinessMqNodeMapper businessMqNodeMapper;
+
     public PageModel<BusinessMqLog> queryBusinessMqLogPage(BusinessMqLogQuery query){
         String collectionname="";
         if (query.getQueryDate()==null){
@@ -63,5 +70,19 @@ public class BusinessMqManager {
         }
         PageModel<BusinessMqLog> pageModel=new PageModel<BusinessMqLog>(list,query.getCurrPage(),i,query.getPageSize());
         return pageModel;
+    }
+
+    public PageModel<BusinessMqNode> queryPageList(BusinessMqNodeQuery query){
+        List<BusinessMqNode> list= businessMqNodeMapper.queryPageList(query);
+        int count=businessMqNodeMapper.queryCountPage(query);
+        PageModel<BusinessMqNode> pageModel=new PageModel<BusinessMqNode>(list,query.getCurrPage(),count,query.getPageSize());
+        return pageModel;
+    }
+
+    public boolean insertNode(BusinessMqNode businessMqNode){
+        if (businessMqNodeMapper.insertNode(businessMqNode)>0){
+            return true;
+        }
+        return false;
     }
 }

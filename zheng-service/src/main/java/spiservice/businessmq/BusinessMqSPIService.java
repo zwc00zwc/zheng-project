@@ -5,7 +5,9 @@ import domain.manager.BusinessMqManager;
 import domain.model.PageModel;
 import domain.model.mq.BusinessMq;
 import domain.model.mq.BusinessMqLog;
+import domain.model.mq.BusinessMqNode;
 import domain.model.mq.query.BusinessMqLogQuery;
+import domain.model.mq.query.BusinessMqNodeQuery;
 import domain.model.mq.query.BusinessMqQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,7 +52,15 @@ public class BusinessMqSPIService implements BusinessMqSPI {
         return new PageModel<BusinessMq>(list,query.getCurrPage(),keys.size(),query.getPageSize());
     }
 
+    public PageModel<BusinessMqNode> queryBusinessMqNodePage(BusinessMqNodeQuery query) {
+        return businessMqManager.queryPageList(query);
+    }
+
     public PageModel<BusinessMqLog> queryBusinessMqLogPage(BusinessMqLogQuery query) {
         return businessMqManager.queryBusinessMqLogPage(query);
+    }
+
+    public boolean insertNode(BusinessMqNode businessMqNode) {
+        return businessMqManager.insertNode(businessMqNode);
     }
 }

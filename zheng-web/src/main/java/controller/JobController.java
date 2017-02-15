@@ -53,11 +53,13 @@ public class JobController extends BaseController {
     public JsonResult adding(Job job){
         job.setCreateTime(new Date());
         try {
-            jobSPIService.insertJob(job);
+            if (jobSPIService.insertJob(job)){
+                return jsonResult(1,"新增成功");
+            }
         } catch (Exception e) {
             return jsonResult(-1,"新增失败");
         }
-        return jsonResult(1,"新增成功");
+        return jsonResult(-1,"新增失败");
     }
 
     @Auth(rule ="/job/log")

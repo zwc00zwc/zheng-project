@@ -2,6 +2,7 @@ package businessmq.db.dal;
 
 import businessmq.db.BaseDB;
 import businessmq.db.DbConfig;
+import common.utility.DateUtility;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,7 +20,7 @@ public class BusinessMqDal {
      * @param msg
      * @return
      */
-    public Integer insertMq(DbConfig config,String msg){
+    public static Integer insertMq(DbConfig config,String msg){
         Connection connection=null;
         PreparedStatement preparedStatement=null;
         ResultSet resultSet=null;
@@ -28,7 +29,7 @@ public class BusinessMqDal {
             preparedStatement=connection.prepareStatement("INSERT INTO tb_message(message,status,createtime) VALUES (?,?,?)",PreparedStatement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1,msg);
             preparedStatement.setInt(2,0);
-            preparedStatement.setDate(3,new java.sql.Date(new Date().getTime()));
+            preparedStatement.setString(3, DateUtility.getStrFromDate(new Date(),""));
             preparedStatement.execute();
             resultSet=preparedStatement.getGeneratedKeys();
             if (resultSet!=null&&resultSet.next()){
@@ -52,7 +53,7 @@ public class BusinessMqDal {
             int b=1;
             int c=1;
             preparedStatement.setInt(a,status);
-            preparedStatement.setDate(b,new java.sql.Date(new Date().getTime()));
+            preparedStatement.setString(b,DateUtility.getStrFromDate(new Date(),""));
             preparedStatement.setLong(c,id);
             if (preparedStatement.executeUpdate()>0){
                 return true;

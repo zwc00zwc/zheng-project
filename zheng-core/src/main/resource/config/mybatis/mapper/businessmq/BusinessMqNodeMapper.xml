@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="domain.mapper.BusinessMqNodeMapper">
+
+    <resultMap id="result" type="businessMqNode">
+        <id column="id" property="id" jdbcType="BIGINT" ></id>
+        <result column="node" property="node" jdbcType="VARCHAR"></result>
+        <result column="driver" property="driver" jdbcType="VARCHAR"></result>
+        <result column="url" property="url" jdbcType="VARCHAR"></result>
+        <result column="username" property="username" jdbcType="VARCHAR"></result>
+        <result column="password" property="password" jdbcType="VARCHAR"></result>
+    </resultMap>
+
+    <sql id="select_sql">
+        SELECT id,node,driver,url,username,password
+    </sql>
+
+    <select id="queryById" parameterType="java.lang.Long" resultMap="result">
+        <include refid="select_sql"/>
+        FROM tb_businessmq_node WHERE id=#{nodeId}
+    </select>
+
+    <select id="queryList" resultMap="result">
+        <include refid="select_sql"/>
+        FROM tb_businessmq_node
+    </select>
+
+    <select id="queryPageList" resultMap="result">
+        <include refid="select_sql"/>
+        FROM tb_businessmq_node
+        limit #{query.startRow},#{query.pageSize}
+    </select>
+
+    <select id="queryCountPage" resultType="java.lang.Integer">
+        SELECT COUNT(1) FROM tb_businessmq_node
+    </select>
+
+    <insert id="insertNode">
+        INSERT INTO tb_businessmq_node(`node`,`driver`,`url`,`username`,`password`) VALUES (#{node.node},#{node.driver},#{node.url},#{node.username},#{node.password})
+    </insert>
+
+    <delete id="deleteNode" parameterType="java.lang.Long">
+        DELETE FROM tb_businessmq_node WHERE id=#{nodeId}
+    </delete>
+</mapper>
