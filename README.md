@@ -178,3 +178,6 @@ public class TestMqConfig {
 <p>
     <img src="https://github.com/zwc00zwc/zheng-project/blob/master/doc/7.png" style="float:none;"/>
 </p>
+<p>
+    <img src="https://github.com/zwc00zwc/zheng-project/blob/master/doc/8.png" style="float:none;"/>
+</p>
