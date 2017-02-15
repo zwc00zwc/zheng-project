@@ -15,7 +15,7 @@ public class DateUtility {
     public static String getStrFromDate(Date date,String format){
         DateFormat dateFormat=null;
         if (StringUtils.isEmpty(format)){
-            dateFormat=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            dateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         }else {
             dateFormat=new SimpleDateFormat(format);
         }
