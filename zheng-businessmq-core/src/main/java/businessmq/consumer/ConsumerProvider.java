@@ -96,18 +96,19 @@ public class ConsumerProvider {
                                 businessMqDal.updateMqStatus(map.get(msg.getDbId()),msg.getId(),1);
                             } catch (Exception e) {
                                 MqLogManager.log(consumerConfig.getExchangeName()+consumerConfig.getRoutingKey()+consumerConfig.getConsumerQueue()+consumerConfig.getJavaClass(),
-                                        e.toString(),new Date());
+                                        msg.getDbId()+"节点"+msg.getId()+"消息异常:"+e.toString(),new Date());
                                 map.remove(msg.getDbId());
                                 consumerConfig.setBlanceNode(map);
                             }
                         }else {
-                            MqLogManager.log(consumerConfig.getExchangeName()+consumerConfig.getRoutingKey()+consumerConfig.getConsumerQueue()+consumerConfig.getJavaClass(),"找不到分区节点",new Date());
+                            MqLogManager.log(consumerConfig.getExchangeName()+consumerConfig.getRoutingKey()+consumerConfig.getConsumerQueue()+consumerConfig.getJavaClass(),
+                                    msg.getDbId()+"节点【"+msg.getId()+"】找不到分区节点",new Date());
                         }
                     }
                     abstractConsumer.work(message);
                 } catch (InterruptedException e) {
                     MqLogManager.log(consumerConfig.getExchangeName()+consumerConfig.getRoutingKey()+consumerConfig.getConsumerQueue()+consumerConfig.getJavaClass(),
-                            e.toString(),new Date());
+                            "消息消费异常+"+e.toString(),new Date());
                 }
             }
         } catch (IOException e) {
