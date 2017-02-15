@@ -101,7 +101,7 @@ public class TestConsumer implements AbstractConsumer{
 }
 ```
 
-任务平台业务代码建议以spring boot进行开发
+消息队列监听业务代码建议以spring boot进行开发
 spring配置任务
 ```
 @Configuration
@@ -133,3 +133,12 @@ public class TestMqConfig {
     }    
 }
 ```
+
+##消息队列效果截图##
+
+<p>
+    <img src="https://github.com/zwc00zwc/zheng-project/blob/master/doc/6.png" style="float:none;"/>
+</p>
+<p>
+    <img src="https://github.com/zwc00zwc/zheng-project/blob/master/doc/7.png" style="float:none;"/>
+</p>

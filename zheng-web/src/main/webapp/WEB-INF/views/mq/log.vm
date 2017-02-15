@@ -20,7 +20,7 @@
                     <th scope="col" colspan="6">业务消息队列日志列表</th>
                 </tr>
                 <tr class="text-c">
-                    <th width="200">作业名</th>
+                    <th width="200">日志Label</th>
                     <th width="300">日志</th>
                     <th width="300">创建时间</th>
                 </tr>

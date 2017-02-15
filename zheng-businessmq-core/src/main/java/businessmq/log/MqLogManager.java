@@ -18,7 +18,7 @@ public class MqLogManager {
             String collectionname= DateUtility.getStrFromDate(new Date(),"yyyyMMdd")+"_log";
             MongoCollection collection= MongodbManager.getDatabase("BusinessMqLog").getCollection(collectionname);
             Document document=new Document();
-            document.append("listener",listener);
+            document.append("logLabel",listener);
             document.append("log",log);
             Calendar calendar   =   new GregorianCalendar();
             calendar.setTime(logTime);
