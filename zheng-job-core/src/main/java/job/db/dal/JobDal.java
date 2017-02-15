@@ -23,7 +23,7 @@ public class JobDal {
             preparedStatement=connection.prepareStatement("SELECT id,jobName,corn,remark,createTime FROM tb_job WHERE jobName=?");
             BaseDB.query(preparedStatement,args);
             resultSet=preparedStatement.executeQuery();
-            if (resultSet.next()){
+            while (resultSet.next()){
                 job.setId(resultSet.getLong("id"));
                 job.setJobName(resultSet.getString("jobName"));
                 job.setCorn(resultSet.getString("corn"));

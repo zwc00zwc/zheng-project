@@ -92,6 +92,42 @@ public class ZhengJobConfig {
 </dependency>
 ```
 
+spring配置消息队列发送事例(spring boot)
+```
+@Configuration
+public class MqProducterConfig {
+    @Bean
+    public ProducterProvider producterProvider(){
+        return new ProducterProvider();
+    }
+
+    @Bean
+    public ProducterConfig config(){
+        ProducterConfig producterConfig=new ProducterConfig();
+        producterConfig.setNode(1);
+        producterConfig.setHost("127.0.0.1");
+        producterConfig.setPort(5672);
+        producterConfig.setUserName("guest");
+        producterConfig.setPassword("guest");
+        Map queuemap=new HashMap();
+        queuemap.put("command",null);
+        producterConfig.setQueueRoutingKey(queuemap);
+        return producterConfig;
+    }
+    @Bean
+    public SpringProductProvide provide(ProducterConfig producterConfig,ProducterProvider producterProvider) {
+        DbConfig dbConfig=new DbConfig();
+        dbConfig.setDriver("com.mysql.jdbc.Driver");
+        dbConfig.setUrl("jdbc:mysql://localhost:3306/com.zwc?useUnicode=true&amp;characterEncoding=UTF-8");
+        dbConfig.setUsername("root");
+        dbConfig.setPassword("root");
+        return new SpringProductProvide(producterConfig,dbConfig,producterProvider);
+    }
+}
+
+```
+
+
 业务代码实现AbstractConsumer接口
 ```
 public class TestConsumer implements AbstractConsumer{
@@ -102,7 +138,7 @@ public class TestConsumer implements AbstractConsumer{
 ```
 
 消息队列监听业务代码建议以spring boot进行开发
-spring配置任务
+spring配置消息队列监听
 ```
 @Configuration
 public class TestMqConfig {

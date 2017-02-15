@@ -19,7 +19,7 @@ public class BusinessMqDal {
      * @param msg
      * @return
      */
-    public static Integer insertMq(DbConfig config,String msg){
+    public Integer insertMq(DbConfig config,String msg){
         Connection connection=null;
         PreparedStatement preparedStatement=null;
         ResultSet resultSet=null;
