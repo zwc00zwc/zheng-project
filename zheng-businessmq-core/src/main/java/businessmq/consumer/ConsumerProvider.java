@@ -6,6 +6,9 @@ import businessmq.base.MqRegistryManeger;
 import businessmq.config.ConsumerConfig;
 import businessmq.config.MessageType;
 import businessmq.config.MqConfig;
+import businessmq.db.DbConfig;
+import businessmq.db.dal.BusinessMqDal;
+import businessmq.db.dal.BusinessMqNodeDal;
 import businessmq.log.MqLogManager;
 import businessmq.reg.listener.ConnectListener;
 import businessmq.reg.zookeeper.ZookeeperRegistryCenter;
@@ -80,16 +83,26 @@ public class ConsumerProvider {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            BusinessMqDal businessMqDal=new BusinessMqDal();
             while (context.isListener()) {
                 try {
                     QueueingConsumer.Delivery delivery = consumer.nextDelivery();
                     String message = new String(delivery.getBody());
                     Message msg= JSON.parseObject(message, Message.class);
-                    if (MessageType.MONGO.getType().equals(msg.getMsgType())){
-
-                    }
                     if (MessageType.MYSQL.getType().equals(msg.getMsgType())){
-
+                        Map<Integer,DbConfig> map= consumerConfig.getBlanceNode();
+                        if (map.containsKey(msg.getDbId())){
+                            try {
+                                businessMqDal.updateMqStatus(map.get(msg.getDbId()),msg.getId(),1);
+                            } catch (Exception e) {
+                                MqLogManager.log(consumerConfig.getExchangeName()+consumerConfig.getRoutingKey()+consumerConfig.getConsumerQueue()+consumerConfig.getJavaClass(),
+                                        e.toString(),new Date());
+                                map.remove(msg.getDbId());
+                                consumerConfig.setBlanceNode(map);
+                            }
+                        }else {
+                            MqLogManager.log(consumerConfig.getExchangeName()+consumerConfig.getRoutingKey()+consumerConfig.getConsumerQueue()+consumerConfig.getJavaClass(),"找不到分区节点",new Date());
+                        }
                     }
                     abstractConsumer.work(message);
                 } catch (InterruptedException e) {

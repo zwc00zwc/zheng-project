@@ -1,6 +1,7 @@
 package businessmq.config;
 
 import businessmq.base.ExchangeType;
+import businessmq.db.DbConfig;
 
 import java.util.Map;
 import java.util.Set;
@@ -29,6 +30,11 @@ public class ConsumerConfig extends MqConfig {
      * 路由数组
      */
     private String[] routingKey;
+
+    /**
+     * 负载均衡节点map
+     */
+    private Map<Integer,DbConfig> blanceNode;
 
     public String getJavaClass() {
         return javaClass;
@@ -68,5 +74,13 @@ public class ConsumerConfig extends MqConfig {
 
     public void setRoutingKey(String[] routingKey) {
         this.routingKey = routingKey;
+    }
+
+    public Map<Integer, DbConfig> getBlanceNode() {
+        return blanceNode;
+    }
+
+    public void setBlanceNode(Map<Integer, DbConfig> blanceNode) {
+        this.blanceNode = blanceNode;
     }
 }

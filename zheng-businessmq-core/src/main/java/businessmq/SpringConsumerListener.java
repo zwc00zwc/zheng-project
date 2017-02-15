@@ -3,6 +3,7 @@ package businessmq;
 import businessmq.config.ConsumerConfig;
 import businessmq.consumer.AbstractConsumer;
 import businessmq.consumer.ConsumerProvider;
+import businessmq.db.DbConfig;
 import businessmq.reg.zookeeper.ZookeeperRegistryCenter;
 import com.google.common.base.Optional;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -13,8 +14,8 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 public class SpringConsumerListener extends ConsumerListener {
     private final AbstractConsumer abstractConsumer;
 
-    public SpringConsumerListener(final ConsumerConfig _config, ZookeeperRegistryCenter zookeeperRegistryCenter, AbstractConsumer abstractConsumer, ThreadPoolTaskExecutor threadPoolTaskExecutor){
-        super(_config,threadPoolTaskExecutor,zookeeperRegistryCenter);
+    public SpringConsumerListener(final ConsumerConfig _config, DbConfig dbConfig, ZookeeperRegistryCenter zookeeperRegistryCenter, AbstractConsumer abstractConsumer, ThreadPoolTaskExecutor threadPoolTaskExecutor){
+        super(_config,dbConfig,threadPoolTaskExecutor,zookeeperRegistryCenter);
         this.abstractConsumer=abstractConsumer;
     }
 

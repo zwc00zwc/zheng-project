@@ -20,7 +20,7 @@ public class BusinessMqDal {
      * @param msg
      * @return
      */
-    public static Integer insertMq(DbConfig config,String msg){
+    public Long insertMq(DbConfig config,String msg){
         Connection connection=null;
         PreparedStatement preparedStatement=null;
         ResultSet resultSet=null;
@@ -33,7 +33,7 @@ public class BusinessMqDal {
             preparedStatement.execute();
             resultSet=preparedStatement.getGeneratedKeys();
             if (resultSet!=null&&resultSet.next()){
-                return resultSet.getInt(1);
+                return resultSet.getLong(1);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -48,10 +48,10 @@ public class BusinessMqDal {
         PreparedStatement preparedStatement=null;
         connection=BaseDB.getConnection(config);
         try {
-            preparedStatement=connection.prepareStatement("UPDATE SET tb_message status=?,updatetime=? WHERE id=?");
+            preparedStatement=connection.prepareStatement("UPDATE tb_message SET status=?,updatetime=? WHERE id=?");
             int a=1;
-            int b=1;
-            int c=1;
+            int b=2;
+            int c=3;
             preparedStatement.setInt(a,status);
             preparedStatement.setString(b,DateUtility.getStrFromDate(new Date(),""));
             preparedStatement.setLong(c,id);

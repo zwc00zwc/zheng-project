@@ -38,16 +38,34 @@ public class ProducterProvider {
         message.setMsgType(MessageType.MYSQL.getType());
         try {
             Map<Integer,DbConfig> dbConfigMap= producterConfig.getBlanceNode();
-            DbConfig dbConfig= dbConfigMap.get(producterConfig.getNode());
-            if (producterConfig.getNode()+1>dbConfigMap.size()){
-                producterConfig.setNode(1);
-            }else {
-                producterConfig.setNode(producterConfig.getNode()+1);
-            }
-            BusinessMqDal dal=new BusinessMqDal();
-            Integer id= dal.insertMq(dbConfig,msg);
-            if (id!=null){
-                message.setId(Integer.toString(id));
+            if (!dbConfigMap.isEmpty()){
+                Integer node= producterConfig.getNode();
+                while (!dbConfigMap.containsKey(producterConfig.getNode())){
+                    if (node+1>dbConfigMap.size()){
+                        node=1;
+                    }else {
+                        node++;
+                    }
+                }
+                DbConfig dbConfig= dbConfigMap.get(node);
+                if (node+1>dbConfigMap.size()){
+                    producterConfig.setNode(1);
+                }else {
+                    producterConfig.setNode(node+1);
+                }
+                BusinessMqDal dal=new BusinessMqDal();
+                Long id= null;
+                try {
+                    id = dal.insertMq(dbConfig,msg);
+                } catch (Exception e) {
+                    MqLogManager.log("【"+node+"】节点异常",
+                            e.toString(),new Date());
+                    dbConfigMap.remove(node);
+                    producterConfig.setBlanceNode(dbConfigMap);
+                }
+                if (id!=null){
+                    message.setId(id);
+                }
             }
         } catch (Exception e) {
             MqLogManager.log(producterConfig.getExchangeName()+"发送消息异常",
