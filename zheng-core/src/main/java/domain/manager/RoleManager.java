@@ -21,7 +21,6 @@ import java.util.List;
 /**
  * Created by XR on 2016/8/31.
  */
-@Transactional
 @Component
 public class RoleManager {
     @Autowired
@@ -87,6 +86,7 @@ public class RoleManager {
         return false;
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public boolean resetadmin(){
         Role role= roleMapper.queryByName("admin");
         if (role!=null){
@@ -102,6 +102,7 @@ public class RoleManager {
         return false;
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public int deleteRole(Long id){
         return roleMapper.deleteRole(id);
     }

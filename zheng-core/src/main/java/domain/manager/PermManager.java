@@ -17,7 +17,6 @@ import java.util.List;
 /**
  * Created by XR on 2016/8/31.
  */
-@Transactional
 @Component
 public class PermManager {
     @Autowired
@@ -87,14 +86,17 @@ public class PermManager {
         return permMapper.queryByParentId(id);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public int insertPerm(Perm perm){
         return permMapper.insertPerm(perm);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public int updateById(Perm perm){
         return permMapper.updateById(perm);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public int deleteById(Long id){
         return permMapper.deleteById(id);
     }

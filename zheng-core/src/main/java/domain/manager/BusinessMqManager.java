@@ -15,6 +15,7 @@ import domain.model.mq.query.BusinessMqNodeQuery;
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -79,6 +80,7 @@ public class BusinessMqManager {
         return pageModel;
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public boolean insertNode(BusinessMqNode businessMqNode){
         if (businessMqNodeMapper.insertNode(businessMqNode)>0){
             return true;

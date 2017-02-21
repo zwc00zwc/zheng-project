@@ -21,7 +21,6 @@ import java.util.*;
 /**
  * Created by alan.zheng on 2017/1/18.
  */
-@Transactional
 @Component
 public class JobManager {
     @Autowired
@@ -42,6 +41,7 @@ public class JobManager {
         return pageModel;
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public boolean insertJob(Job job){
         if (jobMapper.insertJob(job)>0){
             return true;
@@ -95,6 +95,7 @@ public class JobManager {
         return pageModel;
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public boolean deleteJob(Long jobId){
         if (jobMapper.deleteJob(jobId)>0){
             return true;

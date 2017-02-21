@@ -15,7 +15,6 @@ import java.util.List;
 /**
  * Created by XR on 2016/8/31.
  */
-@Transactional
 @Component
 public class MemberManager {
     @Autowired
@@ -43,6 +42,7 @@ public class MemberManager {
         return memberDao.queryById(id);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public boolean insertmember(Member member,String ids){
         if (memberDao.insertmember(member)>0){
             MemberRole memberRole=new MemberRole();
@@ -55,10 +55,12 @@ public class MemberManager {
         return false;
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public int deleteMember(Long id){
         return memberDao.deleteMember(id);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public int updateStatus(Long memberid,Short status){
         return memberDao.updateStatus(memberid,status);
     }
