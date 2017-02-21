@@ -44,6 +44,10 @@ public class RoleSPIService implements RoleSPI {
         return roleManager.insertRole(role,ids);
     }
 
+    public boolean updateRole(Role role, String ids) {
+        return roleManager.updateRole(role,ids);
+    }
+
     public RolePermDto queryDtoById(Long id) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         RolePermDto rolePermDto=new RolePermDto();
         Role role= roleManager.queryById(id);

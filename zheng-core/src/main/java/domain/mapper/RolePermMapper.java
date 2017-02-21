@@ -19,5 +19,7 @@ public interface RolePermMapper {
 
     int updateById(RolePerm rolePerm);
 
+    int updateByRoleId(RolePerm rolePerm);
+
     int deleteByRoleId(Long roleid);
 }

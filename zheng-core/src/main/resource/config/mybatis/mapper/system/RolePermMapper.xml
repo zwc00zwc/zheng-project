@@ -41,6 +41,10 @@
         UPDATE tb_role_perm SET roleid=#{roleId},permids=#{permIds},update_time=#{updateTime} WHERE id=#{id}
     </update>
 
+    <update id="updateByRoleId" parameterType="roleperm">
+        UPDATE tb_role_perm SET permids=#{permIds},update_time=#{updateTime} WHERE roleid=#{roleId}
+    </update>
+
     <delete id="deleteByRoleId" parameterType="long">
         DELETE FROM tb_role_perm WHERE roleid=#{roleid}
     </delete>

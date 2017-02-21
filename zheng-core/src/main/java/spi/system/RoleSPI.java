@@ -20,6 +20,8 @@ public interface RoleSPI {
 
     boolean insertRole(Role role,String ids);
 
+    boolean updateRole(Role role,String ids);
+
     RolePermDto queryDtoById(Long id) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException;
 
     int deleteRole(Long id);

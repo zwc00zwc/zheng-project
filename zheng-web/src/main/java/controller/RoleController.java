@@ -74,7 +74,13 @@ public class RoleController extends BaseController {
     @RequestMapping(value = "/role/editing")
     public JsonResult editing(Role role, @RequestParam(value = "permids") String ids){
         if (role.getId()!=null&&role.getId()>0){   //修改
-            return jsonResult(1,"修改成功");
+            try {
+                if (roleSPIService.updateRole(role,ids)){
+                    return jsonResult(1,"修改成功");
+                }
+            } catch (Exception e) {
+                return jsonResult(-1,"修改失败");
+            }
         }
         return jsonResult(-1,"修改失败");
     }

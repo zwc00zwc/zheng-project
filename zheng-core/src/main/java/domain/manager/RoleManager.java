@@ -75,6 +75,18 @@ public class RoleManager {
         return false;
     }
 
+    @Transactional(rollbackFor = Exception.class)
+    public boolean updateRole(Role role,String permids){
+        RolePerm roleperm=new RolePerm();
+        roleperm.setPermIds(permids);
+        roleperm.setCreateTime(new Date());
+        roleperm.setRoleId(role.getId());
+        if (rolePermMapper.updateByRoleId(roleperm)>0){
+            return true;
+        }
+        return false;
+    }
+
     public boolean resetadmin(){
         Role role= roleMapper.queryByName("admin");
         if (role!=null){
