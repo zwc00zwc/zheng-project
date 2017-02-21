@@ -5,6 +5,7 @@ import job.JobScheduleController;
 import job.config.JobCommand;
 import job.db.dal.JobDal;
 import job.db.model.Job;
+import job.log.JobLogManager;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.recipes.cache.TreeCacheEvent;
@@ -30,6 +31,10 @@ public class JobListener extends AbstractListener {
         }
         if (StringUtils.isNotEmpty(eventstr)){
             JobScheduleController jobScheduleController= JobRegisterManager.instance().getJobScheduleController(jobName);
+            if (jobScheduleController==null){
+                JobLogManager.log("System","任务不存在【"+jobName+"】",new Date());
+                return;
+            }
             if (JobCommand.PAUSE.getCommand().equals(eventstr)){
                 jobScheduleController.pauseJob();
             }
