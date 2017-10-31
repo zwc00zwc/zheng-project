@@ -5,6 +5,7 @@ import common.JsonResult;
 import domain.model.PageModel;
 import domain.model.system.Perm;
 import domain.model.system.query.PermQuery;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +28,7 @@ public class PermController extends BaseController {
     private PermissionSPI permissionSPIService;
     @Auth(rule = "/perm/index")
     @RequestMapping(value = "/perm/index")
+    @ApiOperation(value = "permission", httpMethod = "GET", response = JsonResult.class, notes = "增加管理员")
     public String permission(Model model,Integer currPage){
         PermQuery query=new PermQuery();
         if (currPage!=null){
@@ -38,6 +40,7 @@ public class PermController extends BaseController {
     }
     @Auth(rule = "/perm/add")
     @RequestMapping(value = "/perm/add")
+    @ApiOperation(value = "add", httpMethod = "GET", response = JsonResult.class, notes = "增加管理员")
     public String add(Model model){
         List<Integer> integerList=new ArrayList<Integer>();
         integerList.add(1);
@@ -51,6 +54,7 @@ public class PermController extends BaseController {
     @Auth(rule = "/perm/add")
     @ResponseBody
     @RequestMapping(value = "/perm/adding")
+    @ApiOperation(value = "adding", httpMethod = "GET", response = JsonResult.class, notes = "增加管理员")
     public JsonResult adding(Perm perm){
         if (perm.getParentId()!=null&&perm.getParentId()>0){
             Perm parent= permissionSPIService.queryById(perm.getParentId());
@@ -86,6 +90,7 @@ public class PermController extends BaseController {
     @Auth(rule = "/perm/edit")
     @ResponseBody
     @RequestMapping(value = "/perm/editing")
+    @ApiOperation(value = "editing", httpMethod = "GET", response = JsonResult.class, notes = "增加管理员")
     public JsonResult editing(Perm perm){
         if (perm.getParentId()!=null&&perm.getParentId()>0){
             Perm parent= permissionSPIService.queryById(perm.getParentId());

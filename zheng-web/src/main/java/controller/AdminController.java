@@ -6,6 +6,8 @@ import domain.dto.MemberDto;
 import domain.model.PageModel;
 import domain.model.system.Member;
 import domain.model.system.query.MemberQuery;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +27,7 @@ import java.util.List;
  * Created by Administrator on 2016/8/21.
  */
 @Controller
+@Api(value = "AdminController")
 public class AdminController extends BaseController {
     @Resource
     private MemberSPI memberSPIService;
@@ -59,6 +62,7 @@ public class AdminController extends BaseController {
     @Auth(rule ="/admin/add" )
     @ResponseBody
     @RequestMapping(value = "/admin/adding")
+    @ApiOperation(value="send接口", notes="事件发生货到付款静安寺")
     public JsonResult adding(Member member,@RequestParam(value = "roleids") String ids){
         member.setStatus((short)1);
         member.setCreateTime(new Date());

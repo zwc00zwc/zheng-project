@@ -24,6 +24,9 @@
     <!--支持aspectj-->
     <aop:aspectj-autoproxy/>
 
+    <!--swagger-->
+    <!--<bean class="com.mangofactory.swagger.configuration.SpringSwaggerConfig" />-->
+
     <bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
         <!-- 线程池活跃的线程数 -->
         <property name="corePoolSize" value="5" />
