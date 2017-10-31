@@ -20,7 +20,7 @@
 
     <bean id="authExceptionHandler" class="handler.AuthExceptionHandler"></bean>
 
-    <context:component-scan base-package="aopservice"></context:component-scan>
+    <context:component-scan base-package="aopservice,config"></context:component-scan>
     <!--支持aspectj-->
     <aop:aspectj-autoproxy/>
 

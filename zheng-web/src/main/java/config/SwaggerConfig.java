@@ -1,8 +1,15 @@
 package config;
 
+import com.google.common.base.Predicate;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import springfox.documentation.RequestHandler;
 import springfox.documentation.builders.ApiInfoBuilder;
+import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.spi.DocumentationType;
@@ -14,14 +21,17 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  */
 @Configuration
 @EnableSwagger2
+@EnableWebMvc
+@ComponentScan(basePackages = {"controller"})
 public class SwaggerConfig {
     @Bean
     public Docket config() {
+        System.out.print("aaa");
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
-                .useDefaultResponseMessages(false)
+                .useDefaultResponseMessages(true)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("controller"))
+                .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
                 .build();
     }
 
