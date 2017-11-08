@@ -13,6 +13,7 @@
         <module>zheng-service</module>
         <module>zheng-core</module>
         <module>zheng-common</module>
+        <module>zheng-main</module>
     </modules>
 
     <properties>
