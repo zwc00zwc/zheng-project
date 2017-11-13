@@ -62,7 +62,7 @@ public class AdminController extends BaseController {
     @Auth(rule ="/admin/add" )
     @ResponseBody
     @RequestMapping(value = "/admin/adding")
-    @ApiOperation(value="send接口", notes="事件发生货到付款静安寺")
+    @ApiOperation(value="send接口",httpMethod = "POST",notes="事件发生货到付款静安寺", response = Member.class)
     public JsonResult adding(Member member,@RequestParam(value = "roleids") String ids){
         member.setStatus((short)1);
         member.setCreateTime(new Date());
