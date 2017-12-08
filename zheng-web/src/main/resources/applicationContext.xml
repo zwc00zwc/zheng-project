@@ -16,7 +16,7 @@
     <aop:config proxy-target-class="true"/>
 
     <import resource="classpath:config/spring-mvc.xml"/>
-    <import resource="classpath:config/spring-dubbo-consumer.xml"/>
+    <!--<import resource="classpath:config/spring-dubbo-consumer.xml"/>-->
 
     <bean id="authExceptionHandler" class="handler.AuthExceptionHandler"></bean>
 
