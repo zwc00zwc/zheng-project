@@ -5,6 +5,7 @@ import domain.mapper.MemberRoleMapper;
 import domain.model.system.Member;
 import domain.model.system.MemberRole;
 import domain.model.system.query.MemberQuery;
+import lock.Lock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,6 +44,7 @@ public class MemberManager {
     }
 
     @Transactional(rollbackFor = Exception.class)
+    @Lock
     public boolean insertmember(Member member,String ids){
         if (memberDao.insertmember(member)>0){
             MemberRole memberRole=new MemberRole();
