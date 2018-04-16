@@ -15,8 +15,8 @@
   http://www.springframework.org/schema/mvc
   http://www.springframework.org/schema/mvc/spring-mvc.xsd" >
 
-    <context:component-scan base-package="domain.manager,lock"></context:component-scan>
+    <context:component-scan base-package="domain.manager,spi,lock"></context:component-scan>
 
-    <!--redis 分布式锁-->
+    <!--redis 锁-->
     <bean class="common.lock.RedisLock" />
 </beans>
